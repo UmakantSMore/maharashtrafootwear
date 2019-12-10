@@ -36,11 +36,18 @@
                             <b id="spnMessage" visible="false" runat="server"></b>
                         </div>
                         <br />
-                        <div style="text-align: right;">
-                            <asp:Button ID="btn_updateRealStock" Visible="false"  runat="server" Text="Update Stock" class="btn btn-Normal btn-primary" OnClick="btn_updateRealStock_Click" />
-                            <asp:Button ID="btnAddNewProduct" runat="server" Text=" New Product" class="btn btn-Normal btn-primary" OnClick="btnAddNewProduct_Click" />
 
+                        <div class="form-group row" style="text-align: right;">
+
+                            <div class="col-xs-12">
+                                <asp:Button ID="btn_updateRealStock" Visible="false" runat="server" Text="Update Stock" class="btn btn-Normal btn-primary" OnClick="btn_updateRealStock_Click" />
+                                
+                                <asp:Button ID="btnAddNewProduct" runat="server" Text=" New Product" class="btn btn-Normal btn-primary" OnClick="btnAddNewProduct_Click" />
+
+                            </div>
                         </div>
+
+
                         <br />
                         <table>
                             <tr>
@@ -70,9 +77,10 @@
                                     <asp:Label ID="Label5" runat="server" Width="10"></asp:Label></td>
                                 <td>
                                     <asp:DropDownList ID="ddlActiveStatus" Class="form-control" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlActiveStatus_SelectedIndexChanged">
-                                         <asp:ListItem Value="0">NotActive</asp:ListItem>
+                                         <asp:ListItem Value="2" Selected="True">All</asp:ListItem>
                                         <asp:ListItem Value="1">Active</asp:ListItem>
-                                         <asp:ListItem Value="2">All</asp:ListItem>
+                                         <asp:ListItem Value="0">Non Active</asp:ListItem>
+
                                        <%-- <asp:ListItem Value="2">All</asp:ListItem>--%>
                                     </asp:DropDownList></td>
 
@@ -181,17 +189,17 @@
                                             <asp:CheckBox ID="allCheckbox1" runat="server" /></th>
                                         <th style="text-align: center">Sr No</th>
                                         <th style="text-align: center">Name</th>
-                                        <th style="text-align: center">SKU No.</th>
-                                        <th style="text-align: center">SS</th>
-                                        <th style="text-align: center">DP</th>
+                                        <th style="text-align: center">MRP</th>
+                                        <th style="text-align: center; display:none" >SKU No.</th>
+                                        <th style="text-align: center; display:none">SS</th>
+                                        <th style="text-align: center">Dealer(%)</th>
                                         <%-- <th style="text-align: center">Wholesale Price</th>
                                 <th style="text-align: center">Customer(Fake) Price</th>--%>
-                                        <th style="text-align: center">Fake</th>
-                                        <th style="text-align: center">Retail</th>
-                                        <th style="text-align: center">Landing Price</th>
+                                        <th style="text-align: center; display:none">Fake</th>
+                                        <th style="text-align: center; display:none">Landing Price</th>
                                         <th style="text-align: center; display: none">Discount</th>
                                         <th style="text-align: center">GST %</th>
-                                        <th style="text-align: center">App Stock</th>
+                                        <th style="text-align: center; display:none">App Stock</th>
                                         <th style="text-align: center">Real Stock</th>
                                         <th style="text-align: center">Stock Alert</th>
                                         <th style="text-align: center; display: none;">Is Stock</th>
@@ -225,22 +233,24 @@
                                                     <asp:Label ID="lblSeqNo" runat="server" Visible="false" Text='<%# Eval("seqno") %>'></asp:Label>
                                                     <asp:Label ID="lblProductName" runat="server" Text='<%# Eval("productname") %>'></asp:Label>
                                                 </td>
-                                                <td style="text-align: center; width: 100px;">
+
+                                                <td style="text-align: center">
+                                                    <asp:TextBox ID="txtCustomerPrice" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("customerprice") %>'></asp:TextBox>
+                                                </td>
+                                                <td style="text-align: center; width: 100px; display:none">
                                                     <asp:Label ID="lblSKU" runat="server" Text='<%# Eval("sku") %>'></asp:Label>
                                                 </td>
-                                                <td style="text-align: center">
+                                                <td style="text-align: center; display:none">
                                                     <asp:TextBox ID="txtSuperWholesaleprice" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("superwholesaleprice") %>'></asp:TextBox>
                                                 </td>
                                                 <td style="text-align: center">
                                                     <asp:TextBox ID="txtDealerPrice" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("dealerprice") %>'></asp:TextBox>
                                                 </td>
-                                                <td style="text-align: center">
+                                                <td style="text-align: center; display:none">
                                                     <asp:TextBox ID="txtWholesaleprice" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("wholesaleprice") %>'></asp:TextBox>
                                                 </td>
-                                                <td style="text-align: center">
-                                                    <asp:TextBox ID="txtCustomerPrice" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("customerprice") %>'></asp:TextBox>
-                                                </td>
-                                                <td style="text-align: center">
+                                                
+                                                <td style="text-align: center; display:none">
                                                     <%-- <asp:Label ID="Label3" runat="server" Text='<%# Eval("LandingPrice") %>'></asp:Label>--%>
                                                     <asp:TextBox ID="txtLandingPrice" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("LandingPrice") %>'></asp:TextBox>
                                                 </td>
@@ -251,13 +261,14 @@
                                                     <asp:TextBox ID="txtGST" Style="width: 40px" runat="server" CssClass="form-control" Text='<%# Eval("gst") %>'></asp:TextBox>
                                                 </td>
                                                 <td style="text-align: center">
-                                                    <asp:TextBox ID="txtStockQuantites" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("quantites") %>'></asp:TextBox>
-                                                </td>
-                                                <td style="text-align: center">
                                                     <asp:TextBox ID="txtRealStock" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("RealStock") %>'></asp:TextBox>
 
 
                                                 </td>
+                                                <td style="text-align: center; display:none">
+                                                    <asp:TextBox ID="txtStockQuantites" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("quantites") %>'></asp:TextBox>
+                                                </td>
+                                                
                                                 <td style="text-align: center">
                                                     <asp:TextBox ID="txtStockAlertQuantites" Style="width: 50px" CssClass="form-control" runat="server" Text='<%# Eval("alertquantites") %>'></asp:TextBox>
                                                 </td>
@@ -281,7 +292,8 @@
 
 
                                                 <td style="text-align: center;">
-                                                    <asp:Label ID="lblStockAlert" runat="server" CssClass='<%# Eval("CssClass") %>' Style="font-size: medium; font-weight: bold; width: 50px" Text='<%# Eval("quantites") %>'></asp:Label>
+                                                    <asp:Label ID="Label6" runat="server" CssClass='<%# Eval("CssClass") %>' Style="font-size: medium; font-weight: bold; width: 60px" Text='<%# Eval("RealStock") %>'></asp:Label>
+                                                    <%--<asp:Label ID="lblStockAlert" runat="server" CssClass='<%# Eval("CssClass") %>' Style="font-size: medium; font-weight: bold; width: 50px" Text='<%# Eval("quantites") %>'></asp:Label>--%>
                                                 </td>
                                                 <td style="text-align: center">
                                                     <asp:HyperLink ID="hlEdit" runat="server" CssClass="btn btn-sm btn-success" Text="Edit"></asp:HyperLink>&nbsp;
@@ -300,25 +312,26 @@
                                             <asp:CheckBox ID="CheckBox1" runat="server" /></th>
                                         <th style="text-align: center">Sr No</th>
                                         <th style="text-align: center">Name</th>
-                                        <th style="text-align: center">SKU No.</th>
-                                        <th style="text-align: center">Super Stockist Price</th>
-                                        <th style="text-align: center">Dealer Price</th>
+                                        <th style="text-align: center">MRP</th>
+                                        <th style="text-align: center; display:none" >SKU No.</th>
+                                        <th style="text-align: center; display:none">SS</th>
+                                        <th style="text-align: center">Dealer(%)</th>
                                         <%-- <th style="text-align: center">Wholesale Price</th>
                                 <th style="text-align: center">Customer(Fake) Price</th>--%>
-                                        <th style="text-align: center">Wholesale Fake Price</th>
-                                        <th style="text-align: center">Customer Price</th>
-                                        <th style="text-align: center">Landing Price</th>
+                                        <th style="text-align: center; display:none">Fake</th>
+                                        <th style="text-align: center; display:none">Landing Price</th>
                                         <th style="text-align: center; display: none">Discount</th>
                                         <th style="text-align: center">GST %</th>
-                                        <th style="text-align: center">App Stock</th>
+                                        <th style="text-align: center; display:none">App Stock</th>
                                         <th style="text-align: center">Real Stock</th>
                                         <th style="text-align: center">Stock Alert</th>
                                         <th style="text-align: center; display: none;">Is Stock</th>
                                         <th style="text-align: center">Is Active</th>
-                                        <th style="text-align: center">Is HotProduct</th>
+                                         <th style="text-align: center">Is HotProduct</th>
                                         <th style="text-align: center; display: none;">HSN Code</th>
                                         <th style="text-align: center">Stock Alert</th>
                                         <th style="text-align: center">Action</th>
+
 
 
                                     </tr>

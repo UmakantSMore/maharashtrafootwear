@@ -26,7 +26,7 @@ public partial class managedealer1 : System.Web.UI.Page
        
 
         HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
-        hPageTitle.InnerText = "Manage Dealers";
+        hPageTitle.InnerText = "Manage Retailers";
 
         //if (!Page.IsPostBack)
         //{
@@ -39,7 +39,7 @@ public partial class managedealer1 : System.Web.UI.Page
         {
             spnMessage.Visible = true;
             spnMessage.Style.Add("color", "green");
-            spnMessage.InnerText = "Dealer Updated Successfully";
+            spnMessage.InnerText = "Retailer Updated Successfully";
         }
         //if (!Page.IsPostBack)
         //{
@@ -169,12 +169,12 @@ public partial class managedealer1 : System.Web.UI.Page
                     //SelectAllNotActiveUser();
                     search();
                     spnMessage.Style.Add("color", "green");
-                    spnMessage.InnerText = "User Updated Successfully";
+                    spnMessage.InnerText = "Retailer Updated Successfully";
                 }
                 else
                 {
                     spnMessage.Style.Add("color", "red");
-                    spnMessage.InnerText = "User Not Updated";
+                    spnMessage.InnerText = "Retailer Not Updated";
                 }
             }
         }
@@ -267,12 +267,12 @@ public partial class managedealer1 : System.Web.UI.Page
             //SelectAllNotActiveUser();
             search();
             spnMessage.Style.Add("color", "green");
-            spnMessage.InnerText = "User Deleted Successfully";
+            spnMessage.InnerText = "Retailer Deleted Successfully";
         }
         else
         {
             spnMessage.Style.Add("color", "green");
-            spnMessage.InnerText = "User Not Deleted";
+            spnMessage.InnerText = "Retailer Not Deleted";
         }
 
     }
@@ -361,7 +361,7 @@ public partial class managedealer1 : System.Web.UI.Page
         }
         spnMessage.Visible = true;
         spnMessage.Style.Add("color", "green");
-        spnMessage.InnerText = "Dealer Information Updated Successfully";
+        spnMessage.InnerText = "Retailer Information Updated Successfully";
         SelectAllNotActiveUser();
     }
 
@@ -684,9 +684,9 @@ public partial class managedealer1 : System.Web.UI.Page
             Response.Write("<table><thead>"
                                     +"<tr>"
                                       +"  <th ></th>"
-                                        +"<th >Dealer</th>"
-                                        
-                                        +"<th >Login MNo.</th>"
+                                        + "<th >Retailer</th>"
+
+                                        + "<th >Login MNo.</th>"
                                         +"<th >Password</th>"
                                         
                                         +"<th>WhatsApp MNo.</th>"

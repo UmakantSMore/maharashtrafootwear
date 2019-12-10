@@ -24,7 +24,7 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                             <div class="text-right">
-                                <asp:Button ID="btnNewOrder" runat="server" Text="Add Order" CssClass="btn btn-success" OnClick="btnNewOrder_Click" />
+                                <asp:Button ID="btnNewOrder" runat="server" Text="New Order" CssClass="btn btn-success" OnClick="btnNewOrder_Click" />
                             </div>
 
 
@@ -43,7 +43,7 @@
                                             <tr class="tableheader">
 
                                                 <th style="text-align: center">OrderId</th>
-                                                <th style="text-align: center">Order NO</th>
+                                                <th style="text-align: center">Invoice No</th>
                                                 <th style="text-align: center">Name</th>
                                                 <th style="text-align: center">Amount</th>
                                                 <th style="text-align: center">Date</th>
@@ -107,7 +107,7 @@
                                         <thead>
                                             <tr class="tableheader">
                                                 <th style="text-align: center">OrderId</th>
-                                                <th style="text-align: center">Order NO</th>
+                                                <th style="text-align: center">Invoice No</th>
                                                 <th style="text-align: center">Name</th>
                                                 <th style="text-align: center">Amount</th>
                                                  <th style="text-align: center">Date</th>
@@ -168,7 +168,7 @@
                                         <thead>
                                             <tr class="tableheader">
                                                 <th style="text-align: center">OrderId</th>
-                                                <th style="text-align: center">Order NO</th>
+                                                <th style="text-align: center">Invoice No</th>
                                                 <th style="text-align: center">Name</th>
                                                 <th style="text-align: center">Amount</th>
                                                 <th style="text-align: center">Date</th>
@@ -266,7 +266,7 @@
         $(function () {
             $('#tblTodayOrder').DataTable({
                 "destroy": true,
-                "order": [[2, "desc"]],
+                "order": [[0, "desc"]],
                 'paging': true,
                 'lengthChange': false,
                 'searching': false,
@@ -276,6 +276,7 @@
             })
             $('#tblYesterDayOrder').DataTable({
                 "destroy": true,
+                "order": [[0, "desc"]],
                 'paging': true,
                 'lengthChange': false,
                 'searching': false,
@@ -289,6 +290,7 @@
             })
             $('#tblRemainingOrder').DataTable({
                 "destroy": true,
+                "order": [[0, "desc"]],
                 'paging': true,
                 'lengthChange': false,
                 'searching': false,

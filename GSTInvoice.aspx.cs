@@ -934,7 +934,7 @@ public partial class GSTInvoice : System.Web.UI.Page
         itemTable.AddCell(cell3);
 
 
-        PdfPCell cell6 = new PdfPCell(new Phrase("Mrp", boldTableFont));
+        PdfPCell cell6 = new PdfPCell(new Phrase("MRP", boldTableFont));
         //PdfPCell cell6 = new PdfPCell(new Phrase("Discounted @ "+dt.Tables[8].Rows[0]["discounted"]+"", boldTableFont));
         cell6.BackgroundColor = TabelHeaderBackGroundColor;
         cell6.HorizontalAlignment = 1;
@@ -970,7 +970,7 @@ public partial class GSTInvoice : System.Web.UI.Page
 
             //name of product
             var _phrase1 = new Phrase();
-            _phrase1.Add(new Chunk(row["sr"].ToString(), EmailFont));
+            _phrase1.Add(new Chunk(row["sr"].ToString(), bodyFont));
             PdfPCell descCells = new PdfPCell(_phrase1);
             descCells.HorizontalAlignment = 0;
             descCells.PaddingLeft = 10f;
@@ -987,7 +987,7 @@ public partial class GSTInvoice : System.Web.UI.Page
             itemTable.AddCell(descCell);
 
             //totalqty
-            PdfPCell amountCell = new PdfPCell(new Phrase(new Chunk(row["brandid"].ToString(), EmailFont)));
+            PdfPCell amountCell = new PdfPCell(new Phrase(new Chunk(row["brandid"].ToString(), bodyFont)));
             amountCell.HorizontalAlignment = 1;
             amountCell.PaddingLeft = 10f;
             amountCell.Border = Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER;
@@ -996,7 +996,7 @@ public partial class GSTInvoice : System.Web.UI.Page
             //Total_TotalQty += Math.Round(Convert.ToDouble(row["quantites"].ToString()), 2);
 
             //MRP/perice
-            PdfPCell totalamtCell = new PdfPCell(new Phrase(new Chunk(row["sizeid"].ToString(), EmailFont)));
+            PdfPCell totalamtCell = new PdfPCell(new Phrase(new Chunk(row["sizeid"].ToString(), bodyFont)));
             totalamtCell.HorizontalAlignment = 1;
             totalamtCell.Border = Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER;
             itemTable.AddCell(totalamtCell);
@@ -1004,7 +1004,7 @@ public partial class GSTInvoice : System.Web.UI.Page
 
             //no of boxes
             // PdfPCell qtyCell = new PdfPCell(new Phrase("", bodyFont));
-            PdfPCell qtyCell = new PdfPCell(new Phrase(new Chunk(row["HSNCode"].ToString(), EmailFont)));
+            PdfPCell qtyCell = new PdfPCell(new Phrase(new Chunk(row["HSNCode"].ToString(), bodyFont)));
             qtyCell.HorizontalAlignment = 1;
             qtyCell.PaddingLeft = 10f;
             qtyCell.Border = Rectangle.LEFT_BORDER | Rectangle.RIGHT_BORDER;
@@ -1086,7 +1086,7 @@ public partial class GSTInvoice : System.Web.UI.Page
         totalAmtCell6.HorizontalAlignment = 1;
         itemTable.AddCell(totalAmtCell6);
 
-        PdfPCell totalAmtCell7 = new PdfPCell(new Phrase(Total_TotalQty.ToString(), bodyFont));
+        PdfPCell totalAmtCell7 = new PdfPCell(new Phrase(Convert.ToInt64(Total_TotalQty).ToString(), EmailFont));
         //PdfPCell totalAmtCell7 = new PdfPCell(new Phrase(Math.Round(Convert.ToDouble(totaltaxable.ToString()),2).ToString(), bodyFont));
         totalAmtCell7.Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.BOTTOM_BORDER;
         totalAmtCell7.HorizontalAlignment = 1;
@@ -1100,7 +1100,7 @@ public partial class GSTInvoice : System.Web.UI.Page
         itemTable.AddCell(totalAmtCell8);
 
 
-        PdfPCell totalAmtCellt = new PdfPCell(new Phrase(dt.Tables[0].Rows[0]["subamount"].ToString(), bodyFont));
+        PdfPCell totalAmtCellt = new PdfPCell(new Phrase(dt.Tables[0].Rows[0]["subamount"].ToString(), EmailFont));
         totalAmtCellt.Border = Rectangle.LEFT_BORDER | Rectangle.TOP_BORDER | Rectangle.BOTTOM_BORDER | Rectangle.RIGHT_BORDER ;
         totalAmtCellt.HorizontalAlignment = 1;
         itemTable.AddCell(totalAmtCellt);

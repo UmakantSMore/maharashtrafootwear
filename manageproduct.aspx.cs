@@ -58,8 +58,10 @@ public partial class manageproduct : System.Web.UI.Page
                 if (Request.QueryString["catid"] != null)
                 {
                     //  BindProduct(Convert.ToInt64(Request.QueryString["catid"].ToString()));
-                    search();
+
                     ddlCategory.SelectedValue = Request.QueryString["catid"].ToString();
+
+                    search();
                 }
                 spnMessage.Visible = true;
                 spnMessage.Style.Add("color", "green");
@@ -571,17 +573,19 @@ public partial class manageproduct : System.Web.UI.Page
             cmd.CommandType = CommandType.StoredProcedure;
             if (txtSearch.Text == "")
             {
-                cmd.Parameters.Add("@seachtext", null);
+                cmd.Parameters.AddWithValue("@seachtext", null);
             }
             else
             {
-                cmd.Parameters.Add("@seachtext", txtSearch.Text);
+                cmd.Parameters.AddWithValue("@seachtext", txtSearch.Text);
 
             }
-           
-                cmd.Parameters.Add("@isactive", Convert.ToInt64(ddlActiveStatus.SelectedValue.ToString()));
-          
-            cmd.Parameters.Add("@cid", Convert.ToInt64(ddlCategory.SelectedValue.ToString()));
+            Int64 activestatus = Convert.ToInt64(ddlActiveStatus.SelectedValue.ToString());
+                cmd.Parameters.AddWithValue("@isactive", activestatus);
+            Int64 catid = Convert.ToInt64(ddlCategory.SelectedValue.ToString());
+
+
+            cmd.Parameters.AddWithValue("@cid",catid );
             cmd.Connection = ConnectionString;
             ConnectionString.Open();
             da = new SqlDataAdapter(cmd);

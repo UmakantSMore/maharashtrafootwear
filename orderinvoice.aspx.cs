@@ -44,7 +44,7 @@ public partial class orderinvoice : System.Web.UI.Page
                         sminvoiceNo.InnerText = ds.Tables[0].Rows[0]["oid"].ToString();
 
 
-                        smOrderDate.InnerText = "Order Date : " + ds.Tables[0].Rows[0]["orderdate"].ToString();
+                        smOrderDate.InnerText = "Date : " + ds.Tables[0].Rows[0]["orderdate"].ToString();
 
                         spnTotal.InnerText = ds.Tables[0].Rows[0]["grandTotal"].ToString();
 

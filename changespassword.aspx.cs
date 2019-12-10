@@ -34,7 +34,7 @@ public partial class changespassword : System.Web.UI.Page
                 }
                 else
                 {
-                    ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Password Not Change')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Failed to change the password.')", true);
                 }
                 txtPassword.Text = string.Empty;
                 txtConfirmPassword.Text = string.Empty;

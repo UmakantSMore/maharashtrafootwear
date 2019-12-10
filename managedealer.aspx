@@ -23,9 +23,9 @@
                          <br />
                             
                             <div style="text-align:right;">
-                                 <asp:HyperLink ID="hlUserAuthority" runat="server" class="btn btn-Normal btn-dropbox" Target="_blank" Text="User Authority" NavigateUrl="~/userauthority.aspx"></asp:HyperLink>
+                                 <asp:HyperLink ID="hlUserAuthority" Visible="false" runat="server" class="btn btn-Normal btn-dropbox" Target="_blank" Text="User Authority" NavigateUrl="~/userauthority.aspx"></asp:HyperLink>
                                  <asp:Button ID="btnExcelExport" runat="server" class="btn btn-flickr" Width="100" Text="Excel Export" OnClick="btnExcelExport_Click" /></td>
-                                 <asp:Button ID="btnNewDealer" runat="server" class="btn btn-info" Width="100" Text="New Dealer" OnClick="btnNewDealer_Click" /></td>
+                                 <asp:Button ID="btnNewDealer" runat="server" class="btn btn-info" Width="100" Text="New Retailer" OnClick="btnNewDealer_Click" /></td>
                 <div class="btn-"></div>
                                 
                             </div>
@@ -43,7 +43,7 @@
                                 <asp:ListItem>40</asp:ListItem>
                                 <asp:ListItem>50</asp:ListItem>
                                 </asp:DropDownList></td>
-                                     <td><label for="exampleInputPassword1">Dealer Status</label></td>
+                                     <td><label for="exampleInputPassword1">Retailer Status</label></td>
                             <td>  <asp:Label ID="Label2" runat="server" Width="10"></asp:Label></td>
                             <td> <asp:DropDownList ID="ddlUserstatus"  Class="form-control" Width="100px" runat="server" AutoPostBack="true" OnSelectedIndexChanged="ddlUserstatus_SelectedIndexChanged">
                                 
@@ -82,9 +82,9 @@
                             <table  class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th style="width: 10px; text-align: center" class="allCheckboxActive">
-                                            <asp:CheckBox ID="cbDealerActive" runat="server" /></th>
-                                        <th style="width: 200px; text-align: center">Dealer
+                                        <%--<th style="width: 10px; text-align: center" class="allCheckboxActive">
+                                            <asp:CheckBox ID="cbDealerActive" runat="server" /></th>--%>
+                                        <th style="width: 200px; text-align: center">Retailer
                                         </th>
                                         <th style="width: 80px; text-align: center">Login No
                                         </th>
@@ -102,7 +102,7 @@
                                         </th>--%>
                                         <%--<th style="width: 150px; text-align: center">Address
                                         </th>--%>
-                                        <th style="width: 150px; text-align: center">State City
+                                        <th style="width: 150px; text-align: center">City State
                                         </th>
                                         <th style="width: 150px; text-align: center">Regn. Date
                                         </th>
@@ -127,9 +127,9 @@
                                     <asp:Repeater ID="repDealerActive" runat="server" OnItemDataBound="repDealerActive_ItemDataBound">
                                         <ItemTemplate>
                                             <tr>
-                                                <td class="singleCheckboxActive" style="text-align: center">
+                                                <%--<td class="singleCheckboxActive" style="text-align: center">
                                                     <asp:CheckBox ID="chkContainerActive" runat="server" CssClass="Container" attr-ID='<%# Eval("did") %>' />
-                                                </td>
+                                                </td>--%>
                                                 <td style="text-align: center">
                                                     <asp:HiddenField ID="hfActiveUserId" runat="server" Value='<%# Eval("did") %>' />
                                                     <asp:Label ID="lblName" runat="server" Text='<%# Eval("name")%>'></asp:Label>
@@ -193,15 +193,15 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th style="width: 10px; text-align: center" class="allCheckboxActive">
-                                            <%--<asp:CheckBox ID="CheckBox1" runat="server" />--%></th>
-                                        <th style="width: 200px; text-align: center">Dealer
+                                        <%--<th style="width: 10px; text-align: center" class="allCheckboxActive">
+                                            <asp:CheckBox ID="CheckBox1" runat="server" /></th>--%>
+                                        <th style="width: 200px; text-align: center">Retailer
                                         </th>
-                                        <th style="width: 80px; text-align: center">Login No.
+                                        <th style="width: 80px; text-align: center">Login No
                                         </th>
                                         <th style="width: 80px; text-align: center">Password
                                         </th>
-                                        <th style="width: 80px; text-align: center">WhatsApp No.
+                                        <th style="width: 80px; text-align: center">WhatsApp No
                                         </th>
                                         <th style="width: 80px; text-align: center">GST
                                         </th>
@@ -213,7 +213,7 @@
                                         </th>--%>
                                         <%--<th style="width: 150px; text-align: center">Address
                                         </th>--%>
-                                        <th style="width: 150px; text-align: center">State City
+                                        <th style="width: 150px; text-align: center">City State
                                         </th>
                                         <th style="width: 150px; text-align: center">Regn. Date
                                         </th>
@@ -300,7 +300,7 @@
     <!-- page script -->
     <script>
         $(function () {
-            $('#example1').DataTable({ "order": [[4, "desc"]] })
+            $('#example1').DataTable({ "order": [[8, "desc"]] })
             $('#example2').DataTable({
                 //"order": [[6, "desc"]],
                 'paging': true,

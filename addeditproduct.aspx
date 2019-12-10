@@ -85,20 +85,24 @@
 
 
                                 </div>
-                                <div class="col-xs-3">
+
+
+                                <div class="col-xs-3" style="display:none">
                                     <label for="exampleInputPassword1">Wholesale Price ( % )</label>
-                                    <asp:TextBox ID="txtWholesalePrice" Class="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtWholesalePrice" Class="form-control" runat="server"  Text="0"></asp:TextBox>
                                     <cc1:FilteredTextBoxExtender ID="FTBtxtWholesalePrice" runat="server" FilterMode="ValidChars" TargetControlID="txtWholesalePrice" ValidChars="01234567890."></cc1:FilteredTextBoxExtender>
 
                                 </div>
-                                 <div class="col-xs-3">
+                                 <div class="col-xs-3" style="display:none">
                                     <label for="exampleInputPassword1">Puchase( Landing ) Price</label>
-                                    <asp:TextBox ID="txt_landingprice" Class="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txt_landingprice" Class="form-control" runat="server" Text="0"></asp:TextBox>
                                     <cc1:FilteredTextBoxExtender ID="FilteredTextBoxExtender2" runat="server" FilterMode="ValidChars" TargetControlID="txt_landingprice" ValidChars="01234567890."></cc1:FilteredTextBoxExtender>
 
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Display="Dynamic" ControlToValidate="txt_landingprice" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
 
                                 </div>
+
+
                             </div>
                             <div class="form-group row">
                                 <div class="col-xs-3" style ="display:none;">
@@ -126,22 +130,15 @@
                                 </div>
 
                                 <%--<div class="form-group">--%>
-                                <div class="col-xs-3">
+                                <div class="col-xs-3" style="display:none">
                                     <label for="exampleInputPassword1">Stock Quantites </label>
-                                    <asp:TextBox ID="txtQuantites" Class="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtQuantites" Class="form-control" runat="server" Text="0"></asp:TextBox>
                                     <cc1:FilteredTextBoxExtender ID="FTBtxtQuantites" runat="server" FilterMode="ValidChars" TargetControlID="txtQuantites" ValidChars="01234567890.%"></cc1:FilteredTextBoxExtender>
 
                                     <asp:RequiredFieldValidator ID="RFVtxtQuantites" runat="server" Display="Dynamic" ControlToValidate="txtQuantites" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
 
                                 </div>
-                                <div class="col-xs-3">
-                                    <label for="exampleInputPassword1">Stock Alert Quantites</label>
-                                    <asp:TextBox ID="txtAlertQuantites" Class="form-control" runat="server"></asp:TextBox>
-                                    <cc1:FilteredTextBoxExtender ID="FTBtxtAlertQuantites" runat="server" FilterMode="ValidChars" TargetControlID="txtAlertQuantites" ValidChars="01234567890.%"></cc1:FilteredTextBoxExtender>
 
-                                    <asp:RequiredFieldValidator ID="RFVtxtAlertQuantites" runat="server" Display="Dynamic" ControlToValidate="txtAlertQuantites" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
-
-                                </div>
                                 <div class="col-xs-3">
                                     <label for="exampleInputPassword1">Real Stock</label>
                                     <asp:TextBox ID="txt_RealStock" Class="form-control" runat="server"></asp:TextBox>
@@ -150,6 +147,16 @@
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic" ControlToValidate="txt_RealStock" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
 
                                 </div>
+
+                                <div class="col-xs-3">
+                                    <label for="exampleInputPassword1">Stock Alert Quantites</label>
+                                    <asp:TextBox ID="txtAlertQuantites" Class="form-control" runat="server"></asp:TextBox>
+                                    <cc1:FilteredTextBoxExtender ID="FTBtxtAlertQuantites" runat="server" FilterMode="ValidChars" TargetControlID="txtAlertQuantites" ValidChars="01234567890.%"></cc1:FilteredTextBoxExtender>
+
+                                    <asp:RequiredFieldValidator ID="RFVtxtAlertQuantites" runat="server" Display="Dynamic" ControlToValidate="txtAlertQuantites" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
+
+                                </div>
+                                
                             </div>
                             <div class="form-group row">
                                 <div class="col-xs-3">
@@ -228,28 +235,28 @@
 
                             <div class="form-group row">
                                 <div class="col-xs-3">
-                                    <label for="exampleInputPassword1">YouTube Video 1</label>
+                                    <label for="exampleInputPassword1">YouTube Video</label>
                                     <asp:TextBox ID="txtYouTubeVideo1" Class="form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <%--<div class="form-group">--%>
                                 <div class="col-xs-3">
-                                    <label for="exampleInputPassword1">YouTube Video Name 1 </label>
+                                    <label for="exampleInputPassword1">YouTube Video Name</label>
                                     <asp:TextBox ID="txtYoutubeName1" Class="form-control" runat="server"></asp:TextBox>
                                 </div>
                                 <%--<div class="form-group">--%>
-                                <div class="col-xs-3">
+                                <div class="col-xs-3" style="display:none">
                                     <label for="exampleInputPassword1">YouTube Video 2</label>
                                     <asp:TextBox ID="txtYouTubeVideo2" Class="form-control" runat="server"></asp:TextBox>
                                 </div>
-                                <div class="col-xs-3">
+                                <div class="col-xs-3" style="display:none">
                                     <label for="exampleInputPassword1">YouTube Video Name 2</label>
                                     <asp:TextBox ID="txtYoutubeName2" Class="form-control" runat="server"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row"  style="display:none">
 
                                 <%--<div class="form-group">--%>
-                                <div class="col-xs-3">
+                                <div class="col-xs-3" >
                                     <label for="exampleInputPassword1">YouTube Video 3</label>
                                     <asp:TextBox ID="txtYouTubeVideo3" Class="form-control" runat="server"></asp:TextBox>
                                 </div>
@@ -268,7 +275,7 @@
                                     <asp:TextBox ID="txtYoutubeName4" Class="form-control" runat="server"></asp:TextBox>
                                 </div>
                             </div>
-                             <div class="form-group row">
+                             <div class="form-group row"  style="display:none">
                     
                   <div class="col-xs-3">
                         <label for="exampleInputEmail1">Process Name </label>
@@ -280,7 +287,7 @@
                    </div>
                          <div class="col-xs-3">
                         <label for="exampleInputEmail1">Price </label>
-                     <asp:TextBox ID="txt_price" CssClass="form-control" runat="server"></asp:TextBox>
+                     <asp:TextBox ID="txt_price" CssClass="form-control" runat="server" Text="0"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator7" ControlToValidate="txt_price" ValidationGroup="c1"  runat="server" ErrorMessage="*"></asp:RequiredFieldValidator>   
                          
                     </div>
@@ -292,7 +299,7 @@
                     </div>
                      
 
-                    <div class="form-group row" style="overflow:scroll;">
+                    <div class="form-group row" style="overflow:scroll; display:none">
                         <asp:GridView ID="repProcess" runat="server" AutoGenerateColumns="False" CellPadding="3" DataKeyNames="id" Width="1151px" BackColor="White" BorderColor="#CCCCCC" BorderStyle="None" BorderWidth="1px">
                                 <Columns>
                                      

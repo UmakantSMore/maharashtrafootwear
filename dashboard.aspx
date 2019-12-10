@@ -37,13 +37,13 @@
 <%--<asp:UpdatePanel ID="UpdatePanel1" runat="server">
         <ContentTemplate>--%>
     <!-- Small boxes (Stat box) -->
-    <div class="row">
+        <div class="row">
         <div class="col-lg-3 col-xs-6">
             <!-- small box -->
             <div class="small-box bg-aqua">
                 <div class="inner">
                     <h3>
-                        <asp:Label ID="lbl_AppOrder" runat="server" Text=""></asp:Label></h3>
+                        <asp:Label ID="lbl_AppOrder" runat="server" Text="0"></asp:Label></h3>
 
                     <p>App Order</p>
                 </div>
@@ -59,7 +59,7 @@
             <div class="small-box bg-green">
                 <div class="inner">
                     <h3>
-                        <asp:Label ID="lbl_confirmedOrder" runat="server" Text=""></asp:Label><%--<sup style="font-size: 20px">%</sup>--%></h3>
+                        <asp:Label ID="lbl_confirmedOrder" runat="server" Text="0"></asp:Label><%--<sup style="font-size: 20px">%</sup>--%></h3>
 
                     <p>Confirmed Order</p>
                 </div>
@@ -75,7 +75,7 @@
             <div class="small-box bg-yellow">
                 <div class="inner">
                     <h3>
-                        <asp:Label ID="lbl_DealerRegi" runat="server" Text=""></asp:Label></h3>
+                        <asp:Label ID="lbl_DealerRegi" runat="server" Text="0"></asp:Label></h3>
 
                     <p>Dealer Registrations</p>
                 </div>
@@ -91,7 +91,7 @@
             <div class="small-box bg-red">
                 <div class="inner">
                     <h3>
-                        <asp:Label ID="lbl_UserRegi" runat="server" Text=""></asp:Label></h3>
+                        <asp:Label ID="lbl_UserRegi" runat="server" Text="0"></asp:Label></h3>
 
                     <p>Customer Registrations</p>
                 </div>
@@ -103,6 +103,7 @@
         </div>
         <!-- ./col -->
     </div>
+
     <!-- /.row -->
     <div class="row">
         <!-- Left col -->
@@ -187,27 +188,7 @@
                     </div><br /><br /><br /><br />  
 
 
-<%--                    <!-- Date range -->
-              <div class="form-group">
-                <label>Date range:</label>
-
-                <div class="input-group">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                        
-
-                  <input type="text" class="form-control pull-right" id="txtDateRange" />
-                </div>
-                <!-- /.input group -->
-              </div>
-              <!-- /.form group -->
---%>
-
-                    <%--<div class="col-sm-6 col-sm-offset-3 text-center">
-                        <label class="label label-success">Pie Chart</label>--%>
                         <div id="pie-chart"></div>
-                    <%--</div>--%>
 
                     
 
@@ -312,18 +293,13 @@
 
         <!-- Left col -->
 
-        <section class="col-lg-12 connectedSortable">
+<%--        <section class="col-lg-12 connectedSortable">
             <div class="box box-info">
                 <div class="box-header">
                    
                     <i class="fa fa-area-chart"></i>
                     <h3 class="box-title">Morya Followup</h3>
                     <!-- tools box -->
-                    <%--<div class="pull-right box-tools">
-                <button type="button" class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip"
-                        title="Remove">
-                  <i class="fa fa-times"></i></button>
-              </div>--%>
                     <!-- /. tools -->
                 </div>
                 <div class="box-body">
@@ -331,13 +307,11 @@
                     
                   
                     <div class="col-xs-3"> 
-                        <%--<label for="exampleInputEmail1">From :</label>--%>
                         <asp:TextBox ID="txt_fromDate1" runat="server" class="form-control" autocomplete="off" AutoPostBack="true" ReadOnly="false" placeholder="FROM" OnTextChanged="txt_fromDate1_TextChanged"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="Enter Date" ControlToValidate="txt_fromDate1" ValidationGroup="gg"  ForeColor="Red"></asp:RequiredFieldValidator>
                         <cc1:CalendarExtender ID="CalendarExtender2" PopupButtonID="imgPopup" runat="server" TargetControlID="txt_fromDate1" Format="dd/MM/yyyy"> </cc1:CalendarExtender>
                     </div>
                     <div class="col-xs-3"> 
-                        <%--<label for="exampleInputEmail1">To :</label>--%>
                         <asp:TextBox ID="txt_toDate1" runat="server" class="form-control" autocomplete="off" ReadOnly="false" AutoPostBack="true" placeholder="TO" OnTextChanged="txt_fromDate1_TextChanged"></asp:TextBox>
                         <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ErrorMessage="Enter Date" ControlToValidate="txt_toDate1" ValidationGroup="gg"  ForeColor="Red"></asp:RequiredFieldValidator>
                         <cc1:CalendarExtender ID="CalendarExtender4" PopupButtonID="imgPopup" runat="server"   TargetControlID="txt_toDate1" Format="dd/MM/yyyy"> </cc1:CalendarExtender>
@@ -346,11 +320,9 @@
 
 
 
-                    <%--<div class="col-sm-6 col-sm-offset-3 text-center">--%>
-                        <%--<label class="label label-success">Pie Chart</label>--%>
-
+                   
                         <div id="areaChartMorya"></div>
-                    <%--</div>--%>
+                    
                 </div>
                 <div class="box-footer clearfix"></div>
             </div>
@@ -358,7 +330,7 @@
 
 
 
-        </section>
+        </section>--%>
         <!--/.Left col -->
 
     </div>
@@ -452,7 +424,7 @@
 
         
 
-            Morris.Bar({
+<%--            Morris.Bar({
                 element: 'areaChartMorya',
                 data: [<%=markersFollowup%>],
                 xkey: 'UserName',
@@ -466,7 +438,7 @@
                 pointStrokeColors: ['black'],
                 lineColors: ['red']
 
-            });
+            });--%>
 
 
 

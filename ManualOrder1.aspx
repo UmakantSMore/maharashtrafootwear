@@ -89,9 +89,9 @@
                                     <label for="exampleInputEmail1">Payment Mode </label>
                                     <br />
                                     &nbsp;&nbsp;
-                      <asp:RadioButton ID="rdoCash" runat="server" Text="Cash" GroupName="aa" Checked="true" TabIndex="5" />
+                            <asp:RadioButton ID="rdoCredit" runat="server" Text="Credit" Checked="true" GroupName="aa"  TabIndex="6" />
                                     &nbsp;&nbsp;&nbsp;
-                            <asp:RadioButton ID="rdoCredit" runat="server" Text="Credit" GroupName="aa" Checked="false" TabIndex="6" />
+                      <asp:RadioButton ID="rdoCash" runat="server" Text="Cash" GroupName="aa" Checked="false" TabIndex="5" />
 
 
                                 </div>

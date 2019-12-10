@@ -29,12 +29,18 @@ public partial class dashboard : System.Web.UI.Page
         {
             GetOrderJSON();
             GetIncomeExpenseJSON();
-            GetMoryaFollowupJSON();
             GetOrderDetails();
-         //   GetLowStockProduct();
-             
-           // GetHighestProductDetails();
-           // GetHighestDealerOrderDetails();
+
+            /*
+            
+            GetMoryaFollowupJSON();
+
+            GetLowStockProduct();
+
+            GetHighestProductDetails();
+            GetHighestDealerOrderDetails();
+
+            */
         }
         if (!IsPostBack)
         {
@@ -98,20 +104,7 @@ public partial class dashboard : System.Web.UI.Page
             ViewState["markers"] = value;
         }
     }
-    public string markersFollowup
-    {
-        get
-        {
-            if (ViewState["markersFollowup"] != null)
-                return Convert.ToString(ViewState["markersFollowup"]);
-            else
-                return string.Empty;
-        }
-        set
-        {
-            ViewState["markersFollowup"] = value;
-        }
-    }
+    
 
 
     private void GetOrderJSON()
@@ -205,6 +198,8 @@ public partial class dashboard : System.Web.UI.Page
     
     }
 
+    #region Morya Followup
+    /*
     private void GetMoryaFollowupJSON()
     {
         DataTable dtFollowup = new DataTable();
@@ -217,8 +212,7 @@ public partial class dashboard : System.Web.UI.Page
             from1 = txt_fromDate1.Text.ToString();
             to1 = txt_toDate1.Text.ToString();
 
-            //from = String.Format("yyyy-MM-dd", txt_fromDate1.Text.ToString());
-            //to = String.Format("yyyy-MM-dd", txt_toDate1.Text.ToString());
+            
         }
         
         try
@@ -253,6 +247,65 @@ public partial class dashboard : System.Web.UI.Page
             con.Close();
         }
     }
+
+
+        public string markersFollowup
+    {
+        get
+        {
+            if (ViewState["markersFollowup"] != null)
+                return Convert.ToString(ViewState["markersFollowup"]);
+            else
+                return string.Empty;
+        }
+        set
+        {
+            ViewState["markersFollowup"] = value;
+        }
+    }
+
+    public string DataTableToJSONWithJavaScriptSerializerFollowup(DataTable table)
+    {
+        var JSONString = new StringBuilder();
+        if (table.Rows.Count > 0)
+        {
+            // { y: '2014', a: 50, b: 90},
+
+            for (int i = 0; i < table.Rows.Count; i++)
+            {
+                JSONString.Append("{ ");
+                for (int j = 0; j < table.Columns.Count; j++)
+                {
+                    if (j < table.Columns.Count - 1)
+                    {
+                        JSONString.Append("" + table.Columns[j].ColumnName.ToString() + ": " + "'" + table.Rows[i][j].ToString().Trim() + "', ");
+                    }
+                    else if (j == table.Columns.Count - 1)
+                    {
+                        JSONString.Append("" + table.Columns[j].ColumnName.ToString() + ": " + "" + table.Rows[i][j].ToString().Trim() + "");
+
+
+                        //JSONString.Append("\"" + table.Columns[j].ColumnName.ToString() + @""":" + "\"" + table.Rows[i][j].ToString().Trim() + @"""");
+                    }
+                }
+                if (i == table.Rows.Count - 1)
+                {
+                    JSONString.Append("}");
+                }
+                else
+                {
+                    JSONString.Append("}, ");
+                }
+            }
+        }
+
+        return JSONString.ToString().Replace(@"""", @"\""");
+    }
+    */
+    #endregion
+
+
+
 
 
 
@@ -293,44 +346,7 @@ public partial class dashboard : System.Web.UI.Page
         return JSONString.ToString().Replace(@"""", @"\""");
     }
 
-    public string DataTableToJSONWithJavaScriptSerializerFollowup(DataTable table)
-    {
-        var JSONString = new StringBuilder();
-        if (table.Rows.Count > 0)
-        {
-           // { y: '2014', a: 50, b: 90},
-
-            for (int i = 0; i < table.Rows.Count; i++)
-            {
-                JSONString.Append("{ ");
-                for (int j = 0; j < table.Columns.Count; j++)
-                {
-                    if (j < table.Columns.Count - 1)
-                    {
-                        JSONString.Append("" + table.Columns[j].ColumnName.ToString() + ": " + "'" + table.Rows[i][j].ToString().Trim() + "', ");
-                    }
-                    else if (j == table.Columns.Count - 1)
-                    {
-                        JSONString.Append("" + table.Columns[j].ColumnName.ToString() + ": " + "" + table.Rows[i][j].ToString().Trim() + "");
-
-
-                        //JSONString.Append("\"" + table.Columns[j].ColumnName.ToString() + @""":" + "\"" + table.Rows[i][j].ToString().Trim() + @"""");
-                    }
-                }
-                if (i == table.Rows.Count - 1)
-                {
-                    JSONString.Append("}");
-                }
-                else
-                {
-                    JSONString.Append("}, ");
-                }
-            }
-        }
-
-        return JSONString.ToString().Replace(@"""", @"\""");
-    }
-
+    
     public string DataTableToJSONWithJavaScriptSerializerDetails(DataTable table)
     {
         //{ label: "Friends", value: 30 },
@@ -623,8 +639,10 @@ public partial class dashboard : System.Web.UI.Page
         GetIncomeExpenseJSON();
     }
     
+    /*
     protected void txt_fromDate1_TextChanged(object sender, EventArgs e)
     {
         GetMoryaFollowupJSON();
     }
+    */
 }

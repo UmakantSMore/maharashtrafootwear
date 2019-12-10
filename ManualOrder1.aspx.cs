@@ -51,8 +51,8 @@ public partial class ManualOrder1 : System.Web.UI.Page
             }
             else
             {
-                hPageTitle.InnerText = "Order Add";
-                Page.Title = "Order Add";
+                hPageTitle.InnerText = "New Order";
+                Page.Title = "New Order";
             }
         }
     }
@@ -779,7 +779,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
                 objorders.DeliveredDetails = Convert.ToString(txtdelivereddetails.Text);
                 objorders.ordertype = "";
                 objorders.pendingAmt = Convert.ToDecimal(txttotalAmtfinal.Text);
-                objorders.isconfirmed = true;
+                objorders.isconfirmed = false;
 
                 Int64 OrderProductAdd = 0;
 
@@ -788,7 +788,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
                 if (Request.QueryString["oid"] == null)
                 {
                     //------------------------------
-
+                    /*
                     int year = int.Parse(DateTime.Now.Year.ToString());
                     string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
                     int day = int.Parse(DateTime.Now.Day.ToString());
@@ -799,8 +799,12 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
                     objorders.orderno = orderno1;
 
+                    */
+
                     //save3
+
                     #region
+
                     if (ds != null)
                     {
                         if (ds.Rows.Count > 0)
@@ -1004,8 +1008,8 @@ public partial class ManualOrder1 : System.Web.UI.Page
         ddlPaymentType.SelectedIndex = 0;
         ddlinvoiceType.SelectedIndex = 0;
         txt_InvoieNo.Text = String.Empty;
-        rdoCash.Checked = true;
-        rdoCredit.Checked = false;
+        rdoCash.Checked = false;
+        rdoCredit.Checked = true;
         txt_Date.Text = String.Empty;
 
 

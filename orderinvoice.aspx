@@ -32,12 +32,13 @@
                     <div class="row">
                         <div class="col-xs-12">
                             <h2 class="page-header">
-                                <i class="fa fa-globe"></i>Morya Tools.
+                                <i class="fa fa-globe"> </i>Maharashtra Footwear
+                                <small id="smOrderDate" runat="server" style="text-align:right" class="pull-right"></small>
                                   
                                 <br />
                                    
-                                <small id="smOrderDate" runat="server" class="pull-right"></small>
                             </h2>
+
                         </div>
                     </div>
 
@@ -45,11 +46,10 @@
                         <div class="col-sm-4 invoice-col">
                             From
                               <address>
-                                  <strong>Morya Tools.</strong><br />
-                                  <span id="spnFormAddress" runat="server">22, Pradhan Park,M.G Road,
-                                   Nashik, Maharashtra, India 422001</span><br />
-                                  Phone: <span id="spnFromPhone" runat="server">(0253) 3014578</span><br />
-                                  Email: <span id="spnFromEmail" runat="server">kshatriya.enterprises@gmail.com</span>
+                                  <strong>Maharashtra Footwear</strong><br />
+                                  <span id="spnFormAddress" runat="server">C-60,M.I.D.C BARAMATI - 413133</span><br />
+                                  Phone: <span id="spnFromPhone" runat="server">9325330592</span><br />
+                                  Email: <span id="spnFromEmail" runat="server">test@gmail.com</span>
                               </address>
                         </div>
                         <div class="col-sm-4 invoice-col">
@@ -67,9 +67,9 @@
                             </address>
                         </div>
                         <div class="col-sm-4 invoice-col">
-                            To
+                            
                             <address>
-                                 Order No: <strong id="sporder2" runat="server"></strong>
+                                 Invoice No: <strong id="sporder2" runat="server"></strong>
                                
                                 <br />
                                 Delivery Details :<span id="spdeliveryDetails" runat="server"></span>
@@ -87,7 +87,7 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>sr</th>
+                                        <th>SR</th>
                                             <th>Product</th>
                                             <th>Brand</th>
                                             <th>Size</th>
@@ -95,7 +95,7 @@
                                             <th>Cart</th>
                                             <th>Pack</th>
                                             <th>Quanity</th>
-                                            <th>Mrp</th>
+                                            <th>MRP</th>
                                             <th>Unit Rate</th>
                                             <th>SubTotal</th>
                                             <th>Discount</th>
