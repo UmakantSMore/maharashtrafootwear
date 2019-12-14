@@ -21,9 +21,23 @@ public partial class addarticleproduction : System.Web.UI.Page
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (!String.IsNullOrEmpty(Session["userid"].ToString()))
-            createdby = Session["userid"].ToString();
+        if (Session["userid"] != null)
+        {
+            if (!String.IsNullOrEmpty(Session["userid"].ToString()))
+            {
+                createdby = Session["userid"].ToString();
+            }
+            else
+            {
 
+                Response.Redirect("~/dashboard.aspx");
+            }
+        }
+        else
+        {
+
+            Response.Redirect("~/dashboard.aspx");
+        }
         if (!IsPostBack)
         {
             Bind();
@@ -367,7 +381,7 @@ public partial class addarticleproduction : System.Web.UI.Page
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
-        Int64 Result = 0, Result1 = 0, Result2=0;
+        Int64 Result = 0, Result1 = 0, Result2 = 0;
         DataTable dtProduct = new DataTable();
 
         //Response.Write(hf1.Value);
@@ -405,7 +419,7 @@ public partial class addarticleproduction : System.Web.UI.Page
 
             //id, pid, sizeid, colorid, quantity
 
-            Label id = new Label(); TextBox quantity=new TextBox();
+            Label id = new Label(); TextBox quantity = new TextBox();
             articlestock objPod = new articlestock();
             foreach (RepeaterItem item in Repeater1.Items)
             {
@@ -413,13 +427,13 @@ public partial class addarticleproduction : System.Web.UI.Page
                 {
                     id = (Label)item.FindControl("lblid");
                     quantity = (TextBox)item.FindControl("txtquantity");
-                    
+
                 }
                 objPod.pid = Convert.ToInt64(txtpid.Text);
                 objPod.sizeid = Convert.ToInt64(id.Text);
                 objPod.colorid = Convert.ToInt64(txtcolorid.Text);
                 objPod.quantity = Convert.ToDecimal(quantity.Text);
-               
+
                 Result1 = (new Cls_articlestock_b().InsertUpdate(objPod));
 
                 //if (Result1 > 0)

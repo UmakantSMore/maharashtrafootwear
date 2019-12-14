@@ -42,7 +42,8 @@
                             <div class="col-xs-12">
                                 <asp:Button ID="btn_updateRealStock" Visible="false" runat="server" Text="Update Stock" class="btn btn-Normal btn-primary" OnClick="btn_updateRealStock_Click" />
                                 
-                                <asp:Button ID="btnAddNewProduct" runat="server" Text=" New Product" class="btn btn-Normal btn-primary" OnClick="btnAddNewProduct_Click" />
+                                <asp:Button ID="btnAddNewProduct" runat="server" Text="New Product" class="btn btn-Normal btn-primary" OnClick="btnAddNewProduct_Click" />
+                                <asp:Button ID="btnExcelExport" runat="server" class="btn btn-Normal btn-flickr" Width="150" Text="Excel Export" OnClick="btnExcelExport_Click" />
 
                             </div>
                         </div>
@@ -157,7 +158,6 @@
                         <br />
                         <div class="row">
                             <div class="col-md-6" style="text-align: left;">
-                                <asp:Button ID="btnExcelExport" runat="server" class="btn btn-Normal btn-primary" Width="150" Text="Excel Export" OnClick="btnExcelExport_Click" />
 
                                 <asp:Button ID="btnSave" runat="server" Visible="false"  class="btn btn-Normal btn-primary" Width="150" Text="Save All" OnClick="btnSave_Click" />
                             </div>
@@ -185,14 +185,14 @@
                                 <thead>
                                     <tr>
 
-                                        <th style="text-align: center" class="allCheckbox">
-                                            <asp:CheckBox ID="allCheckbox1" runat="server" /></th>
+                                        <%--<th style="text-align: center" class="allCheckbox">
+                                            <asp:CheckBox ID="allCheckbox1" runat="server" /></th>--%>
                                         <th style="text-align: center">Sr No</th>
                                         <th style="text-align: center">Name</th>
                                         <th style="text-align: center">MRP</th>
                                         <th style="text-align: center; display:none" >SKU No.</th>
                                         <th style="text-align: center; display:none">SS</th>
-                                        <th style="text-align: center">Dealer(%)</th>
+                                        <th style="text-align: center">Retailer(%)</th>
                                         <%-- <th style="text-align: center">Wholesale Price</th>
                                 <th style="text-align: center">Customer(Fake) Price</th>--%>
                                         <th style="text-align: center; display:none">Fake</th>
@@ -200,13 +200,13 @@
                                         <th style="text-align: center; display: none">Discount</th>
                                         <th style="text-align: center">GST %</th>
                                         <th style="text-align: center; display:none">App Stock</th>
-                                        <th style="text-align: center">Real Stock</th>
-                                        <th style="text-align: center">Stock Alert</th>
+                                        <th style="text-align: center; display:none">Real Stock</th>
+                                        <th style="text-align: center; display:none">Stock Alert</th>
                                         <th style="text-align: center; display: none;">Is Stock</th>
                                         <th style="text-align: center">Is Active</th>
                                          <th style="text-align: center">Is HotProduct</th>
                                         <th style="text-align: center; display: none;">HSN Code</th>
-                                        <th style="text-align: center">Stock Alert</th>
+                                        <th style="text-align: center; display:none">Stock Alert</th>
                                         <th style="text-align: center">Action</th>
 
 
@@ -221,7 +221,7 @@
                                     <asp:Repeater ID="repProduct" runat="server" OnItemDataBound="repProduct_ItemDataBound">
                                         <ItemTemplate>
                                             <tr>
-                                                <td class="singleCheckbox" style="text-align: center">
+                                                <td class="singleCheckbox" style="text-align: center; display:none  ">
                                                     <asp:CheckBox ID="chkContainer" runat="server" attr-ID='<%# Eval("pid") %>' />
                                                 </td>
                                                 <td class="singleCheckbox" style="text-align: center">
@@ -260,7 +260,7 @@
                                                 <td style="text-align: center">
                                                     <asp:TextBox ID="txtGST" Style="width: 40px" runat="server" CssClass="form-control" Text='<%# Eval("gst") %>'></asp:TextBox>
                                                 </td>
-                                                <td style="text-align: center">
+                                                <td style="text-align: center; display:none">
                                                     <asp:TextBox ID="txtRealStock" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("RealStock") %>'></asp:TextBox>
 
 
@@ -269,7 +269,7 @@
                                                     <asp:TextBox ID="txtStockQuantites" Style="width: 60px" runat="server" CssClass="form-control" Text='<%# Eval("quantites") %>'></asp:TextBox>
                                                 </td>
                                                 
-                                                <td style="text-align: center">
+                                                <td style="text-align: center; display:none">
                                                     <asp:TextBox ID="txtStockAlertQuantites" Style="width: 50px" CssClass="form-control" runat="server" Text='<%# Eval("alertquantites") %>'></asp:TextBox>
                                                 </td>
                                                 <td style="text-align: center; display: none;">
@@ -291,8 +291,8 @@
 
 
 
-                                                <td style="text-align: center;">
-                                                    <asp:Label ID="Label6" runat="server" CssClass='<%# Eval("CssClass") %>' Style="font-size: medium; font-weight: bold; width: 60px" Text='<%# Eval("RealStock") %>'></asp:Label>
+                                                <td style="text-align: center; display:none">
+                                                    <asp:Label ID="lblStockAlert" runat="server" CssClass='<%# Eval("CssClass") %>' Style="font-size: medium; font-weight: bold; width: 60px" Text='<%# Eval("alertquantites") %>'></asp:Label>
                                                     <%--<asp:Label ID="lblStockAlert" runat="server" CssClass='<%# Eval("CssClass") %>' Style="font-size: medium; font-weight: bold; width: 50px" Text='<%# Eval("quantites") %>'></asp:Label>--%>
                                                 </td>
                                                 <td style="text-align: center">
@@ -308,14 +308,14 @@
                                 </tbody>
                                 <tfoot>
                                     <tr>
-                                        <th style="text-align: center" class="allCheckbox">
-                                            <asp:CheckBox ID="CheckBox1" runat="server" /></th>
+                                        <%--<th style="text-align: center" class="allCheckbox">
+                                            <asp:CheckBox ID="CheckBox1" runat="server" /></th>--%>
                                         <th style="text-align: center">Sr No</th>
                                         <th style="text-align: center">Name</th>
                                         <th style="text-align: center">MRP</th>
                                         <th style="text-align: center; display:none" >SKU No.</th>
                                         <th style="text-align: center; display:none">SS</th>
-                                        <th style="text-align: center">Dealer(%)</th>
+                                        <th style="text-align: center">Retailer(%)</th>
                                         <%-- <th style="text-align: center">Wholesale Price</th>
                                 <th style="text-align: center">Customer(Fake) Price</th>--%>
                                         <th style="text-align: center; display:none">Fake</th>
@@ -323,13 +323,13 @@
                                         <th style="text-align: center; display: none">Discount</th>
                                         <th style="text-align: center">GST %</th>
                                         <th style="text-align: center; display:none">App Stock</th>
-                                        <th style="text-align: center">Real Stock</th>
-                                        <th style="text-align: center">Stock Alert</th>
+                                        <th style="text-align: center; display:none">Real Stock</th>
+                                        <th style="text-align: center; display:none">Stock Alert</th>
                                         <th style="text-align: center; display: none;">Is Stock</th>
                                         <th style="text-align: center">Is Active</th>
                                          <th style="text-align: center">Is HotProduct</th>
                                         <th style="text-align: center; display: none;">HSN Code</th>
-                                        <th style="text-align: center">Stock Alert</th>
+                                        <th style="text-align: center; display:none">Stock Alert</th>
                                         <th style="text-align: center">Action</th>
 
 

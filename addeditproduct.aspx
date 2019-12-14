@@ -85,7 +85,18 @@
 
 
                                 </div>
+                                <div class="col-xs-3">
+                                    <label for="exampleInputPassword1">GST (%)</label>
+                                    <asp:TextBox ID="txtGST" Class="form-control" runat="server"></asp:TextBox>
+                                    <cc1:FilteredTextBoxExtender ID="FTBtxtGST" runat="server" FilterMode="ValidChars" TargetControlID="txtGST" ValidChars="01234567890."></cc1:FilteredTextBoxExtender>
 
+                                </div>
+
+                                <div class="col-xs-3">
+                                    <label for="exampleInputPassword1">HSN Code</label>
+                                    <asp:TextBox ID="txt_Hsncode" Class="form-control" runat="server"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txt_Hsncode" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
+                                </div>
 
                                 <div class="col-xs-3" style="display:none">
                                     <label for="exampleInputPassword1">Wholesale Price ( % )</label>
@@ -122,12 +133,7 @@
                             <div class="form-group row">
 
                                 <%--<div class="form-group">--%>
-                                <div class="col-xs-3">
-                                    <label for="exampleInputPassword1">GST (%)</label>
-                                    <asp:TextBox ID="txtGST" Class="form-control" runat="server"></asp:TextBox>
-                                    <cc1:FilteredTextBoxExtender ID="FTBtxtGST" runat="server" FilterMode="ValidChars" TargetControlID="txtGST" ValidChars="01234567890."></cc1:FilteredTextBoxExtender>
-
-                                </div>
+                                
 
                                 <%--<div class="form-group">--%>
                                 <div class="col-xs-3" style="display:none">
@@ -139,18 +145,18 @@
 
                                 </div>
 
-                                <div class="col-xs-3">
+                                <div class="col-xs-3" style="display:none">
                                     <label for="exampleInputPassword1">Real Stock</label>
-                                    <asp:TextBox ID="txt_RealStock" Class="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txt_RealStock" Class="form-control" runat="server" Text="0"></asp:TextBox>
                                     <cc1:FilteredTextBoxExtender ID="FilteredTextBoxExtender1" runat="server" FilterMode="ValidChars" TargetControlID="txt_RealStock" ValidChars="01234567890.%"></cc1:FilteredTextBoxExtender>
 
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic" ControlToValidate="txt_RealStock" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
 
                                 </div>
 
-                                <div class="col-xs-3">
+                                <div class="col-xs-3" style="display:none">
                                     <label for="exampleInputPassword1">Stock Alert Quantites</label>
-                                    <asp:TextBox ID="txtAlertQuantites" Class="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtAlertQuantites" Class="form-control" runat="server" Text="0"></asp:TextBox>
                                     <cc1:FilteredTextBoxExtender ID="FTBtxtAlertQuantites" runat="server" FilterMode="ValidChars" TargetControlID="txtAlertQuantites" ValidChars="01234567890.%"></cc1:FilteredTextBoxExtender>
 
                                     <asp:RequiredFieldValidator ID="RFVtxtAlertQuantites" runat="server" Display="Dynamic" ControlToValidate="txtAlertQuantites" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
@@ -159,33 +165,29 @@
                                 
                             </div>
                             <div class="form-group row">
-                                <div class="col-xs-3">
-                                    <label for="exampleInputPassword1">HSN Code</label>
-                                    <asp:TextBox ID="txt_Hsncode" Class="form-control" runat="server"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="txt_Hsncode" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
-                                </div>
+                                
                                 <%--<div class="form-group">--%>
 
-                                <div class="col-xs-3">
+                                <div class="col-xs-3" style="display:none">
                                     <label for="exampleInputPassword1">Packing</label>
-                                    <asp:TextBox ID="txtpack" Class="form-control" runat="server"></asp:TextBox>
+                                    <asp:TextBox ID="txtpack" Class="form-control" runat="server" Text="0"></asp:TextBox>
                                     <cc1:FilteredTextBoxExtender ID="FilteredTextBoxExtender3" runat="server" FilterMode="ValidChars" TargetControlID="txtpack" ValidChars="01234567890.%"></cc1:FilteredTextBoxExtender>
 
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" Display="Dynamic" ControlToValidate="txtpack" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
 
                                 </div>
 
-                                <div class="col-xs-2">
+                                <div class="col-xs-2" style="display:none">
                                     <label for="exampleInputPassword1">Is Stock</label>
-                                    <asp:CheckBox ID="cbIsStock" Class="form-control" runat="server"></asp:CheckBox>
+                                    <asp:CheckBox ID="cbIsStock" Class="form-control" runat="server" Checked="false"></asp:CheckBox>
                                 </div>
-                                <div class="col-xs-2">
+                                <div class="col-xs-2" style="display:none">
                                     <label for="exampleInputPassword1">Is HotProduct</label>
-                                    <asp:CheckBox ID="cbIsHotproduct" Class="form-control" runat="server"></asp:CheckBox>
+                                    <asp:CheckBox ID="cbIsHotproduct" Class="form-control" runat="server" Checked="false"></asp:CheckBox>
                                 </div>
-                                <div class="col-xs-2">
+                                <div class="col-xs-2" style="display:none">
                                     <label for="exampleInputPassword1">GST Included </label>
-                                    <asp:CheckBox ID="cbIsgstType" Class="form-control" runat="server"></asp:CheckBox>
+                                    <asp:CheckBox ID="cbIsgstType" Class="form-control" runat="server" Checked="true"></asp:CheckBox>
                                 </div>
                             </div>
 
@@ -233,7 +235,7 @@
                             </div>
 
 
-                            <div class="form-group row">
+                            <div class="form-group row" style="display:none">
                                 <div class="col-xs-3">
                                     <label for="exampleInputPassword1">YouTube Video</label>
                                     <asp:TextBox ID="txtYouTubeVideo1" Class="form-control" runat="server"></asp:TextBox>

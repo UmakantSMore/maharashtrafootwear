@@ -8,7 +8,7 @@ using System.Web.UI;
 using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 
-public partial class managegroup : System.Web.UI.Page
+public partial class managecollectiontrip : System.Web.UI.Page
 {
     common ocommon = new common();
     protected void Page_Load(object sender, EventArgs e)
@@ -17,31 +17,31 @@ public partial class managegroup : System.Web.UI.Page
         {
             BindGroup();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
-            hPageTitle.InnerText = "Manage Size Group";
+            hPageTitle.InnerText = "Manage Collection Trip";
         }
 
         if (Request.QueryString["mode"] == "u")
         {
             spnMessage.Visible = true;
             spnMessage.Style.Add("color", "green");
-            spnMessage.InnerText = "Group Updated Successfully";
+            spnMessage.InnerText = "Trip Updated Successfully";
         }
         else if (Request.QueryString["mode"] == "i")
         {
             spnMessage.Visible = true;
             spnMessage.Style.Add("color", "green");
-            spnMessage.InnerText = "Group Inserted Successfully";
+            spnMessage.InnerText = "Trip Inserted Successfully";
         }
     }
 
     private void BindGroup()
     {
-        DataTable dtGroup = (new Cls_groupmaster_b().SelectAllAdmin());
-        if (dtGroup != null)
+        DataTable dtTrip = (new Cls_collectiontrip_b().SelectAll());
+        if (dtTrip != null)
         {
-            if (dtGroup.Rows.Count > 0)
+            if (dtTrip.Rows.Count > 0)
             {
-                repBank.DataSource = dtGroup;
+                repBank.DataSource = dtTrip;
                 repBank.DataBind();
             }
             else
@@ -59,7 +59,7 @@ public partial class managegroup : System.Web.UI.Page
 
     protected void btnAddNew_Click(object sender, EventArgs e)
     {
-        Response.Redirect(Page.ResolveUrl("~/addeditgroup.aspx"));
+        Response.Redirect(Page.ResolveUrl("~/addeditcollectiontrip.aspx"));
     }
 
     protected void lnkDelete_Click(object sender, EventArgs e)
@@ -67,29 +67,25 @@ public partial class managegroup : System.Web.UI.Page
         RepeaterItem item = (sender as LinkButton).Parent as RepeaterItem;
         Int32 GroupCount = int.Parse((item.FindControl("lblGroupCount") as Label).Text);
         spnMessage.Visible = true;
-        if (GroupCount.ToString() == "0")
-        {
-            Int32 GroupId = int.Parse((item.FindControl("lblGroupId") as Label).Text);
-            bool yes = (new Cls_groupmaster_b().Delete(GroupId));
 
-            if (yes)
-            {
-                BindGroup();
-                spnMessage.Style.Add("color", "green");
-                spnMessage.InnerText = "Group Deleted Successfully";
-            }
-            else
-            {
-                spnMessage.Style.Add("color", "red");
-                spnMessage.InnerText = "Group Not Deleted";
-            }
+        Int32 GroupId = int.Parse((item.FindControl("lblGroupId") as Label).Text);
+        bool yes = (new Cls_collectiontrip_b().Delete(GroupId));
+
+        if (yes)
+        {
+            BindGroup();
+            spnMessage.Style.Add("color", "green");
+            spnMessage.InnerText = "Trip Deleted Successfully";
         }
         else
         {
             spnMessage.Style.Add("color", "red");
-            spnMessage.InnerText = "In this group sizes are added..so you can not delete.";
+            spnMessage.InnerText = "Trip Not Deleted";
         }
+
     }
+
+    /*
 
     protected void IsActive_CheckedChanged(object sender, EventArgs e)
     {
@@ -110,12 +106,14 @@ public partial class managegroup : System.Web.UI.Page
         }
     }
 
+    */
+
     protected void repBank_ItemDataBound(object sender, RepeaterItemEventArgs e)
     {
         if ((e.Item.ItemType == ListItemType.Item) || (e.Item.ItemType == ListItemType.AlternatingItem))
         {
             HyperLink hlEdit = (HyperLink)e.Item.FindControl("hlEdit");
-            hlEdit.NavigateUrl = Page.ResolveUrl("~/addeditgroup.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "id").ToString(), true));
+            hlEdit.NavigateUrl = Page.ResolveUrl("~/addeditcollectiontrip.aspx?id=" + ocommon.Encrypt(DataBinder.Eval(e.Item.DataItem, "id").ToString(), true));
         }
     }
 }
