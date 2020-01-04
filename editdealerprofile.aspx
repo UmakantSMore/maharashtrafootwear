@@ -78,9 +78,13 @@
                         <asp:DropDownList ID="ddldistrict" runat="server"  class="form-control"></asp:DropDownList>
                        
                     </div>
-                        <div class="col-xs-4"><label for="exampleInputPassword1">City</label>
-                            <asp:TextBox ID="txtCity" class="form-control" runat="server"></asp:TextBox>
-                    </div>
+                        <div class="col-xs-4">
+                            <label for="exampleInputPassword1">City</label>
+                            <asp:ListBox ID="lstCity" runat="server" class="form-control select2"></asp:ListBox>
+                            <asp:HiddenField ID="hfcity" runat="server" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Display="Dynamic" ControlToValidate="lstCity" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
+
+                        </div>
                     </div>
                     
                     <div class="form-group row">
@@ -172,6 +176,37 @@
             return result;
         }
     </script>
+
+    <script type="text/javascript">
+        function pageLoad() {
+            // JS to execute during full and partial postbacks
+            initDropDowns();
+
+
+        }
+
+        $(document).ready(function () {
+
+            initDropDowns();
+
+        });
+
+        function initDropDowns() {
+
+            $("#<%=lstCity.ClientID%>").select2({
+
+                allowClear: true
+
+            }).on('change.select2', function () {
+         //alert("Selected value is: "+$("#<%=lstCity.ClientID%>").select2("val"));
+                    $('[id*=hfcity]').val($(this).val());
+                });
+        }
+
+    </script>
+
+
+
 
 
 </asp:Content>

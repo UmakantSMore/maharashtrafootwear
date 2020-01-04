@@ -136,7 +136,7 @@ public partial class addeditproductmultipleimages : System.Web.UI.Page
 
     private void WatermarkImageCreate(string fileName)
     {
-        string watermarkText = "© MORYATOOLS";
+        string watermarkText = "";
         using (Bitmap bmp = new Bitmap(HttpContext.Current.Server.MapPath(productFrontPath) + fileName, false))
         {
             using (Graphics grp = Graphics.FromImage(bmp))

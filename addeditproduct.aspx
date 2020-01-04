@@ -179,11 +179,11 @@
 
                                 <div class="col-xs-2" style="display:none">
                                     <label for="exampleInputPassword1">Is Stock</label>
-                                    <asp:CheckBox ID="cbIsStock" Class="form-control" runat="server" Checked="false"></asp:CheckBox>
+                                    <asp:CheckBox ID="cbIsStock" Class="form-control" runat="server" Checked="true"></asp:CheckBox>
                                 </div>
                                 <div class="col-xs-2" style="display:none">
                                     <label for="exampleInputPassword1">Is HotProduct</label>
-                                    <asp:CheckBox ID="cbIsHotproduct" Class="form-control" runat="server" Checked="false"></asp:CheckBox>
+                                    <asp:CheckBox ID="cbIsHotproduct" Class="form-control" runat="server" Checked="true"></asp:CheckBox>
                                 </div>
                                 <div class="col-xs-2" style="display:none">
                                     <label for="exampleInputPassword1">GST Included </label>
@@ -194,6 +194,14 @@
 
                             <%--<div class="form-group row"> </div>--%>
                             <div class="form-group row">
+
+                                <div class="col-xs-3">
+                            <label for="exampleInputPassword1">Size Group</label>
+                            <asp:ListBox ID="lstsizegroup" runat="server" class="form-control select2"></asp:ListBox>
+                            <asp:HiddenField ID="hfsizegroup" runat="server" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator8" runat="server" Display="Dynamic" ControlToValidate="lstsizegroup" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
+
+                        </div>
 
                                 <div class="col-xs-3">
                                     <label for="exampleInputPassword1">Short Description </label>
@@ -212,6 +220,11 @@
 
 
                                 <%--<div class="form-group">--%>
+                                
+                            </div>
+
+                            <div class="form-group row">
+
                                 <div class="col-xs-3">
                                     <label for="exampleInputFile">Image</label>
                                     
@@ -232,10 +245,12 @@
                                     </table>
             
                                 </div>
+
                             </div>
-
-
                             <div class="form-group row" style="display:none">
+                                
+                                
+                                
                                 <div class="col-xs-3">
                                     <label for="exampleInputPassword1">YouTube Video</label>
                                     <asp:TextBox ID="txtYouTubeVideo1" Class="form-control" runat="server"></asp:TextBox>
@@ -430,5 +445,35 @@
             return result;
         }
     </script>
+
+    <script type="text/javascript">
+        function pageLoad() {
+            // JS to execute during full and partial postbacks
+            initDropDowns();
+
+
+        }
+
+        $(document).ready(function () {
+
+            initDropDowns();
+
+        });
+
+        function initDropDowns() {
+
+            $("#<%=lstsizegroup.ClientID%>").select2({
+
+                allowClear: true
+
+            }).on('change.select2', function () {
+         
+                    $('[id*=hfsizegroup]').val($(this).val());
+                });
+        }
+
+    </script>
+
+
 </asp:Content>
 

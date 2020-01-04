@@ -719,6 +719,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
         Repeater1.DataBind();
         ViewState["dtprod"] = dtprod;
     }
+
     protected void btnSave_Click(object sender, EventArgs e)
     {
         if (ddlname.SelectedIndex == 0 || Repeater1.Items.Count == 0)
@@ -849,19 +850,47 @@ public partial class ManualOrder1 : System.Web.UI.Page
                                     #endregion " Stock Update "
 
                                 }
+                                //Response.Redirect(Page.ResolveUrl("~/manageCustomerOrder.aspx?mode=i"), false);
+                            }
+                            else
+                            {
+                                clear();
+                                ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Order not insert ');", true);
+
                             }
                         }
-                    }
-                    if (OrderId > 0)
-                    {
-                        //SendOrderMail(OrderId);
-                        ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Record Saved Successfully')", true);
-                        clear();
+                        else
+                        {
+                            clear();
+                            ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Please Select Products First');", true);
+
+                        }
                     }
                     else
                     {
+                        clear();
+                        ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Please Select Products First');", true);
 
                     }
+                    
+                    if (OrderId > 0 && OrderProductAdd >0)
+                    {
+                        //clear();
+                        //ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Order insert Successfully ');", true);
+
+
+                        Response.Redirect(Page.ResolveUrl("~/manageCustomerOrder.aspx?mode=i"), false);
+                        //Response.Redirect("~/manageCustomerOrder.aspx?mode=i");
+
+                    }
+                    
+                    else
+                    {
+                        clear();
+                        ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Order not insert ');", true);
+
+                    }
+                    
                     #endregion
                 }
                 else
@@ -978,26 +1007,13 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
 
             }
-            catch { }
+            catch (Exception ex) { }
             finally { con.Close(); }
 
-            if (OrderId > 0)
-            {
-                clear();
-                //ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Order insert Successfully ');", true);
-              
-                
-                Response.Redirect(Page.ResolveUrl("~/manageCustomerOrder.aspx?mode=i"));
-               
-            }
-            else
-            {
-                clear();
-                ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Order not insert ');", true);
 
-            }
         }
     }
+
     public void clear()
     {
 

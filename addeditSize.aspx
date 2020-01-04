@@ -1,20 +1,21 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="addeditSize.aspx.cs" Inherits="addeditSize" %>
+
 <%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
-       <style type="text/css">
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="Server">
+    <style type="text/css">
         .error {
             color: red;
         }
     </style>
 </asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
- <div class="row">
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
+    <div class="row">
         <!-- left column -->
         <div class="col-md-6">
             <!-- general form elements -->
             <div class="box box-primary">
                 <div class="box-header with-border">
-                    <h3 class="box-title">  <b id="spnMessgae" runat="server"></b></h3>
+                    <h3 class="box-title"><b id="spnMessgae" runat="server"></b></h3>
                 </div>
                 <!-- /.box-header -->
                 <!-- form start -->
@@ -22,25 +23,34 @@
                 <div class="box-body">
                     <div class="form-group row">
                         <div class="col-xs-6">
-                        <label for="exampleInputEmail1">Size Name </label>
-                         <asp:TextBox ID="txtSizeName" class="form-control" runat="server"></asp:TextBox>
-                          <asp:RequiredFieldValidator ID="RFVtxtCategoryName" runat="server" Display="Dynamic" ControlToValidate="txtSizeName" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
-                    </div>
+                            <label for="exampleInputEmail1">Size Name </label>
+                            <asp:TextBox ID="txtSizeName" class="form-control" runat="server"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RFVtxtCategoryName" runat="server" Display="Dynamic" ControlToValidate="txtSizeName" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
+                        </div>
                     </div>
 
                     <div class="form-group row">
                         <div class="col-xs-6">
-                        <label for="exampleInputEmail1">Size Group </label>
-                         <asp:ListBox ID="lstGroup" runat="server" class="form-control select2"></asp:ListBox>
-                         <asp:HiddenField ID="hfgroupid" runat="server" />
-            
+                            <label for="exampleInputEmail1">Size Group </label>
+                            <asp:ListBox ID="lstGroup" runat="server" class="form-control select2"></asp:ListBox>
+                            <asp:HiddenField ID="hfgroupid" runat="server" />
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" Display="Dynamic" ControlToValidate="lstGroup" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
+
+                        </div>
                     </div>
+
+                    <div class="form-group row">
+                        <div class="col-xs-6">
+                            <label for="exampleInputPassword1">Multiplier</label>
+                            <asp:TextBox ID="txtmultiplier" Class="form-control" runat="server"></asp:TextBox>
+                            <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic" ControlToValidate="txtmultiplier" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
+                    <asp:RegularExpressionValidator ID="REtxtmultiplier" runat="server" Display="Dynamic" CssClass="erroe" ControlToValidate="txtmultiplier" ValidationExpression="^\d+" ErrorMessage="* Invalid Multiplier" ValidationGroup="c1" ></asp:RegularExpressionValidator>
+
+                        </div>
                     </div>
 
 
-
-
-                  <%--  <div class="form-group">
+                    <%--  <div class="form-group">
                         <label for="exampleInputPassword1">Category Short Description</label>
                          <asp:TextBox ID="txtCategoryShortDescription" Class="form-control" TextMode="MultiLine" runat="server"></asp:TextBox>                  
                         <asp:RequiredFieldValidator ID="RFVtxtCategoryShortDescription" runat="server" Display="Dynamic" ControlToValidate="txtCategoryShortDescription" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
@@ -69,14 +79,13 @@
                             </tr>
                         </table>
                     </div>
-                     --%>
-                    
+                    --%>
                 </div>
                 <!-- /.box-body -->
 
                 <div class="box-footer">
-                     
-                     <asp:Button ID="btnSave" runat="server" class="btn btn-primary" CausesValidation="true" ValidationGroup="c1" Text="Save" OnClick="btnSave_Click" />&nbsp;&nbsp;
+
+                    <asp:Button ID="btnSave" runat="server" class="btn btn-primary" CausesValidation="true" ValidationGroup="c1" Text="Save" OnClick="btnSave_Click" />&nbsp;&nbsp;
                     <asp:Button ID="btnCancel" runat="server" class="btn btn-primary" CssClass="btn btn-info" OnClick="btnCancel_Click" Text="Cancel" />
                 </div>
 
@@ -173,7 +182,7 @@
                     $('[id*=hfgroupid]').val($(this).val());
                 });
 
-            
+
         }
 
 
@@ -183,7 +192,5 @@
     </script>
     <script type="text/javascript">
     </script>--%>
-
-
 </asp:Content>
 

@@ -145,61 +145,61 @@
                                                          <asp:Label ID="Label7" runat="server" Text='<%# Eval("colorid") %>'></asp:Label>
                                                           
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label8" runat="server" Text='<%# Eval("cart") %>'></asp:Label>
                                                         
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label9" runat="server" Text='<%# Eval("pack") %>'></asp:Label>
                                                          
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label10" runat="server" Text='<%# Eval("qty") %>'></asp:Label>
                                                        
 
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label11" runat="server" Text='<%# Eval("mrp") %>'></asp:Label>
                                                        
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label12" runat="server" Text='<%# Eval("unitRate") %>'></asp:Label>
                                                         
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label13" runat="server" Text='<%# Eval("subTotal") %>'></asp:Label>
                                            
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label14" runat="server" Text='<%# Eval("discount") %>'></asp:Label>
                                                       
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label15" runat="server" Text='<%# Eval("scheme") %>'></asp:Label>
                                                         
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label16" runat="server" Text='<%# Eval("taxableamt") %>'></asp:Label>
                                                       
 
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label17" runat="server" Text='<%# Eval("CGSTper") %>'></asp:Label>
                                                        
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label18" runat="server" Text='<%# Eval("SGSTper") %>'></asp:Label>
                                                       
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label19" runat="server" Text='<%# Eval("IGSTper") %>'></asp:Label>
                                                          
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label20" runat="server" Text='<%# Eval("GSTamt") %>'></asp:Label>
                                                       
                                                     </td>
-                                                    <td class="center">
+                                                    <td class="center" style="text-align:right" >
                                                          <asp:Label ID="Label21" runat="server" Text='<%# Eval("TotalAmount") %>'></asp:Label>
                                                   
                                                     </td>

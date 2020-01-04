@@ -7,6 +7,7 @@
             color: red;
         }
     </style>
+    <link rel="stylesheet" href="Template/dist/css/AdminLTE.min.css" />
     
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="Server">
@@ -74,9 +75,10 @@
                     <div class="form-group row">
                                 <div class="col-xs-6">
                                     <label for="exampleInputEmail1">Main Category </label>
-                                    <asp:DropDownList ID="ddlMainCategory" Class="form-control" runat="server"></asp:DropDownList>
+                                    <asp:ListBox ID="lstmaincategory" SelectionMode="Multiple" runat="server" class="form-control select2"></asp:ListBox>
+                                    <asp:HiddenField ID="hfmaincategory" runat="server" />
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic" ControlToValidate="lstmaincategory" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
 
-                                    <asp:RequiredFieldValidator ID="RFVddlCategory" runat="server" InitialValue="0" Display="Dynamic" ControlToValidate="ddlMainCategory" CssClass="error" ErrorMessage="Required Field" ValidationGroup="p1"></asp:RequiredFieldValidator>
                                 </div>
                         </div>
                      <%--<div class="form-group">
@@ -157,5 +159,39 @@
             return result;
         }
     </script>
+
+    <script type="text/javascript">
+        function pageLoad() {
+            // JS to execute during full and partial postbacks
+            initDropDowns();
+
+
+        }
+
+        $(document).ready(function () {
+
+            initDropDowns();
+
+        });
+
+        function initDropDowns() {
+
+            $("#<%=lstmaincategory.ClientID%>").select2({
+
+                allowClear: true
+
+            }).on('change.select2', function () {
+         //alert("Selected value is: "+$("#<%=lstmaincategory.ClientID%>").select2("val"));
+                    $('[id*=hfmaincategory]').val($(this).val());
+                });
+
+
+            
+        }
+
+    </script>
+
+
+
 </asp:Content>
 

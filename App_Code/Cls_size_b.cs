@@ -113,6 +113,7 @@ namespace BusinessLayer
 
         #region Private Variables
         private Int64 _cid;
+        private Int64 _multiplier;
         private String _sizeName;
         private String _imagename;
 
@@ -133,6 +134,11 @@ namespace BusinessLayer
         {
             get { return _cid; }
             set { _cid = value; }
+        }
+        public Int64 multiplier
+        {
+            get { return _multiplier; }
+            set { _multiplier = value; }
         }
 
         public Int64 groupid

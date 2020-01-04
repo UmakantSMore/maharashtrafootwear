@@ -56,8 +56,9 @@
 
                                 <div class="col-xs-4">
                                     <label for="exampleInputEmail1">City Names<span style="color: red">*</span></label>
-                                    <asp:TextBox ID="txtcityname" CssClass="form-control" runat="server"></asp:TextBox>
-                                    <asp:RequiredFieldValidator ID="RFVtxtBankBranch" runat="server" Display="Dynamic" ControlToValidate="txtcityname" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
+                                    <asp:ListBox ID="lstCity" runat="server" SelectionMode="Multiple" class="form-control select2"></asp:ListBox>
+                                    <asp:HiddenField ID="hfcity" runat="server" />
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" Display="Dynamic" ControlToValidate="lstCity" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
 
                                 </div>
                                 
@@ -164,22 +165,20 @@
          //alert("Selected value is: "+$("#<%=lstday.ClientID%>").select2("val"));
                     $('[id*=hfday]').val($(this).val());
                 });
+
+            $("#<%=lstCity.ClientID%>").select2({
+
+                allowClear: true
+
+            }).on('change.select2', function () {
+         //alert("Selected value is: "+$("#<%=lstCity.ClientID%>").select2("val"));
+                    $('[id*=hfcity]').val($(this).val());
+                });
         }
 
     </script>
 
-    <script type="text/javascript">
-        
-
-    </script>
-
-
-    <script type="text/javascript">
-        
-
-    </script>
-
-
+    
 
 
 </asp:Content>

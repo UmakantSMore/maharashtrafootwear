@@ -204,8 +204,8 @@
                                         <th style="text-align: center; display:none">Stock Alert</th>
                                         <th style="text-align: center; display: none;">Is Stock</th>
                                         <th style="text-align: center">Is Active</th>
-                                         <th style="text-align: center">Is HotProduct</th>
-                                        <th style="text-align: center; display: none;">HSN Code</th>
+                                         <th style="text-align: center; display: none">Is HotProduct</th>
+                                        <th style="text-align: center">HSN Code</th>
                                         <th style="text-align: center; display:none">Stock Alert</th>
                                         <th style="text-align: center">Action</th>
 
@@ -278,12 +278,12 @@
                                                 <td style="text-align: center">
                                                     <asp:CheckBox ID="IsActive" runat="server" AutoPostBack="true" Checked='<%# Eval("isactive") %>' OnCheckedChanged="IsActive_CheckedChanged" />
                                                 </td>
-                                                 <td style="text-align: center"> 
+                                                 <td style="text-align: center; display: none"> 
                                                     <asp:CheckBox ID="isHotproduct" runat="server" AutoPostBack="true" Checked='<%# Eval("isHotproduct") %>' OnCheckedChanged="isHotproduct_CheckedChanged" />
                                                 </td>
 
 
-                                                <td style="text-align: center; display: none;">
+                                                <td style="text-align: center">
                                                     <asp:Label ID="Label1" runat="server" Text='<%# Eval("HSNCode") %>'></asp:Label>
 
                                                 </td>
@@ -327,8 +327,8 @@
                                         <th style="text-align: center; display:none">Stock Alert</th>
                                         <th style="text-align: center; display: none;">Is Stock</th>
                                         <th style="text-align: center">Is Active</th>
-                                         <th style="text-align: center">Is HotProduct</th>
-                                        <th style="text-align: center; display: none;">HSN Code</th>
+                                         <th style="text-align: center; display: none">Is HotProduct</th>
+                                        <th style="text-align: center">HSN Code</th>
                                         <th style="text-align: center; display:none">Stock Alert</th>
                                         <th style="text-align: center">Action</th>
 

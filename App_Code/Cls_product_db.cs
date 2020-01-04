@@ -264,6 +264,8 @@ namespace DatabaseLayer
                                     objproduct.brandid= Convert.ToInt64(ds.Tables[0].Rows[0]["brandid"]);
                                     objproduct.maincategoryid = Convert.ToInt64(ds.Tables[0].Rows[0]["maincategoryid"]);
                                     objproduct.gsttype = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["gsttype"].ToString()) ? false : Convert.ToBoolean(ds.Tables[0].Rows[0]["gsttype"]);
+                                    //objproduct.sizegroupid = Convert.ToString(ds.Tables[0].Rows[0]["sizegroupid"]);
+
                                 }
                             }
                         }
@@ -389,6 +391,7 @@ namespace DatabaseLayer
 
                 cmd.Parameters.AddWithValue("@fk_mainCategoryId", objproduct.maincategoryid);
                 cmd.Parameters.AddWithValue("@gsttype", objproduct.gsttype);
+                //cmd.Parameters.AddWithValue("@sizegroupid", objproduct.sizegroupid);
                 
                 ConnectionString.Open();
                 cmd.ExecuteNonQuery();

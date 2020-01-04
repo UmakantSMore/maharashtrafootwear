@@ -18,11 +18,11 @@ public partial class editdealerprofile : System.Web.UI.Page
         if (!Page.IsPostBack)
         {
             BindUser();
-            Bindstate();
+            BindStateandCity();
             if (Request.QueryString["id"] != null)
             {
-                hPageTitle.InnerText = "Update Dealer";
-                Page.Title = "Update Dealer";
+                hPageTitle.InnerText = "Update Retailer";
+                Page.Title = "Update Retailer";
                 btnUpdate.Text = "Update";
                 BindDealer(ocommon.Decrypt(Convert.ToString(Request.QueryString["id"]), true));
                 txtbalance.ReadOnly = true;
@@ -30,8 +30,8 @@ public partial class editdealerprofile : System.Web.UI.Page
             }
             else
             {
-                hPageTitle.InnerText = "New Dealer";
-                Page.Title = "New Dealer";
+                hPageTitle.InnerText = "New Retailer";
+                Page.Title = "New Retailer";
                 btnUpdate.Text = "Add";
                 //BindDealer(ocommon.Decrypt(Convert.ToString(Request.QueryString["id"]), true));
 
@@ -56,7 +56,8 @@ public partial class editdealerprofile : System.Web.UI.Page
             txtpanno.Text = objdealermaster.panno;
             txtAddress1.Text = objdealermaster.address1;
             txtAddress2.Text = objdealermaster.address2;
-            txtCity.Text = objdealermaster.city;
+            lstCity.SelectedValue = objdealermaster.city;
+            hfcity.Value = objdealermaster.city;
             txtSate.SelectedValue = objdealermaster.state;
             txtSate_SelectedIndexChanged(null, null);
             ddldistrict.SelectedValue = objdealermaster.district.ToString();
@@ -78,7 +79,7 @@ public partial class editdealerprofile : System.Web.UI.Page
         objdealermaster.panno = txtpanno.Text;
         objdealermaster.address1 = txtAddress1.Text;
         objdealermaster.address2 = txtAddress2.Text;
-        objdealermaster.city = txtCity.Text;
+        objdealermaster.city = hfcity.Value;
         objdealermaster.state = txtSate.SelectedValue.ToString();
         objdealermaster.district = Convert.ToInt64(ddldistrict.SelectedValue.ToString());
         objdealermaster.agentid = Convert.ToInt64(ddlUser.SelectedValue.ToString());
@@ -128,7 +129,7 @@ public partial class editdealerprofile : System.Web.UI.Page
         txtpanno.Text = String.Empty;
         txtAddress1.Text = String.Empty;
         txtAddress2.Text = String.Empty;
-        txtCity.Text = String.Empty;
+        lstCity.SelectedIndex = 0;
         txtSate.SelectedIndex = 0;
         ddlUser.SelectedIndex = 0;
         txtbalance.Text = "0";
@@ -239,10 +240,9 @@ public partial class editdealerprofile : System.Web.UI.Page
             ddlUser.Items.Insert(0, objListItem);
         }
     }
-    private void Bindstate()
+    private void BindStateandCity()
     {
-       
-
+        
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         SqlCommand cmd = new SqlCommand();
         cmd.CommandText = "getState_byCountryId";
@@ -283,6 +283,33 @@ public partial class editdealerprofile : System.Web.UI.Page
             ListItem objListItem = new ListItem("--Select State--", "-1");
             txtSate.Items.Insert(0, objListItem);
         }
+
+        DataTable dtCity = new DataTable();
+
+        try
+        {
+            cls_CityMaster_b clscity = new cls_CityMaster_b();
+            dtCity = clscity.SelectAll();
+
+        }
+        catch { }
+        finally { con.Close(); }
+
+        if (dtCity != null)
+        {
+            if (dtCity.Rows.Count > 0)
+            {
+                Session["city"] = dtCity;
+                lstCity.DataSource = dtCity;
+                lstCity.DataTextField = "cityname";
+                lstCity.DataValueField = "id";
+                lstCity.DataBind();
+                //System.Web.UI.WebControls.ListItem objListItem = new System.Web.UI.WebControls.ListItem("--Select City--", "0");
+                //lstCity.Items.Insert(0, objListItem);
+            }
+        }
+
+
     }
     private void BindDistrict(Int64 stateId)
     {

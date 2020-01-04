@@ -43,7 +43,7 @@ public partial class addeditcategory : System.Web.UI.Page
 
     private void Clear()
     {
-        ddlMainCategory.SelectedIndex = 0;
+        lstmaincategory.SelectedIndex = 0;
         txtCategoryName.Text = string.Empty;
         txtActualPrice.Text = string.Empty;
         txtCategoryDiscount.Text = string.Empty;
@@ -63,14 +63,15 @@ public partial class addeditcategory : System.Web.UI.Page
         {
             if (dtMainCategory.Rows.Count > 0)
             {
-                ddlMainCategory.DataSource = dtMainCategory;
-                ddlMainCategory.DataTextField = "name";
-                ddlMainCategory.DataValueField = "id";
-                ddlMainCategory.DataBind();
+                lstmaincategory.DataSource = dtMainCategory;
+                lstmaincategory.DataTextField = "name";
+                lstmaincategory.DataValueField = "id";
+                lstmaincategory.DataBind();
                 ListItem objListItem = new ListItem("--Select Main Category--", "0");
-                ddlMainCategory.Items.Insert(0, objListItem);
+                lstmaincategory.Items.Insert(0, objListItem);
             }
         }
+        
     }
 
     //private void BindBank()
@@ -92,6 +93,7 @@ public partial class addeditcategory : System.Web.UI.Page
 
     public void BindCategory(Int64 CategoryId)
     {
+        
         category objcategory = (new Cls_category_b().SelectById(CategoryId));
         if (objcategory != null)
         {
@@ -99,7 +101,36 @@ public partial class addeditcategory : System.Web.UI.Page
             txtCategoryName.Text = objcategory.categoryname;
             txtCategoryShortDescription.Text = objcategory.shortdesc;
             txtCategoryLongDescription.Text = objcategory.longdescp;
-            ddlMainCategory.SelectedValue = Convert.ToString(objcategory.maincategoryid);
+            hfmaincategory.Value = objcategory.maincategoryid;
+            String [] maincatid = objcategory.maincategoryid.Split(',');
+            foreach (string i in maincatid) { 
+                //lstmaincategory.SelectedValue = i;
+                //lstmaincategory.Items[Convert.ToInt16(i)].Selected = true;
+            lstmaincategory.Items.FindByValue(i).Selected = true;
+            }
+
+            /*
+             * 
+             *  string[] arr = dtUser.Rows[0]["FK_subAreaId"].ToString().Split(',');
+        arr = arr.Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+            for (int j = 0; j < ddlSubArea.Items.Count; j++)
+        {
+            for (int j1 = 0; j1 < arr.Length; j1++)
+            {
+                if (ddlSubArea.Items[j].Value.ToString().Trim() == arr[j1].ToString().Trim())
+                {
+                    ddlSubArea.Items[j].Selected = true;
+                }
+                else
+                {
+                }
+            }
+
+        }
+*/
+
+
             if (!string.IsNullOrEmpty(objcategory.imagename))
             {
                 imgCategory.Visible = true;
@@ -147,13 +178,16 @@ public partial class addeditcategory : System.Web.UI.Page
         objcategory.shortdesc = txtCategoryShortDescription.Text.Trim();
         objcategory.longdescp = txtCategoryLongDescription.Text.Trim();
         //objcategory.bankid = Convert.ToInt32(ddlBank.SelectedValue);
-        objcategory.maincategoryid = Convert.ToInt32(ddlMainCategory.SelectedValue);
+        objcategory.maincategoryid = hfmaincategory.Value;
+
         if (ViewState["fileName"] != null)
         {
             objcategory.imagename = ViewState["fileName"].ToString();
         }
         if (Request.QueryString["id"] != null)
         {
+            //objcategory.maincategoryid = lstmaincategory.SelectedValue;
+
             objcategory.cid = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true));
             Result = (new Cls_category_b().Update(objcategory));
             if (Result > 0)
@@ -171,6 +205,8 @@ public partial class addeditcategory : System.Web.UI.Page
         }
         else
         {
+            //objcategory.maincategoryid = hfmaincategory.Value;
+
             Result = (new Cls_category_b().Insert(objcategory));
             if (Result > 0)
             {

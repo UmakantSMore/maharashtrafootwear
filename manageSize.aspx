@@ -26,6 +26,7 @@
                                 <thead>
                                     <tr>
                                         <th style="text-align: center">Size Name</th>
+                                        <th style="text-align: center">Multiplier</th>
                                       
                                         <th style="text-align: center">Action</th>
                                     </tr>
@@ -43,6 +44,10 @@
                                                     <%--<asp:Label ID="lblSeqNo" runat="server" Visible="false" Text='<%# Eval("seqno") %>'></asp:Label>--%>
                                                     <asp:Label ID="lblCategoryName" runat="server" Text='<%# Eval("sizeName") %>'></asp:Label>
                                                 </td>
+                                                <td style="text-align: center">
+                                                    <asp:Label ID="lblmultiplier" runat="server" Text='<%# Eval("multiplier") %>'></asp:Label>
+
+                                                </td>
                                              
                                                 <td style="text-align: center">
                                                     <asp:HyperLink ID="hlEdit" runat="server" Style="text-decoration: underline" class="btn btn-success" Text="Edit"></asp:HyperLink>&nbsp;
@@ -56,6 +61,7 @@
                                 <tfoot>
                                     <tr>
                                         <th style="text-align: center">Size Name</th>
+                                        <th style="text-align: center">Multiplier</th>
                                          
                                         <th style="text-align: center">Action</th>
                                     </tr>

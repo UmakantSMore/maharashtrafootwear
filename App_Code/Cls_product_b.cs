@@ -306,6 +306,7 @@ namespace BusinessLayer
         private Int64 _brandid;
         private Int64 _maincategoryid;
         private Boolean _gsttype;
+        private String _sizegroupid;
         #endregion
 
 
@@ -516,7 +517,14 @@ namespace BusinessLayer
 
         }
 
-       // gsttype
+        public String sizegroupid
+        {
+            get { return _sizegroupid; }
+            set { _sizegroupid = value; }
+        }
+
+
+        // gsttype
         #endregion
     }
 

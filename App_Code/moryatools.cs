@@ -22,6 +22,7 @@ using System.Globalization;
 
 public class moryatools : System.Web.Services.WebService
 {
+	SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
     public moryatools()
     { }
 
@@ -1184,8 +1185,9 @@ public class moryatools : System.Web.Services.WebService
                     DataTable dt3 = new DataTable();
                     for (int i = 0; i < dtProduct.Rows.Count; i++)
                     {
+                    
                         dt3 = new DataTable();
-                        SqlCommand cmd = new SqlCommand("SELECT 'http://moryaapp.moryatools.com/uploads/product/front/' +  imagevideopath as imagevideopath FROM productimagesvideos Where isdelete=0 and pid=" + ProductId, con);
+                        SqlCommand cmd = new SqlCommand("SELECT 'http://maharashtrafootwear.onlineerp.org/uploads/product/front/' +  imagevideopath as imagevideopath FROM productimagesvideos Where isdelete=0 and pid=" + ProductId, con);
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
                         cmd.Connection = con;
                         da.SelectCommand = cmd;
@@ -1582,6 +1584,7 @@ public class moryatools : System.Web.Services.WebService
     //    Context.Response.Write(finalResult);
     //    Context.Response.End();
     //}
+		/*
     [WebMethod]
     public void Order_InsertOrderandOrderProduct(string OrderProducts_JSONString, string UserId, string ProductQuantites, string BillPaidorNot, string OrderAmount, string Discount, string Tax, string TotalAmount, string OrderDate, string UserType,string customerType)
     {
@@ -1721,6 +1724,254 @@ public class moryatools : System.Web.Services.WebService
         Context.Response.Write(finalResult);
         Context.Response.End();
     }
+*/
+
+		
+    [WebMethod]
+    public void Order_InsertOrderandOrderProduct(string OrderProducts_JSONString, string UserId)
+    {
+        string finalResult = string.Empty;
+        
+
+        Int64 OrderProductAdd = 0;
+        Int64 OrderId = 0;
+        decimal subtotal = 0, totalamount = 0, gstamount = 0, taxableamount = 0, cgstamount = 0, sgstamount = 0, igstamount = 0;
+
+        var dtOrderProducts = JsonConvert.DeserializeObject<DataTable>(OrderProducts_JSONString);
+        DataTable dtprodn = new DataTable();
+
+        string productdata = "select 0 as uid,0 as pid,'' as brandid,'' as sizeid,'' as colorid, 0 as cart, 0 as pack, 0 as qty, 0.0 as mrp, 0.0 as unitRate, 0.0 as subTotal, 0.0 as discount, 0.0 as scheme, 0.0 as taxableamt, 0.0 as CGSTper, 0.0 as SGSTper, 0.0 as IGSTper, 0.0 as GSTamt, 0.0 as TotalAmount from product where pid=-1";
+        SqlDataAdapter daproduct = new SqlDataAdapter(productdata, con);
+        daproduct.Fill(dtprodn);
+
+        //Session["dtprod"] = dtprodn;
+        if (dtOrderProducts != null)
+        {
+            if (dtOrderProducts.Rows.Count > 0)
+            {
+                
+                foreach (DataRow dr in dtOrderProducts.Rows)
+                {
+                    try
+                    {
+                        //if (Session["dtprod"] != null)
+                        //  dtprodn = (DataTable)Session["dtprod"];
+                        DataTable dtresult = new DataTable();
+
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.CommandText = "getcalculationsforproduct";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.AddWithValue("@uid", UserId); 
+                        cmd.Parameters.AddWithValue("@sizeid", dr["sizeid"]);
+                        cmd.Parameters.AddWithValue("@pid",dr["productid"]);
+
+                        cmd.Parameters.AddWithValue("@qty",dr["quantites"]);
+                        cmd.Connection = con;
+                            con.Open();
+                            SqlDataAdapter da = new SqlDataAdapter(cmd);
+                            da.Fill(dtresult);
+                            if (dtresult != null) {
+                                if (dtresult.Rows.Count > 0) {
+
+                                    DataRow drp = dtprodn.NewRow();
+                                    int rowcnt = dtprodn.Rows.Count + 1;
+
+
+                                    drp["uid"] = Convert.ToInt64(dtresult.Rows[0]["uid"]);
+                                    drp["pid"] = Convert.ToInt64(dtresult.Rows[0]["pid"]);
+                                    drp["brandid"] = Convert.ToString(dtresult.Rows[0]["brandName"]);
+                                    drp["sizeid"] = Convert.ToString(dtresult.Rows[0]["sizeid"]);
+                                    drp["colorid"] = Convert.ToString(dtresult.Rows[0]["colorid"]);
+                                    drp["cart"] = Convert.ToDecimal(dtresult.Rows[0]["cart"]);
+                                    drp["pack"] = Convert.ToDecimal(dtresult.Rows[0]["packing"]);
+                                    drp["qty"] = Convert.ToDecimal(dtresult.Rows[0]["qty"]);
+                                    drp["mrp"] = Convert.ToDecimal(dtresult.Rows[0]["MRP"]);
+                                    drp["unitRate"] = Convert.ToDecimal(dtresult.Rows[0]["unitRate"]);
+                                    drp["subTotal"] = Convert.ToDecimal(dtresult.Rows[0]["subtotal"]);
+                                    subtotal += Convert.ToDecimal(dtresult.Rows[0]["subtotal"]);
+                                    drp["discount"] = Convert.ToDecimal(dtresult.Rows[0]["discount"]);
+                                    drp["scheme"] = Convert.ToDecimal(dtresult.Rows[0]["scheme"]);
+                                    drp["taxableamt"] = Convert.ToDecimal(dtresult.Rows[0]["taxable"]);
+                                    taxableamount += Convert.ToDecimal(dtresult.Rows[0]["taxable"]);
+                                /*
+                                    drp["CGSTper"] = dtresult.Rows[0]["CGST"];
+                                    drp["SGSTper"] = dtresult.Rows[0]["SGST"];
+                                    drp["IGSTper"] = dtresult.Rows[0]["IGST"];
+
+                                */
+                                    drp["CGSTper"] = Convert.ToDecimal(dtresult.Rows[0]["CGST"]);
+                                    drp["SGSTper"] = Convert.ToDecimal(dtresult.Rows[0]["SGST"]);
+                                    drp["IGSTper"] = Convert.ToDecimal(dtresult.Rows[0]["IGST"]);
+
+
+                                    cgstamount += Convert.ToDecimal(dtresult.Rows[0]["CGSTamount"]);
+                                    sgstamount += Convert.ToDecimal(dtresult.Rows[0]["SGSTamount"]);
+                                    igstamount += Convert.ToDecimal(dtresult.Rows[0]["IGSTamount"]);
+
+                                    drp["GSTamt"] = Convert.ToDecimal(dtresult.Rows[0]["gstamount"]);
+                                    gstamount += Convert.ToDecimal(dtresult.Rows[0]["gstamount"]);
+                                    drp["TotalAmount"] = Convert.ToDecimal(dtresult.Rows[0]["totalamount"]);
+                                    totalamount += Convert.ToDecimal(dtresult.Rows[0]["totalamount"]);
+
+
+                                    dtprodn.Rows.Add(drp);
+                                    
+                                    //Session["dtprod"] = dtprodn;
+                                   
+
+                                }
+                            }
+
+                        }
+                        catch (Exception ex)
+                        {
+                            ErrHandler.writeError(ex.Message, ex.StackTrace);
+                            
+                        }
+                        finally
+                        {
+                            con.Close();
+                        }
+
+                    }
+                
+            }
+        }
+
+        orders objorders = new orders();
+
+        if (UserId == string.Empty)
+        {
+            objorders.uid = 0;
+        }
+        else
+        {
+            objorders.uid = Convert.ToInt64(UserId);
+        }
+        objorders.paymentType = "0";
+        objorders.invoicetype = "0";
+
+
+
+        objorders.paymentMode = "Credit";
+        objorders.orderdate = DateTime.Now;
+        objorders.subamount = subtotal;
+
+        objorders.totalGSTAmount = gstamount;
+
+        objorders.per_tradeDisandScheme = 0;
+        objorders.amt_tradeDisandScheme = 0;
+
+        objorders.per_taxableDiscount = 0;
+        objorders.amt_taxableDiscount = 0;
+        objorders.TaxableAmount = taxableamount;
+
+        objorders.TotalAmount = totalamount;
+
+        objorders.CGSTamt = Convert.ToDecimal(cgstamount);
+        objorders.SGSTamt = Convert.ToDecimal(sgstamount);
+        objorders.IGSTamt = Convert.ToDecimal(igstamount);
+
+        objorders.freightDiscount = 0;
+        objorders.duedate = Convert.ToDateTime(DateTime.Now);
+        objorders.otheramt = 0;
+        objorders.grandTotal = totalamount;
+        objorders.Referenceby = string.Empty;
+        objorders.DeliveredThrough = string.Empty;
+        objorders.DeliveredDetails = string.Empty;
+        objorders.ordertype = string.Empty;
+        objorders.pendingAmt = totalamount;
+        objorders.isconfirmed = true;
+
+
+
+
+
+
+
+        if (dtprodn != null)
+        {
+            if (dtprodn.Rows.Count > 0)
+            {
+                OrderId = (new Cls_orders_b().Insert(objorders));
+                if (OrderId > 0)
+                {
+                    for (int i = 0; i < dtprodn.Rows.Count; i++)
+                    {
+                        OrderProductAdd = 0;
+                        orderproducts objorderproducts = new orderproducts();
+                        objorderproducts.oid = OrderId;
+                        objorderproducts.uid = Convert.ToInt64(dtprodn.Rows[i]["uid"]);
+                        objorderproducts.pid = Convert.ToInt64(dtprodn.Rows[i]["pid"]);
+                        objorderproducts.brandid = Convert.ToString(dtprodn.Rows[i]["brandid"]);
+                        objorderproducts.sizeid = Convert.ToString(dtprodn.Rows[i]["sizeid"]);
+                        objorderproducts.colorid = Convert.ToString(dtprodn.Rows[i]["colorid"]);
+                        objorderproducts.cart = Convert.ToDecimal(dtprodn.Rows[i]["cart"]);
+                        objorderproducts.pack = Convert.ToString(dtprodn.Rows[i]["pack"]);
+                        objorderproducts.qty = Convert.ToDecimal(dtprodn.Rows[i]["qty"]);
+                        objorderproducts.mrp = Convert.ToDecimal(dtprodn.Rows[i]["mrp"]);
+                        objorderproducts.unitRate = Convert.ToDecimal(dtprodn.Rows[i]["unitRate"]);
+                        objorderproducts.subTotal = Convert.ToDecimal(dtprodn.Rows[i]["subTotal"]);
+
+                        objorderproducts.discount = Convert.ToDecimal(dtprodn.Rows[i]["discount"]);
+                        objorderproducts.scheme = Convert.ToDecimal(dtprodn.Rows[i]["scheme"]);
+                        objorderproducts.taxableamt = Convert.ToDecimal(dtprodn.Rows[i]["taxableamt"]);
+
+
+                        decimal CGSTper = Convert.ToDecimal(dtprodn.Rows[i]["CGSTper"]);
+                        decimal SGSTper = Convert.ToDecimal(dtprodn.Rows[i]["SGSTper"]);
+                        decimal IGSTper = Convert.ToDecimal(dtprodn.Rows[i]["IGSTper"]);
+                        decimal GSTamt = Convert.ToDecimal(dtprodn.Rows[i]["GSTamt"]);
+
+
+                        objorderproducts.CGSTper = Convert.ToDecimal(dtprodn.Rows[i]["CGSTper"]);
+                        objorderproducts.SGSTper = Convert.ToDecimal(dtprodn.Rows[i]["SGSTper"]);
+                        objorderproducts.IGSTper = Convert.ToDecimal(dtprodn.Rows[i]["IGSTper"]);
+                        objorderproducts.GSTamt = Convert.ToDecimal(dtprodn.Rows[i]["GSTamt"]);
+                        objorderproducts.TotalAmount = Convert.ToDecimal(dtprodn.Rows[i]["TotalAmount"]);
+                        objorderproducts.isdelete = false;
+
+
+                        OrderProductAdd = (new Cls_orderproducts_b().Insert(objorderproducts));
+
+                        #region " Stock Update "
+
+
+                        //Product_StockUpdate(objorderproducts.pid, objorderproducts.quantites);
+
+
+                        #endregion " Stock Update "
+
+                        //[{"userid":"15","productid":"783","productprice":"500","discount":"10","quantites":10,"productafterdiscountprice":"450","gst":"12"},{"userid":"15","productid":"10783","productprice":"500","discount":"10","quantites":10,"productafterdiscountprice":"450","gst":"12"}]
+
+
+                        //[{"productid":"55","quantites":10,"sizeid":"4 x 8"}]
+
+                        //[{"productid":"63","quantites":"20","sizeid":"4 x 7"},{"productid":"73","quantites":"20","sizeid":"4X8"}]
+
+
+                    }
+                }
+            }
+        }
+
+        if ((OrderId > 0) && (OrderProductAdd > 0))
+        {
+            //SendOrderMail(OrderId);
+            finalResult = "{\"success\" : 1, \"message\" : \"Order Created Sucessfully\", \"data\" : \"\"}";
+        }
+        else
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"Order Not Created \", \"data\" : \"\"}";
+        }
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
+	
 
     private bool SendOrderMail(Int64 OrderId)
     {
@@ -4884,6 +5135,62 @@ public class moryatools : System.Web.Services.WebService
         Context.Response.Write(finalResult);
         Context.Response.End();
     }
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void getSizesByProductId(Int64 productid)
+    {
+        string finalResult = string.Empty;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            DataTable dtSizes = new DataTable();
+
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "getSizesByProductId";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@pid", Convert.ToInt64(productid));
+            cmd.Connection = con;
+            con.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dtSizes);
+
+
+            if (dtSizes != null)
+            {
+                if (dtSizes.Rows.Count > 0)
+                {
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtSizes);
+                    finalResult = "{\"success\" : 1, \"message\" : \"Size Data\", \"data\" :" + output + "}";
+
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"No Data Exists  \", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \"No Data  Exists  \", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"No Data Exists  \", \"data\" : \"\"}";
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
+
 
 
 }

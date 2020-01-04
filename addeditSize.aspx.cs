@@ -28,13 +28,13 @@ public partial class addeditSize : System.Web.UI.Page
             {
                 BindSize(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true)));
                 btnSave.Text = "Update";
-                hPageTitle.InnerText = "Size Update";
-                Page.Title = "Size Update";
+                hPageTitle.InnerText = "Update Size";
+                Page.Title = "Update Size";
             }
             else
             {
-                hPageTitle.InnerText = "Size Add";
-                Page.Title = "Size Add";
+                hPageTitle.InnerText = "New Size";
+                Page.Title = "New Size";
                 btnSave.Text = "Add";
 
             }
@@ -104,7 +104,9 @@ public partial class addeditSize : System.Web.UI.Page
         {
             //ddlBank.SelectedValue = objcategory.bankid.ToString();
             txtSizeName.Text = objcategory.sizeName;
+            hfgroupid.Value = objcategory.groupid.ToString();
             lstGroup.SelectedValue = objcategory.groupid.ToString();
+            txtmultiplier.Text = objcategory.multiplier.ToString();
 
 
         }
@@ -125,7 +127,7 @@ public partial class addeditSize : System.Web.UI.Page
         sizeMaster objcategory = new sizeMaster();
         objcategory.sizeName = txtSizeName.Text.Trim();
         objcategory.groupid = Convert.ToInt64(hfgroupid.Value);
-
+        objcategory.multiplier = Convert.ToInt64(txtmultiplier.Text.Trim());
         if (Request.QueryString["id"] != null)
         {
             objcategory.cid = Convert.ToInt64(ocommon.Decrypt(Request.QueryString["id"].ToString(), true));

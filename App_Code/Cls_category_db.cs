@@ -144,7 +144,7 @@ namespace DatabaseLayer
                                     objcategory.shortdesc = Convert.ToString(ds.Tables[0].Rows[0]["shortdesc"]);
                                     objcategory.longdescp = Convert.ToString(ds.Tables[0].Rows[0]["longdescp"]);
                                     //objcategory.bankid = Convert.ToInt32(ds.Tables[0].Rows[0]["bankid"]);
-                                    objcategory.maincategoryid = Convert.ToInt32(ds.Tables[0].Rows[0]["maincategoryid"]);
+                                    objcategory.maincategoryid = ds.Tables[0].Rows[0]["maincategoryid"].ToString();
                                 }
                             }
                         }
