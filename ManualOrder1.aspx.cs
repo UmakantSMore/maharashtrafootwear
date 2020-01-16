@@ -24,11 +24,11 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
 
 
-        txt_Date.Text = DateTime.Now.ToString("dd/MM/yyyy");
+        //txt_Date.Text = DateTime.Now.ToString("dd/MM/yyyy");
         txtduedate.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
 
-        //txt_Date.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
+        txt_Date.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Today);
         //txtduedate.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
         //-------------------------------------------------
         if (!IsPostBack)
@@ -38,12 +38,15 @@ public partial class ManualOrder1 : System.Web.UI.Page
             BindRepeater();
             BindDealer();
             BindProducts();
+
+          /*  BindSize();
+            BindColor();
+            */
+
+
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
             if (Request.QueryString["oid"] != null)
             {
-
-
-
                 BindOrders(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["oid"].ToString(), true)));
                 btnSave.Text = "Update";
                 hPageTitle.InnerText = "Order Update";
@@ -188,16 +191,18 @@ public partial class ManualOrder1 : System.Web.UI.Page
     {
         try
         {
-            if (ddlname.SelectedIndex == 0 || ddlProduct.SelectedIndex == 0)
+            if (ddlname.SelectedIndex <= 0 || ddlProduct.SelectedIndex == 0)
             {
-                ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Please Select All Product Name and Customer Name')", true);
+                ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Please Select Customer Name and Product Name')", true);
             }
             else
             {
                 DataTable dt = new DataTable();
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "salegrid_byproductId";
-                cmd.CommandType = CommandType.StoredProcedure;
+                SqlCommand cmd = new SqlCommand
+                {
+                    CommandText = "salegrid_byproductId",
+                    CommandType = CommandType.StoredProcedure
+                };
                 cmd.Parameters.AddWithValue("@pid", Convert.ToInt64(ddlProduct.SelectedValue.ToString()));
                 cmd.Parameters.AddWithValue("@uid", Convert.ToInt64(ddlname.SelectedValue.ToString()));
 
@@ -210,8 +215,12 @@ public partial class ManualOrder1 : System.Web.UI.Page
                 {
                     // ddlProduct
                     txtBrand.Text = dt.Rows[0]["brandName"].ToString();
+                    
+                    /*
                     txtSize.Text = dt.Rows[0]["sizeid"].ToString();
                     txtColor.Text = dt.Rows[0]["colorid"].ToString();
+                    */
+
                     txtCart.Text = "0";
                     txtPack.Text = dt.Rows[0]["packing"].ToString();
                     txtQty.Text = "0";
@@ -230,13 +239,85 @@ public partial class ManualOrder1 : System.Web.UI.Page
                     txtGSTtotal.Text = "0";
                     txtTotal.Text = "0";
                     //pid,productname,brandid,brandName,sizeid,colorid,packing,MRP,unitRate,CGST,SGST,IGST
+
+
+
+                    // string GetSizes = "SELECT cid,sizeName FROM tblSize where groupid = @groupid";
+
+                    SqlCommand cmdsize = new SqlCommand
+                    {
+                        CommandText = "SELECT cid,sizeName FROM tblSize where groupid = @groupid",
+                        CommandType = CommandType.Text,
+                        Connection = con
+                    };
+
+                    cmdsize.Parameters.AddWithValue("@groupid", dt.Rows[0]["sizeid"].ToString());
+
+                    //SqlDataAdapter dasizes = new SqlDataAdapter(GetSizes, con);
+
+                    SqlDataAdapter dasizes = new SqlDataAdapter(cmdsize);
+                    DataTable dtsizes = new DataTable();
+                    dasizes.Fill(dtsizes);
+                    if (dtsizes.Rows.Count > 0)
+                    {
+                        txtSize.DataSource = dtsizes;
+                        txtSize.DataTextField = "sizeName";
+                        txtSize.DataValueField = "cid";
+                        txtSize.DataBind();
+                        txtSize.Items.Insert(0, "---select---");
+                    }
+                    else
+                    {
+                        txtSize.DataSource = dtsizes;
+                        txtSize.DataTextField = "sizeName";
+                        txtSize.DataValueField = "cid";
+                        txtSize.DataBind();
+                        txtSize.Items.Insert(0, "---select---");
+
+                    }
+
+                    SqlCommand cmdcolor = new SqlCommand
+                    {
+                        CommandText = "(select cid,colorname from tblColor where cid in (SELECT Item FROM[dbo].[SplitString]((select fk_colorid from product where pid = @pid),',')))",
+                        CommandType = CommandType.Text,
+                        Connection = con
+                    };
+
+                    cmdcolor.Parameters.AddWithValue("@pid", Convert.ToInt64(ddlProduct.SelectedValue.ToString()));
+
+                    //SqlDataAdapter dasizes = new SqlDataAdapter(GetSizes, con);
+
+                    SqlDataAdapter dacolors = new SqlDataAdapter(cmdcolor);
+                    DataTable dtcolors = new DataTable();
+                    dacolors.Fill(dtcolors);
+                    if (dtcolors.Rows.Count > 0)
+                    {
+                        txtColor.DataSource = dtcolors;
+                        txtColor.DataTextField = "colorname";
+                        txtColor.DataValueField = "cid";
+                        txtColor.DataBind();
+                        txtColor.Items.Insert(0, "---select---");
+                    }
+                    else
+                    {
+                        txtColor.DataSource = dtcolors;
+                        txtColor.DataTextField = "colorname";
+                        txtColor.DataValueField = "cid";
+                        txtColor.DataBind();
+                        txtColor.Items.Insert(0, "---select---");
+                    }
+
+
+
+
                 }
                 con.Close();
                 //salegrid_byproductId
             }
         }
-        catch { }
-        txtCart.Focus();
+        catch(Exception ex) { }
+        //txtCart.Focus();
+        txtSize.Focus();
     }
     protected void txtCart_TextChanged(object sender, EventArgs e)
     {
@@ -265,17 +346,20 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
             double tot1 = subtotal - disamt;
 
-            double d1 = tot1 / (gst + 100);
-            double taxableamt = d1 * 100;
+            //double d1 = tot1 / (gst + 100);
+            //double taxableamt = d1 * 100;
+
+            double taxableamt = totalQty * unitRate;
             txttaxable.Text = System.Math.Round(taxableamt, 2).ToString();
 
 
-            //grand
-            double p = subtotal - disamt;
-            txtTotal.Text = System.Math.Round(p, 2).ToString();
-
+            
             double gstamt = (taxableamt * gst) / 100;
             txtGSTtotal.Text = System.Math.Round(gstamt, 2).ToString();
+
+            //grand
+            double p = subtotal + gstamt - disamt;
+            txtTotal.Text = System.Math.Round(p, 2).ToString();
 
 
             //txtDiscount.Text = txttradDis.Text;
@@ -626,11 +710,10 @@ public partial class ManualOrder1 : System.Web.UI.Page
     {
         try
         {
-
-
-            if (ddlProduct.SelectedIndex == 0 || txtCart.Text == string.Empty)
+            if (ddlProduct.SelectedIndex <= 0 || txtCart.Text == string.Empty)
             {
-                ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Please Enter Proper Value ');", true);
+                //ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Please Enter Proper Value ');", true);
+                ScriptManager.RegisterStartupScript(this, typeof(Page), "alertmsg", "alert('Please Enter Proper Value ');", true);
                 return;
             }
 
@@ -640,7 +723,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
             DataRow[] drr = dtprodn.Select("pid='" + ddlProduct.SelectedValue.ToString() + " ' ");
             if (drr.Length > 0)
             {
-                ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('This Product already add')", true);
+                ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('This Product is already added...)", true);
             }
             else
             {
@@ -652,6 +735,8 @@ public partial class ManualOrder1 : System.Web.UI.Page
                 dr["productName"] = ddlProduct.SelectedItem.ToString();
                 dr["pid"] = Convert.ToInt64(ddlProduct.SelectedValue.ToString());
                 dr["brandid"] = Convert.ToString(txtBrand.Text);
+                dr["sizename"] = txtSize.SelectedItem.ToString();
+                dr["colorname"] = txtColor.SelectedItem.ToString();
                 dr["sizeid"] = Convert.ToString(txtSize.Text);
                 dr["colorid"] = Convert.ToString(txtColor.Text);
                 dr["cart"] = Convert.ToDecimal(txtCart.Text);
@@ -678,8 +763,10 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
                 //clear
                 txtBrand.Text = "";
-                txtSize.Text = "";
-                txtColor.Text = "";
+
+                txtSize.SelectedIndex = -1;
+                txtColor.SelectedIndex = -1;
+
                 txtCart.Text = "0";
                 txtPack.Text = "0";
                 txtQty.Text = "0";
@@ -711,7 +798,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
     private void BindRepeater()
     {
 
-        string productdata = "select '' as sr,'' as productName,pid,brandid,sizeid, colorid, cart, pack, qty, mrp, unitRate, subTotal, discount, scheme, taxableamt, CGSTper, SGSTper, IGSTper, GSTamt, TotalAmount from saleorder_product where oid=-1";
+        string productdata = "select '' as sr,'' as productName,pid,brandid,'' as sizename,'' as colorname,sizeid, colorid, cart, pack, qty, mrp, unitRate, subTotal, discount, scheme, taxableamt, CGSTper, SGSTper, IGSTper, GSTamt, TotalAmount from saleorder_product where oid=-1";
         SqlDataAdapter daproduct = new SqlDataAdapter(productdata, con);
         DataTable dtprod = new DataTable();
         daproduct.Fill(dtprod);
@@ -738,11 +825,12 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
 
                 string finalResult = string.Empty;
-                orders objorders = new orders();
-
-                objorders.uid = Convert.ToInt64(ddlname.SelectedValue.ToString());
-                objorders.paymentType = Convert.ToString(ddlPaymentType.SelectedValue.ToString());
-                objorders.invoicetype = Convert.ToString(ddlinvoiceType.SelectedValue.ToString());
+                orders objorders = new orders
+                {
+                    uid = Convert.ToInt64(ddlname.SelectedValue.ToString()),
+                    paymentType = Convert.ToString(ddlPaymentType.SelectedValue.ToString()),
+                    invoicetype = Convert.ToString(ddlinvoiceType.SelectedValue.ToString())
+                };
 
 
                 string paymentmode1 = "";
@@ -817,30 +905,32 @@ public partial class ManualOrder1 : System.Web.UI.Page
                                 {
                                     OrderProductAdd = 0;
 
-                                    orderproducts objorderproducts = new orderproducts();
-                                    objorderproducts.oid = OrderId;
-                                    objorderproducts.uid = Convert.ToInt64(ddlname.SelectedValue.ToString());
-                                    objorderproducts.pid = Convert.ToInt64(ds.Rows[i]["pid"]);
-                                    objorderproducts.brandid = Convert.ToString(ds.Rows[i]["brandid"]);
-                                    objorderproducts.sizeid = Convert.ToString(ds.Rows[i]["sizeid"]);
-                                    objorderproducts.colorid = Convert.ToString(ds.Rows[i]["colorid"]);
-                                    objorderproducts.cart = Convert.ToDecimal(ds.Rows[i]["cart"]);
-                                    objorderproducts.pack = Convert.ToString(ds.Rows[i]["pack"]);
-                                    objorderproducts.qty = Convert.ToDecimal(ds.Rows[i]["qty"]);
-                                    objorderproducts.mrp = Convert.ToDecimal(ds.Rows[i]["mrp"]);
-                                    objorderproducts.unitRate = Convert.ToDecimal(ds.Rows[i]["unitRate"]);
-                                    objorderproducts.subTotal = Convert.ToDecimal(ds.Rows[i]["subTotal"]);
+                                    orderproducts objorderproducts = new orderproducts
+                                    {
+                                        oid = OrderId,
+                                        uid = Convert.ToInt64(ddlname.SelectedValue.ToString()),
+                                        pid = Convert.ToInt64(ds.Rows[i]["pid"]),
+                                        brandid = Convert.ToString(ds.Rows[i]["brandid"]),
+                                        sizeid = Convert.ToString(ds.Rows[i]["sizeid"]),
+                                        colorid = Convert.ToString(ds.Rows[i]["colorid"]),
+                                        cart = Convert.ToDecimal(ds.Rows[i]["cart"]),
+                                        pack = Convert.ToString(ds.Rows[i]["pack"]),
+                                        qty = Convert.ToDecimal(ds.Rows[i]["qty"]),
+                                        mrp = Convert.ToDecimal(ds.Rows[i]["mrp"]),
+                                        unitRate = Convert.ToDecimal(ds.Rows[i]["unitRate"]),
+                                        subTotal = Convert.ToDecimal(ds.Rows[i]["subTotal"]),
 
-                                    objorderproducts.discount = Convert.ToDecimal(ds.Rows[i]["discount"]);
-                                    objorderproducts.scheme = Convert.ToDecimal(ds.Rows[i]["scheme"]);
-                                    objorderproducts.taxableamt = Convert.ToDecimal(ds.Rows[i]["taxableamt"]);
+                                        discount = Convert.ToDecimal(ds.Rows[i]["discount"]),
+                                        scheme = Convert.ToDecimal(ds.Rows[i]["scheme"]),
+                                        taxableamt = Convert.ToDecimal(ds.Rows[i]["taxableamt"]),
 
-                                    objorderproducts.CGSTper = Convert.ToDecimal(ds.Rows[i]["CGSTper"]);
-                                    objorderproducts.SGSTper = Convert.ToDecimal(ds.Rows[i]["SGSTper"]);
-                                    objorderproducts.IGSTper = Convert.ToDecimal(ds.Rows[i]["IGSTper"]);
-                                    objorderproducts.GSTamt = Convert.ToDecimal(ds.Rows[i]["GSTamt"]);
-                                    objorderproducts.TotalAmount = Convert.ToDecimal(ds.Rows[i]["TotalAmount"]);
-                                    objorderproducts.isdelete = false;
+                                        CGSTper = Convert.ToDecimal(ds.Rows[i]["CGSTper"]),
+                                        SGSTper = Convert.ToDecimal(ds.Rows[i]["SGSTper"]),
+                                        IGSTper = Convert.ToDecimal(ds.Rows[i]["IGSTper"]),
+                                        GSTamt = Convert.ToDecimal(ds.Rows[i]["GSTamt"]),
+                                        TotalAmount = Convert.ToDecimal(ds.Rows[i]["TotalAmount"]),
+                                        isdelete = false
+                                    };
 
 
 
@@ -913,30 +1003,32 @@ public partial class ManualOrder1 : System.Web.UI.Page
                                 {
                                     OrderProductAdd = 0;
 
-                                    orderproducts objorderproducts = new orderproducts();
-                                    objorderproducts.oid = OrderId;
-                                    objorderproducts.uid = Convert.ToInt64(ddlname.SelectedValue.ToString());
-                                    objorderproducts.pid = Convert.ToInt64(ds.Rows[i]["pid"]);
-                                    objorderproducts.brandid = Convert.ToString(ds.Rows[i]["brandid"]);
-                                    objorderproducts.sizeid = Convert.ToString(ds.Rows[i]["sizeid"]);
-                                    objorderproducts.colorid = Convert.ToString(ds.Rows[i]["colorid"]);
-                                    objorderproducts.cart = Convert.ToDecimal(ds.Rows[i]["cart"]);
-                                    objorderproducts.pack = Convert.ToString(ds.Rows[i]["pack"]);
-                                    objorderproducts.qty = Convert.ToDecimal(ds.Rows[i]["qty"]);
-                                    objorderproducts.mrp = Convert.ToDecimal(ds.Rows[i]["mrp"]);
-                                    objorderproducts.unitRate = Convert.ToDecimal(ds.Rows[i]["unitRate"]);
-                                    objorderproducts.subTotal = Convert.ToDecimal(ds.Rows[i]["subTotal"]);
+                                    orderproducts objorderproducts = new orderproducts
+                                    {
+                                        oid = OrderId,
+                                        uid = Convert.ToInt64(ddlname.SelectedValue.ToString()),
+                                        pid = Convert.ToInt64(ds.Rows[i]["pid"]),
+                                        brandid = Convert.ToString(ds.Rows[i]["brandid"]),
+                                        sizeid = Convert.ToString(ds.Rows[i]["sizeid"]),
+                                        colorid = Convert.ToString(ds.Rows[i]["colorid"]),
+                                        cart = Convert.ToDecimal(ds.Rows[i]["cart"]),
+                                        pack = Convert.ToString(ds.Rows[i]["pack"]),
+                                        qty = Convert.ToDecimal(ds.Rows[i]["qty"]),
+                                        mrp = Convert.ToDecimal(ds.Rows[i]["mrp"]),
+                                        unitRate = Convert.ToDecimal(ds.Rows[i]["unitRate"]),
+                                        subTotal = Convert.ToDecimal(ds.Rows[i]["subTotal"]),
 
-                                    objorderproducts.discount = Convert.ToDecimal(ds.Rows[i]["discount"]);
-                                    objorderproducts.scheme = Convert.ToDecimal(ds.Rows[i]["scheme"]);
-                                    objorderproducts.taxableamt = Convert.ToDecimal(ds.Rows[i]["taxableamt"]);
+                                        discount = Convert.ToDecimal(ds.Rows[i]["discount"]),
+                                        scheme = Convert.ToDecimal(ds.Rows[i]["scheme"]),
+                                        taxableamt = Convert.ToDecimal(ds.Rows[i]["taxableamt"]),
 
-                                    objorderproducts.CGSTper = Convert.ToDecimal(ds.Rows[i]["CGSTper"]);
-                                    objorderproducts.SGSTper = Convert.ToDecimal(ds.Rows[i]["SGSTper"]);
-                                    objorderproducts.IGSTper = Convert.ToDecimal(ds.Rows[i]["IGSTper"]);
-                                    objorderproducts.GSTamt = Convert.ToDecimal(ds.Rows[i]["GSTamt"]);
-                                    objorderproducts.TotalAmount = Convert.ToDecimal(ds.Rows[i]["TotalAmount"]);
-                                    objorderproducts.isdelete = false;
+                                        CGSTper = Convert.ToDecimal(ds.Rows[i]["CGSTper"]),
+                                        SGSTper = Convert.ToDecimal(ds.Rows[i]["SGSTper"]),
+                                        IGSTper = Convert.ToDecimal(ds.Rows[i]["IGSTper"]),
+                                        GSTamt = Convert.ToDecimal(ds.Rows[i]["GSTamt"]),
+                                        TotalAmount = Convert.ToDecimal(ds.Rows[i]["TotalAmount"]),
+                                        isdelete = false
+                                    };
 
 
                                     try
@@ -976,6 +1068,24 @@ public partial class ManualOrder1 : System.Web.UI.Page
                             }
                         }
                     }
+                    if (OrderId > 0 )
+                    {
+                        //clear();
+                        //ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Order insert Successfully ');", true);
+
+
+                        Response.Redirect(Page.ResolveUrl("~/manageCustomerOrder.aspx?mode=u"), false);
+                        //Response.Redirect("~/manageCustomerOrder.aspx?mode=i");
+
+                    }
+
+                    else
+                    {
+                        clear();
+                        ScriptManager.RegisterStartupScript(this, GetType(), "alertmsg", "alert('Order Updation Failed...');", true);
+
+                    }
+                    /*
                     if (OrderId > 0)
                     {
                         ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Record updated Successfully')", true);
@@ -985,6 +1095,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
                     {
 
                     }
+                    */
                     #endregion
 
 
@@ -1066,10 +1177,12 @@ public partial class ManualOrder1 : System.Web.UI.Page
         {
             con.Open();
             DataSet ds = new DataSet();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Display_CustomerOrder";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "Display_CustomerOrder",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             cmd.Parameters.AddWithValue("@oid", Oid);
             //con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -1077,8 +1190,13 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
             if (ds.Tables[0] != null)
             {
-                ddlname.SelectedValue = ds.Tables[0].Rows[0]["uid"].ToString();
+                String idid = ds.Tables[0].Rows[0]["uid"].ToString();
+                //lstCity.Items.FindByValue(i).Selected = true;
+                
+                ddlname.SelectedValue = idid;
+
                 ddlname_SelectedIndexChanged(null, null);
+
                 ddlPaymentType.SelectedValue = ds.Tables[0].Rows[0]["paymentType"].ToString();
                 ddlinvoiceType.SelectedValue = ds.Tables[0].Rows[0]["invoicetype"].ToString();
                 txt_InvoieNo.Text = ds.Tables[0].Rows[0]["orderno"].ToString();
@@ -1126,6 +1244,11 @@ public partial class ManualOrder1 : System.Web.UI.Page
                     dr["brandid"] = Convert.ToString(ds.Tables[1].Rows[i]["brandid"].ToString());
                     dr["sizeid"] = Convert.ToString(ds.Tables[1].Rows[i]["sizeid"].ToString());
                     dr["colorid"] = Convert.ToString(ds.Tables[1].Rows[i]["colorid"].ToString());
+
+                    dr["sizename"] = Convert.ToString(ds.Tables[1].Rows[i]["sizename"].ToString());
+                    dr["colorname"] = Convert.ToString(ds.Tables[1].Rows[i]["colorname"].ToString());
+
+
                     dr["cart"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["cart"].ToString());
                     dr["pack"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["pack"].ToString());
                     dr["qty"] = Convert.ToDecimal(ds.Tables[1].Rows[i]["qty"].ToString());
@@ -1155,7 +1278,7 @@ public partial class ManualOrder1 : System.Web.UI.Page
 
             con.Close();
         }
-        catch { }
+        catch (Exception ex){ }
         finally { con.Close(); }
 
     }
@@ -1218,11 +1341,13 @@ public partial class ManualOrder1 : System.Web.UI.Page
             double d1 = tot1 / (gst + 100);
             double taxableamt = d1 * 100;
             //txttaxable.Text = System.Math.Round(taxableamt, 2).ToString();
-           
-            double grandtotal = subtotal - disamt;
-           // txtTotal.Text = System.Math.Round(p, 2).ToString();
+
+            // txtTotal.Text = System.Math.Round(p, 2).ToString();
+
             double gstamt = (taxableamt * gst) / 100;
             txtGSTtotal.Text = System.Math.Round(gstamt, 2).ToString();
+
+            double grandtotal = subtotal - disamt;
 
 
             DataRow[] drr = dtprodn.Select("sr='" + txtsr.Text + " ' ");

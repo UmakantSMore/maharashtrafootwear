@@ -96,9 +96,9 @@
                                                 <th>Brand</th>
                                                 <th>Size</th>
                                                 <th>Color</th>
-                                                <th>Cart</th>
-                                                <th>Pack</th>
-                                                <th>Quanity</th>
+                                                <th style="width:20px">Quantity</th>
+                                                <th style="display:none">Pack</th>
+                                                <th style="display:none">Quanity</th>
                                                 <th>Mrp</th>
                                                 <th>Unit Rate</th>
                                                 <th>SubTotal</th>
@@ -123,7 +123,7 @@
                                                         </td>
                                                         <td class="center">
                                                             <asp:Label ID="rep_txtproductName" runat="server" Text='<%# Eval("productName") %>'></asp:Label>
-                                                            <asp:Label ID="rep_txtproductid" runat="server" Text='<%# Eval("pid") %>'></asp:Label>
+                                                            <asp:Label ID="rep_txtproductid" Visible="false" runat="server" Text='<%# Eval("pid") %>'></asp:Label>
 
                                                         </td>
                                                         <td class="center">
@@ -144,11 +144,11 @@
                                                             <asp:Label ID="Label1" runat="server" Text='<%# Eval("cart") %>'></asp:Label>
                                                             <%--<asp:TextBox ID="rep_txtCart" Width="50" AutoPostBack="true" OnTextChanged="rep_txtCart_TextChanged" runat="server" Text=' <%#Eval("cart")%>'></asp:TextBox>--%>
                                                         </td>
-                                                        <td class="center">
+                                                        <td class="center" style="display:none">
                                                             <asp:Label ID="rep_txtpacking" runat="server" Text='<%# Eval("pack") %>'></asp:Label>
 
                                                         </td>
-                                                        <td class="center">
+                                                        <td class="center" style="display:none">
                                                             <asp:Label ID="rep_txtqty" runat="server" Text='<%# Eval("qty") %>'></asp:Label>
 
                                                         </td>
@@ -317,7 +317,7 @@
 
                                     <label for="exampleInputEmail1">Due Date </label>
 
-                                    <asp:TextBox ID="txtduedate" runat="server" class="form-control" autocomplete="off"></asp:TextBox>
+                                    <asp:TextBox ID="txtduedate" runat="server" ReadOnly="true" class="form-control" autocomplete="off"></asp:TextBox>
                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator18" runat="server" ErrorMessage="Enter Date" ControlToValidate="txtduedate" ValidationGroup="gg" ForeColor="Red"></asp:RequiredFieldValidator>
                                     <cc1:CalendarExtender ID="CalendarExtender1" PopupButtonID="imgPopup" runat="server" TargetControlID="txtduedate" Format="yyyy/MM/dd"></cc1:CalendarExtender>
 

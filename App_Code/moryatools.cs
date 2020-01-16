@@ -22,7 +22,7 @@ using System.Globalization;
 
 public class moryatools : System.Web.Services.WebService
 {
-	SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
     public moryatools()
     { }
 
@@ -38,8 +38,10 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtUser = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "userdealer_Login";
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "userdealer_Login"
+            };
             cmd.Parameters.AddWithValue("@mobileno", mobile);
             cmd.Parameters.AddWithValue("@password", password);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -96,9 +98,11 @@ public class moryatools : System.Web.Services.WebService
     private void UpdateLatitudeLongitudeUsingUserId(Int64 UserId, string UserType, Decimal Latitude, Decimal Longitude)
     {
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-        SqlCommand cmd = new SqlCommand();
-        cmd.CommandType = CommandType.Text;
-        cmd.Connection = con;
+        SqlCommand cmd = new SqlCommand
+        {
+            CommandType = CommandType.Text,
+            Connection = con
+        };
         try
         {
             string query = string.Empty;
@@ -134,10 +138,12 @@ public class moryatools : System.Web.Services.WebService
         string finalResult = string.Empty;
         Int64 Result = 0;
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-        SqlCommand cmd = new SqlCommand();
-        cmd.Connection = con;
-        cmd.CommandType = CommandType.StoredProcedure;
-        cmd.CommandText = "userdelaer_changepassword";
+        SqlCommand cmd = new SqlCommand
+        {
+            Connection = con,
+            CommandType = CommandType.StoredProcedure,
+            CommandText = "userdelaer_changepassword"
+        };
         cmd.Parameters.AddWithValue("@userid", UserId);
         cmd.Parameters.AddWithValue("@usertype", UserType);
         cmd.Parameters.AddWithValue("@password", NewPassword);
@@ -171,7 +177,7 @@ public class moryatools : System.Web.Services.WebService
 
 
 
-         
+
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public void ForgetPassword(string mobile)
@@ -182,8 +188,10 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtUser = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "userdealer_ForgetPassword";
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "userdealer_ForgetPassword"
+            };
             cmd.Parameters.AddWithValue("@mobileno", mobile);
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter sda = new SqlDataAdapter();
@@ -252,11 +260,13 @@ public class moryatools : System.Web.Services.WebService
         strBul = strBul.Append("</div>");
         mail.Body = strBul.ToString();
         mail.IsBodyHtml = true;
-        SmtpClient smtp = new SmtpClient();
-        smtp.Host = "103.250.184.62";
-        smtp.Port = 25;
-        smtp.UseDefaultCredentials = false;
-        smtp.Credentials = new System.Net.NetworkCredential("demo@moryatools.com", "vsys@2017");
+        SmtpClient smtp = new SmtpClient
+        {
+            Host = "103.250.184.62",
+            Port = 25,
+            UseDefaultCredentials = false,
+            Credentials = new System.Net.NetworkCredential("demo@moryatools.com", "vsys@2017")
+        };
         try
         {
             smtp.Send(mail);
@@ -278,10 +288,12 @@ public class moryatools : System.Web.Services.WebService
         SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "userdealerlogin_update";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = ConnectionString;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "userdealerlogin_update",
+                CommandType = CommandType.StoredProcedure,
+                Connection = ConnectionString
+            };
 
             cmd.Parameters.AddWithValue("@uid", UserId);
             cmd.Parameters.AddWithValue("@utype", UserType);
@@ -330,10 +342,12 @@ public class moryatools : System.Web.Services.WebService
         SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "userdealerlogin_status";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = ConnectionString;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "userdealerlogin_status",
+                CommandType = CommandType.StoredProcedure,
+                Connection = ConnectionString
+            };
 
             cmd.Parameters.AddWithValue("@uid", UserId);
             cmd.Parameters.AddWithValue("@utype", UserType);
@@ -403,22 +417,24 @@ public class moryatools : System.Web.Services.WebService
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
                 try
                 {
-                    userregistration objuserregistration = new userregistration();
-                    objuserregistration.fname = FirstName;
-                    objuserregistration.mname = MiddleName;
-                    objuserregistration.lname = LastName;
-                    objuserregistration.email = Email;
-                    objuserregistration.phone = Mobile;
-                    objuserregistration.password = Password;
-                    objuserregistration.address1 = Address;
-                    objuserregistration.address2 = string.Empty;
-                    //objuserregistration.dob = DOB;
-                    objuserregistration.dob = string.Empty;
-                    objuserregistration.isguest = IsGuest;
-                    objuserregistration.registrationdate = RegDate;
-                    objuserregistration.uguid = Guid.NewGuid().ToString();
-                    objuserregistration.isactive = true;
-                    objuserregistration.isdelete = false;
+                    userregistration objuserregistration = new userregistration
+                    {
+                        fname = FirstName,
+                        mname = MiddleName,
+                        lname = LastName,
+                        email = Email,
+                        phone = Mobile,
+                        password = Password,
+                        address1 = Address,
+                        address2 = string.Empty,
+                        //objuserregistration.dob = DOB;
+                        dob = string.Empty,
+                        isguest = IsGuest,
+                        registrationdate = RegDate,
+                        uguid = Guid.NewGuid().ToString(),
+                        isactive = true,
+                        isdelete = false
+                    };
 
                     Int64 Result = (new Cls_userregistration_b().Insert(objuserregistration));
                     if (Result > 0)
@@ -518,21 +534,23 @@ public class moryatools : System.Web.Services.WebService
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
                 try
                 {
-                    userregistration objuserregistration = new userregistration();
-                    objuserregistration.fname = Name;
-                    objuserregistration.mname = string.Empty;
-                    objuserregistration.lname = string.Empty;
-                    objuserregistration.email = Email;
-                    objuserregistration.phone = Mobile;
-                    objuserregistration.password = string.Empty;
-                    objuserregistration.address1 = Address;
-                    objuserregistration.address2 = string.Empty;
-                    objuserregistration.dob = string.Empty;
-                    objuserregistration.isguest = false;
-                    objuserregistration.registrationdate = DateTime.Now.ToShortDateString();
-                    objuserregistration.uguid = Guid.NewGuid().ToString();
-                    objuserregistration.isactive = true;
-                    objuserregistration.isdelete = false;
+                    userregistration objuserregistration = new userregistration
+                    {
+                        fname = Name,
+                        mname = string.Empty,
+                        lname = string.Empty,
+                        email = Email,
+                        phone = Mobile,
+                        password = string.Empty,
+                        address1 = Address,
+                        address2 = string.Empty,
+                        dob = string.Empty,
+                        isguest = false,
+                        registrationdate = DateTime.Now.ToShortDateString(),
+                        uguid = Guid.NewGuid().ToString(),
+                        isactive = true,
+                        isdelete = false
+                    };
 
                     Int64 Result = (new Cls_userregistration_b().Insert(objuserregistration));
                     if (Result > 0)
@@ -575,9 +593,11 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtMobile = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "userregistration_CheckMobileNumberExit";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "userregistration_CheckMobileNumberExit",
+                CommandType = CommandType.StoredProcedure
+            };
             cmd.Parameters.AddWithValue("@mobileno", MobileNumber);
             cmd.Connection = con;
             SqlDataAdapter sda = new SqlDataAdapter();
@@ -620,9 +640,11 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtMobile = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "userregistration_CheckMobileNumberExit";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "userregistration_CheckMobileNumberExit",
+                CommandType = CommandType.StoredProcedure
+            };
             cmd.Parameters.AddWithValue("@mobileno", MobileNumber);
             cmd.Connection = con;
             SqlDataAdapter sda = new SqlDataAdapter();
@@ -665,9 +687,11 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtMobile = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "dealer_CheckMobileNumberExit";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "dealer_CheckMobileNumberExit",
+                CommandType = CommandType.StoredProcedure
+            };
             cmd.Parameters.AddWithValue("@mobileno", MobileNumber);
             cmd.Connection = con;
             SqlDataAdapter sda = new SqlDataAdapter();
@@ -710,9 +734,11 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtMobile = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "dealer_CheckMobileNumberExit";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "dealer_CheckMobileNumberExit",
+                CommandType = CommandType.StoredProcedure
+            };
             cmd.Parameters.AddWithValue("@mobileno", MobileNumber);
             cmd.Connection = con;
             SqlDataAdapter sda = new SqlDataAdapter();
@@ -756,17 +782,19 @@ public class moryatools : System.Web.Services.WebService
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            userregistration objuserregistration = new userregistration();
-            objuserregistration.fname = FirstName;
-            objuserregistration.mname = MiddleName;
-            objuserregistration.lname = LastName;
-            objuserregistration.email = Email;
-            objuserregistration.address1 = Address;
-            objuserregistration.address2 = string.Empty;
-            objuserregistration.dob = DOB;
-            objuserregistration.uid = UserId;
-            objuserregistration.isactive = true;
-            objuserregistration.isdelete = false;
+            userregistration objuserregistration = new userregistration
+            {
+                fname = FirstName,
+                mname = MiddleName,
+                lname = LastName,
+                email = Email,
+                address1 = Address,
+                address2 = string.Empty,
+                dob = DOB,
+                uid = UserId,
+                isactive = true,
+                isdelete = false
+            };
 
             //objuserregistration.phone = Mobile;
             //objuserregistration.password = Password;
@@ -847,19 +875,21 @@ public class moryatools : System.Web.Services.WebService
         string finalResult = string.Empty;
         try
         {
-            SqlConnection ConnectionString=new SqlConnection (ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString .ToString());
-           // DataTable dtCategory = (new Cls_category_b().category_WSSelectAll());
-            DataTable dtCategory=new DataTable ();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "getSubCategory_fromMaincategory";
-                cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Connection = ConnectionString;
-                cmd.Parameters.AddWithValue("@id", Convert.ToInt64(mainCategoryId));
-                ConnectionString.Open();
-             SqlDataAdapter  da = new SqlDataAdapter(cmd);
-                da.Fill(dtCategory);
+            SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString.ToString());
+            // DataTable dtCategory = (new Cls_category_b().category_WSSelectAll());
+            DataTable dtCategory = new DataTable();
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "getSubCategory_fromMaincategory",
+                CommandType = CommandType.StoredProcedure,
+                Connection = ConnectionString
+            };
+            cmd.Parameters.AddWithValue("@id", Convert.ToInt64(mainCategoryId));
+            ConnectionString.Open();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dtCategory);
 
-            
+
             if (dtCategory != null)
             {
                 if (dtCategory.Rows.Count > 0)
@@ -1056,7 +1086,7 @@ public class moryatools : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public void SelectProductsUsingCategoryIdandBrandId(Int64 CategoryId,Int64 brandId)
+    public void SelectProductsUsingCategoryIdandBrandId(Int64 CategoryId, Int64 brandId)
     {
         string finalResult = string.Empty;
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
@@ -1157,8 +1187,11 @@ public class moryatools : System.Web.Services.WebService
                     DataTable dt2 = new DataTable();
                     dt2.Columns.Add("pid", typeof(Int64));
                     dt2.Columns.Add("cid", typeof(Int64));
+                    dt2.Columns.Add("sizegroupname", typeof(string));
+                    dt2.Columns.Add("colorname", typeof(string));
                     dt2.Columns.Add("Categoryname", typeof(string));
                     dt2.Columns.Add("productname", typeof(string));
+                    dt2.Columns.Add("brandname", typeof(string));
                     dt2.Columns.Add("imagename", typeof(string));
                     dt2.Columns.Add("sku", typeof(string));
                     dt2.Columns.Add("customerprice", typeof(string));
@@ -1185,7 +1218,7 @@ public class moryatools : System.Web.Services.WebService
                     DataTable dt3 = new DataTable();
                     for (int i = 0; i < dtProduct.Rows.Count; i++)
                     {
-                    
+
                         dt3 = new DataTable();
                         SqlCommand cmd = new SqlCommand("SELECT 'http://maharashtrafootwear.onlineerp.org/uploads/product/front/' +  imagevideopath as imagevideopath FROM productimagesvideos Where isdelete=0 and pid=" + ProductId, con);
                         SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -1199,8 +1232,11 @@ public class moryatools : System.Web.Services.WebService
                                 dr = dt2.NewRow();
                                 dr["pid"] = Convert.ToInt32(dtProduct.Rows[i]["pid"]);
                                 dr["cid"] = Convert.ToString(dtProduct.Rows[i]["cid"]);
+                                dr["sizegroupname"] = Convert.ToString(dtProduct.Rows[i]["sizegroupname"]);
+                                dr["colorname"] = Convert.ToString(dtProduct.Rows[i]["colorname"]);
                                 dr["Categoryname"] = Convert.ToString(dtProduct.Rows[i]["Categoryname"]);
                                 dr["productname"] = Convert.ToString(dtProduct.Rows[i]["productname"]);
+                                dr["brandname"] = Convert.ToString(dtProduct.Rows[i]["brandname"]);
                                 dr["imagename"] = Convert.ToString(dtProduct.Rows[i]["imagename"]);
                                 dr["sku"] = Convert.ToString(dtProduct.Rows[i]["sku"]);
                                 dr["customerprice"] = Convert.ToString(dtProduct.Rows[i]["customerprice"]);
@@ -1234,8 +1270,11 @@ public class moryatools : System.Web.Services.WebService
                                 dr = dt2.NewRow();
                                 dr["pid"] = Convert.ToInt32(dtProduct.Rows[i]["pid"]);
                                 dr["cid"] = Convert.ToString(dtProduct.Rows[i]["cid"]);
+                                dr["sizegroupname"] = Convert.ToString(dtProduct.Rows[i]["sizegroupname"]);
+                                dr["colorname"] = Convert.ToString(dtProduct.Rows[i]["colorname"]);
                                 dr["Categoryname"] = Convert.ToString(dtProduct.Rows[i]["Categoryname"]);
                                 dr["productname"] = Convert.ToString(dtProduct.Rows[i]["productname"]);
+                                dr["brandname"] = Convert.ToString(dtProduct.Rows[i]["brandname"]);
                                 dr["imagename"] = Convert.ToString(dtProduct.Rows[i]["imagename"]);
                                 dr["sku"] = Convert.ToString(dtProduct.Rows[i]["sku"]);
                                 dr["customerprice"] = Convert.ToString(dtProduct.Rows[i]["customerprice"]);
@@ -1264,8 +1303,11 @@ public class moryatools : System.Web.Services.WebService
                             dr = dt2.NewRow();
                             dr["pid"] = Convert.ToInt32(dtProduct.Rows[i]["pid"]);
                             dr["cid"] = Convert.ToString(dtProduct.Rows[i]["cid"]);
+                            dr["sizegroupname"] = Convert.ToString(dtProduct.Rows[i]["sizegroupname"]);
+                            dr["colorname"] = Convert.ToString(dtProduct.Rows[i]["colorname"]);
                             dr["Categoryname"] = Convert.ToString(dtProduct.Rows[i]["Categoryname"]);
                             dr["productname"] = Convert.ToString(dtProduct.Rows[i]["productname"]);
+                            dr["brandname"] = Convert.ToString(dtProduct.Rows[i]["brandname"]);
                             dr["imagename"] = Convert.ToString(dtProduct.Rows[i]["imagename"]);
                             dr["sku"] = Convert.ToString(dtProduct.Rows[i]["sku"]);
                             dr["customerprice"] = Convert.ToString(dtProduct.Rows[i]["customerprice"]);
@@ -1423,11 +1465,13 @@ public class moryatools : System.Web.Services.WebService
         string finalResult = string.Empty;
         try
         {
-            feedback objfeedback = new feedback();
-            objfeedback.name = Name;
-            objfeedback.phone = Phone;
-            objfeedback.feedbackmessage = FeedBack;
-            objfeedback.feedbackdt = DateTime.Now;
+            feedback objfeedback = new feedback
+            {
+                name = Name,
+                phone = Phone,
+                feedbackmessage = FeedBack,
+                feedbackdt = DateTime.Now
+            };
 
             Int64 Result = (new Cls_feedback_b().Insert(objfeedback));
             if (Result > 0)
@@ -1584,154 +1628,156 @@ public class moryatools : System.Web.Services.WebService
     //    Context.Response.Write(finalResult);
     //    Context.Response.End();
     //}
-		/*
-    [WebMethod]
-    public void Order_InsertOrderandOrderProduct(string OrderProducts_JSONString, string UserId, string ProductQuantites, string BillPaidorNot, string OrderAmount, string Discount, string Tax, string TotalAmount, string OrderDate, string UserType,string customerType)
+    /*
+[WebMethod]
+public void Order_InsertOrderandOrderProduct(string OrderProducts_JSONString, string UserId, string ProductQuantites, string BillPaidorNot, string OrderAmount, string Discount, string Tax, string TotalAmount, string OrderDate, string UserType,string customerType)
+{
+    string finalResult = string.Empty;
+    Customer_orders objorders = new Customer_orders();
+    if (UserId == string.Empty)
     {
-        string finalResult = string.Empty;
-        Customer_orders objorders = new Customer_orders();
-        if (UserId == string.Empty)
-        {
-            objorders.uid = 0;
-        }
-        else
-        {
-            objorders.uid = Convert.ToInt64(UserId);
-        }
-        if (ProductQuantites == string.Empty)
-        {
-            objorders.productquantites = 0;
-        }
-        else
-        {
-            objorders.productquantites = Convert.ToInt32(ProductQuantites);
-        }
-        if (BillPaidorNot == string.Empty)
-        {
-            objorders.billpaidornot = false;
-        }
-        else
-        {
-            objorders.billpaidornot = false;
-        }
-        if (OrderAmount == string.Empty)
-        {
-            objorders.amount = 0;
-        }
-        else
-        {
-            objorders.amount = Convert.ToDecimal(OrderAmount);
-        }
-        if (Discount == string.Empty)
-        {
-            objorders.discount = 0;
-        }
-        else
-        {
-            objorders.discount = Convert.ToDecimal(Discount);
-        }
-        if (Tax == string.Empty)
-        {
-            objorders.tax = 0;
-        }
-        else
-        {
-            objorders.tax = Convert.ToDecimal(Tax);
-        }
-        if (TotalAmount == string.Empty)
-        {
-            objorders.totalamount = 0;
-        }
-        else
-        {
-            objorders.totalamount = Convert.ToDecimal(TotalAmount);
-        }
-        if (OrderDate == string.Empty)
-        {
-            objorders.orderdate = DateTime.Now;
-        }
-        else
-        {
-            objorders.orderdate = DateTime.Now;
-        }
-        if (UserType == string.Empty)
-        {
-            objorders.usertype = "U";
-        }
-        else
-        {
-            objorders.usertype = UserType;
-        }
+        objorders.uid = 0;
+    }
+    else
+    {
+        objorders.uid = Convert.ToInt64(UserId);
+    }
+    if (ProductQuantites == string.Empty)
+    {
+        objorders.productquantites = 0;
+    }
+    else
+    {
+        objorders.productquantites = Convert.ToInt32(ProductQuantites);
+    }
+    if (BillPaidorNot == string.Empty)
+    {
+        objorders.billpaidornot = false;
+    }
+    else
+    {
+        objorders.billpaidornot = false;
+    }
+    if (OrderAmount == string.Empty)
+    {
+        objorders.amount = 0;
+    }
+    else
+    {
+        objorders.amount = Convert.ToDecimal(OrderAmount);
+    }
+    if (Discount == string.Empty)
+    {
+        objorders.discount = 0;
+    }
+    else
+    {
+        objorders.discount = Convert.ToDecimal(Discount);
+    }
+    if (Tax == string.Empty)
+    {
+        objorders.tax = 0;
+    }
+    else
+    {
+        objorders.tax = Convert.ToDecimal(Tax);
+    }
+    if (TotalAmount == string.Empty)
+    {
+        objorders.totalamount = 0;
+    }
+    else
+    {
+        objorders.totalamount = Convert.ToDecimal(TotalAmount);
+    }
+    if (OrderDate == string.Empty)
+    {
+        objorders.orderdate = DateTime.Now;
+    }
+    else
+    {
+        objorders.orderdate = DateTime.Now;
+    }
+    if (UserType == string.Empty)
+    {
+        objorders.usertype = "U";
+    }
+    else
+    {
+        objorders.usertype = UserType;
+    }
 
-        int year = int.Parse(DateTime.Now.Year.ToString());
-        string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
-        int day = int.Parse(DateTime.Now.Day.ToString());
-        int min = int.Parse(DateTime.Now.Minute.ToString());
-        int hour = int.Parse(DateTime.Now.Hour.ToString());
+    int year = int.Parse(DateTime.Now.Year.ToString());
+    string month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
+    int day = int.Parse(DateTime.Now.Day.ToString());
+    int min = int.Parse(DateTime.Now.Minute.ToString());
+    int hour = int.Parse(DateTime.Now.Hour.ToString());
 
-        string orderno1 = year + "_" + month.Substring(0, 3).ToUpper() + "_" + day + "_" + hour + min;
+    string orderno1 = year + "_" + month.Substring(0, 3).ToUpper() + "_" + day + "_" + hour + min;
 
-       // objorders.orderno = orderno1;
-        //objorders.ordertype = customerType.ToString();
+   // objorders.orderno = orderno1;
+    //objorders.ordertype = customerType.ToString();
 
-        Int64 OrderProductAdd = 0;
-        Int64 OrderId = 0;
-        var dtOrderProducts = JsonConvert.DeserializeObject<DataTable>(OrderProducts_JSONString);
-        if (dtOrderProducts != null)
+    Int64 OrderProductAdd = 0;
+    Int64 OrderId = 0;
+    var dtOrderProducts = JsonConvert.DeserializeObject<DataTable>(OrderProducts_JSONString);
+    if (dtOrderProducts != null)
+    {
+        if (dtOrderProducts.Rows.Count > 0)
         {
-            if (dtOrderProducts.Rows.Count > 0)
+            OrderId = (new Cls_Customer_order_b().Insert(objorders));
+            if (OrderId > 0)
             {
-                OrderId = (new Cls_Customer_order_b().Insert(objorders));
-                if (OrderId > 0)
+                for (int i = 0; i < dtOrderProducts.Rows.Count; i++)
                 {
-                    for (int i = 0; i < dtOrderProducts.Rows.Count; i++)
-                    {
-                        OrderProductAdd = 0;
-                        Customer_orderproducts objorderproducts = new Customer_orderproducts();
-                        objorderproducts.oid = OrderId;
-                        objorderproducts.uid = Convert.ToInt64(dtOrderProducts.Rows[i]["userid"]);
-                        objorderproducts.pid = Convert.ToInt64(dtOrderProducts.Rows[i]["productid"]);
-                        objorderproducts.productprice = Convert.ToDecimal(dtOrderProducts.Rows[i]["productprice"]);
-                        objorderproducts.discount = Convert.ToDecimal(dtOrderProducts.Rows[i]["discount"]);
-                        objorderproducts.productafterdiscountprice = Convert.ToDecimal(dtOrderProducts.Rows[i]["productafterdiscountprice"]);
-                        objorderproducts.quantites = Convert.ToInt32(dtOrderProducts.Rows[i]["quantites"]);
-                        objorderproducts.gst = Convert.ToDecimal(dtOrderProducts.Rows[i]["gst"]);
-                        OrderProductAdd = (new Cls_Customer_orderproducts_b().Insert(objorderproducts));
-                        #region " Stock Update "
-                        Product_StockUpdate(objorderproducts.pid, objorderproducts.quantites);
-                        #endregion " Stock Update "
+                    OrderProductAdd = 0;
+                    Customer_orderproducts objorderproducts = new Customer_orderproducts();
+                    objorderproducts.oid = OrderId;
+                    objorderproducts.uid = Convert.ToInt64(dtOrderProducts.Rows[i]["userid"]);
+                    objorderproducts.pid = Convert.ToInt64(dtOrderProducts.Rows[i]["productid"]);
+                    objorderproducts.productprice = Convert.ToDecimal(dtOrderProducts.Rows[i]["productprice"]);
+                    objorderproducts.discount = Convert.ToDecimal(dtOrderProducts.Rows[i]["discount"]);
+                    objorderproducts.productafterdiscountprice = Convert.ToDecimal(dtOrderProducts.Rows[i]["productafterdiscountprice"]);
+                    objorderproducts.quantites = Convert.ToInt32(dtOrderProducts.Rows[i]["quantites"]);
+                    objorderproducts.gst = Convert.ToDecimal(dtOrderProducts.Rows[i]["gst"]);
+                    OrderProductAdd = (new Cls_Customer_orderproducts_b().Insert(objorderproducts));
+                    #region " Stock Update "
+                    Product_StockUpdate(objorderproducts.pid, objorderproducts.quantites);
+                    #endregion " Stock Update "
 
-                        //[{"userid":"15","productid":"783","productprice":"500","discount":"10","quantites":10,"productafterdiscountprice":"450","gst":"12"},{"userid":"15","productid":"10783","productprice":"500","discount":"10","quantites":10,"productafterdiscountprice":"450","gst":"12"}]
+                    //[{"userid":"15","productid":"783","productprice":"500","discount":"10","quantites":10,"productafterdiscountprice":"450","gst":"12"},{"userid":"15","productid":"10783","productprice":"500","discount":"10","quantites":10,"productafterdiscountprice":"450","gst":"12"}]
 
 
-                    }
                 }
             }
         }
-
-        if ((OrderId > 0) && (OrderProductAdd > 0))
-        {
-            SendOrderMail(OrderId);
-            finalResult = "{\"success\" : 1, \"message\" : \"Order Created Sucessfully\", \"data\" : \"\"}";
-        }
-        else
-        {
-            finalResult = "{\"success\" : 0, \"message\" : \"Order Not Created \", \"data\" : \"\"}";
-        }
-        Context.Response.Clear();
-        Context.Response.ContentType = "application/json";
-        Context.Response.Flush();
-        Context.Response.Write(finalResult);
-        Context.Response.End();
     }
+
+    if ((OrderId > 0) && (OrderProductAdd > 0))
+    {
+        SendOrderMail(OrderId);
+        finalResult = "{\"success\" : 1, \"message\" : \"Order Created Sucessfully\", \"data\" : \"\"}";
+    }
+    else
+    {
+        finalResult = "{\"success\" : 0, \"message\" : \"Order Not Created \", \"data\" : \"\"}";
+    }
+    Context.Response.Clear();
+    Context.Response.ContentType = "application/json";
+    Context.Response.Flush();
+    Context.Response.Write(finalResult);
+    Context.Response.End();
+}
 */
 
-		
+
     [WebMethod]
     public void Order_InsertOrderandOrderProduct(string OrderProducts_JSONString, string UserId)
     {
+
+
         string finalResult = string.Empty;
-        
+
 
         Int64 OrderProductAdd = 0;
         Int64 OrderId = 0;
@@ -1749,7 +1795,7 @@ public class moryatools : System.Web.Services.WebService
         {
             if (dtOrderProducts.Rows.Count > 0)
             {
-                
+
                 foreach (DataRow dr in dtOrderProducts.Rows)
                 {
                     try
@@ -1758,83 +1804,88 @@ public class moryatools : System.Web.Services.WebService
                         //  dtprodn = (DataTable)Session["dtprod"];
                         DataTable dtresult = new DataTable();
 
-                        SqlCommand cmd = new SqlCommand();
-                        cmd.CommandText = "getcalculationsforproduct";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.AddWithValue("@uid", UserId); 
+                        SqlCommand cmd = new SqlCommand
+                        {
+                            CommandText = "getcalculationsforproduct",
+                            CommandType = CommandType.StoredProcedure
+                        };
+                        cmd.Parameters.AddWithValue("@uid", UserId);
                         cmd.Parameters.AddWithValue("@sizeid", dr["sizeid"]);
-                        cmd.Parameters.AddWithValue("@pid",dr["productid"]);
+                        cmd.Parameters.AddWithValue("@colorid", dr["colorid"]);
+                        cmd.Parameters.AddWithValue("@pid", dr["productid"]);
 
-                        cmd.Parameters.AddWithValue("@qty",dr["quantites"]);
+                        cmd.Parameters.AddWithValue("@qty", dr["quantites"]);
                         cmd.Connection = con;
-                            con.Open();
-                            SqlDataAdapter da = new SqlDataAdapter(cmd);
-                            da.Fill(dtresult);
-                            if (dtresult != null) {
-                                if (dtresult.Rows.Count > 0) {
+                        con.Open();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(dtresult);
+                        if (dtresult != null)
+                        {
+                            if (dtresult.Rows.Count > 0)
+                            {
 
-                                    DataRow drp = dtprodn.NewRow();
-                                    int rowcnt = dtprodn.Rows.Count + 1;
+                                DataRow drp = dtprodn.NewRow();
+                                int rowcnt = dtprodn.Rows.Count + 1;
 
 
-                                    drp["uid"] = Convert.ToInt64(dtresult.Rows[0]["uid"]);
-                                    drp["pid"] = Convert.ToInt64(dtresult.Rows[0]["pid"]);
-                                    drp["brandid"] = Convert.ToString(dtresult.Rows[0]["brandName"]);
-                                    drp["sizeid"] = Convert.ToString(dtresult.Rows[0]["sizeid"]);
-                                    drp["colorid"] = Convert.ToString(dtresult.Rows[0]["colorid"]);
-                                    drp["cart"] = Convert.ToDecimal(dtresult.Rows[0]["cart"]);
-                                    drp["pack"] = Convert.ToDecimal(dtresult.Rows[0]["packing"]);
-                                    drp["qty"] = Convert.ToDecimal(dtresult.Rows[0]["qty"]);
-                                    drp["mrp"] = Convert.ToDecimal(dtresult.Rows[0]["MRP"]);
-                                    drp["unitRate"] = Convert.ToDecimal(dtresult.Rows[0]["unitRate"]);
-                                    drp["subTotal"] = Convert.ToDecimal(dtresult.Rows[0]["subtotal"]);
-                                    subtotal += Convert.ToDecimal(dtresult.Rows[0]["subtotal"]);
-                                    drp["discount"] = Convert.ToDecimal(dtresult.Rows[0]["discount"]);
-                                    drp["scheme"] = Convert.ToDecimal(dtresult.Rows[0]["scheme"]);
-                                    drp["taxableamt"] = Convert.ToDecimal(dtresult.Rows[0]["taxable"]);
-                                    taxableamount += Convert.ToDecimal(dtresult.Rows[0]["taxable"]);
+                                drp["uid"] = Convert.ToInt64(dtresult.Rows[0]["uid"]);
+                                drp["pid"] = Convert.ToInt64(dtresult.Rows[0]["pid"]);
+                                drp["brandid"] = Convert.ToString(dtresult.Rows[0]["brandName"]);
+                                drp["sizeid"] = Convert.ToString(dtresult.Rows[0]["sizeid"]);
+                                drp["colorid"] = Convert.ToString(dtresult.Rows[0]["colorid"]);
+                                drp["cart"] = Convert.ToDecimal(dtresult.Rows[0]["cart"]);
+                                drp["pack"] = Convert.ToDecimal(dtresult.Rows[0]["packing"]);
+                                drp["qty"] = Convert.ToDecimal(dtresult.Rows[0]["qty"]);
+                                drp["mrp"] = Convert.ToDecimal(dtresult.Rows[0]["MRP"]);
+                                drp["unitRate"] = Convert.ToDecimal(dtresult.Rows[0]["unitRate"]);
+                                drp["subTotal"] = Convert.ToDecimal(dtresult.Rows[0]["subtotal"]);
+                                subtotal += Convert.ToDecimal(dtresult.Rows[0]["subtotal"]);
+                                drp["discount"] = Convert.ToDecimal(dtresult.Rows[0]["discount"]);
+                                drp["scheme"] = Convert.ToDecimal(dtresult.Rows[0]["scheme"]);
+                                drp["taxableamt"] = Convert.ToDecimal(dtresult.Rows[0]["taxable"]);
+                                taxableamount += Convert.ToDecimal(dtresult.Rows[0]["taxable"]);
                                 /*
                                     drp["CGSTper"] = dtresult.Rows[0]["CGST"];
                                     drp["SGSTper"] = dtresult.Rows[0]["SGST"];
                                     drp["IGSTper"] = dtresult.Rows[0]["IGST"];
 
                                 */
-                                    drp["CGSTper"] = Convert.ToDecimal(dtresult.Rows[0]["CGST"]);
-                                    drp["SGSTper"] = Convert.ToDecimal(dtresult.Rows[0]["SGST"]);
-                                    drp["IGSTper"] = Convert.ToDecimal(dtresult.Rows[0]["IGST"]);
+                                drp["CGSTper"] = Convert.ToDecimal(dtresult.Rows[0]["CGST"]);
+                                drp["SGSTper"] = Convert.ToDecimal(dtresult.Rows[0]["SGST"]);
+                                drp["IGSTper"] = Convert.ToDecimal(dtresult.Rows[0]["IGST"]);
 
 
-                                    cgstamount += Convert.ToDecimal(dtresult.Rows[0]["CGSTamount"]);
-                                    sgstamount += Convert.ToDecimal(dtresult.Rows[0]["SGSTamount"]);
-                                    igstamount += Convert.ToDecimal(dtresult.Rows[0]["IGSTamount"]);
+                                cgstamount += Convert.ToDecimal(dtresult.Rows[0]["CGSTamount"]);
+                                sgstamount += Convert.ToDecimal(dtresult.Rows[0]["SGSTamount"]);
+                                igstamount += Convert.ToDecimal(dtresult.Rows[0]["IGSTamount"]);
 
-                                    drp["GSTamt"] = Convert.ToDecimal(dtresult.Rows[0]["gstamount"]);
-                                    gstamount += Convert.ToDecimal(dtresult.Rows[0]["gstamount"]);
-                                    drp["TotalAmount"] = Convert.ToDecimal(dtresult.Rows[0]["totalamount"]);
-                                    totalamount += Convert.ToDecimal(dtresult.Rows[0]["totalamount"]);
+                                drp["GSTamt"] = Convert.ToDecimal(dtresult.Rows[0]["gstamount"]);
+                                gstamount += Convert.ToDecimal(dtresult.Rows[0]["gstamount"]);
+                                drp["TotalAmount"] = Convert.ToDecimal(dtresult.Rows[0]["totalamount"]);
+                                totalamount += Convert.ToDecimal(dtresult.Rows[0]["totalamount"]);
 
 
-                                    dtprodn.Rows.Add(drp);
-                                    
-                                    //Session["dtprod"] = dtprodn;
-                                   
+                                dtprodn.Rows.Add(drp);
 
-                                }
+                                //Session["dtprod"] = dtprodn;
+
+
                             }
-
-                        }
-                        catch (Exception ex)
-                        {
-                            ErrHandler.writeError(ex.Message, ex.StackTrace);
-                            
-                        }
-                        finally
-                        {
-                            con.Close();
                         }
 
                     }
-                
+                    catch (Exception ex)
+                    {
+                        ErrHandler.writeError(ex.Message, ex.StackTrace);
+
+                    }
+                    finally
+                    {
+                        con.Close();
+                    }
+
+                }
+
             }
         }
 
@@ -1884,11 +1935,6 @@ public class moryatools : System.Web.Services.WebService
         objorders.isconfirmed = true;
 
 
-
-
-
-
-
         if (dtprodn != null)
         {
             if (dtprodn.Rows.Count > 0)
@@ -1899,23 +1945,25 @@ public class moryatools : System.Web.Services.WebService
                     for (int i = 0; i < dtprodn.Rows.Count; i++)
                     {
                         OrderProductAdd = 0;
-                        orderproducts objorderproducts = new orderproducts();
-                        objorderproducts.oid = OrderId;
-                        objorderproducts.uid = Convert.ToInt64(dtprodn.Rows[i]["uid"]);
-                        objorderproducts.pid = Convert.ToInt64(dtprodn.Rows[i]["pid"]);
-                        objorderproducts.brandid = Convert.ToString(dtprodn.Rows[i]["brandid"]);
-                        objorderproducts.sizeid = Convert.ToString(dtprodn.Rows[i]["sizeid"]);
-                        objorderproducts.colorid = Convert.ToString(dtprodn.Rows[i]["colorid"]);
-                        objorderproducts.cart = Convert.ToDecimal(dtprodn.Rows[i]["cart"]);
-                        objorderproducts.pack = Convert.ToString(dtprodn.Rows[i]["pack"]);
-                        objorderproducts.qty = Convert.ToDecimal(dtprodn.Rows[i]["qty"]);
-                        objorderproducts.mrp = Convert.ToDecimal(dtprodn.Rows[i]["mrp"]);
-                        objorderproducts.unitRate = Convert.ToDecimal(dtprodn.Rows[i]["unitRate"]);
-                        objorderproducts.subTotal = Convert.ToDecimal(dtprodn.Rows[i]["subTotal"]);
+                        orderproducts objorderproducts = new orderproducts
+                        {
+                            oid = OrderId,
+                            uid = Convert.ToInt64(dtprodn.Rows[i]["uid"]),
+                            pid = Convert.ToInt64(dtprodn.Rows[i]["pid"]),
+                            brandid = Convert.ToString(dtprodn.Rows[i]["brandid"]),
+                            sizeid = Convert.ToString(dtprodn.Rows[i]["sizeid"]),
+                            colorid = Convert.ToString(dtprodn.Rows[i]["colorid"]),
+                            cart = Convert.ToDecimal(dtprodn.Rows[i]["cart"]),
+                            pack = Convert.ToString(dtprodn.Rows[i]["pack"]),
+                            qty = Convert.ToDecimal(dtprodn.Rows[i]["qty"]),
+                            mrp = Convert.ToDecimal(dtprodn.Rows[i]["mrp"]),
+                            unitRate = Convert.ToDecimal(dtprodn.Rows[i]["unitRate"]),
+                            subTotal = Convert.ToDecimal(dtprodn.Rows[i]["subTotal"]),
 
-                        objorderproducts.discount = Convert.ToDecimal(dtprodn.Rows[i]["discount"]);
-                        objorderproducts.scheme = Convert.ToDecimal(dtprodn.Rows[i]["scheme"]);
-                        objorderproducts.taxableamt = Convert.ToDecimal(dtprodn.Rows[i]["taxableamt"]);
+                            discount = Convert.ToDecimal(dtprodn.Rows[i]["discount"]),
+                            scheme = Convert.ToDecimal(dtprodn.Rows[i]["scheme"]),
+                            taxableamt = Convert.ToDecimal(dtprodn.Rows[i]["taxableamt"])
+                        };
 
 
                         decimal CGSTper = Convert.ToDecimal(dtprodn.Rows[i]["CGSTper"]);
@@ -1955,6 +2003,8 @@ public class moryatools : System.Web.Services.WebService
             }
         }
 
+
+
         if ((OrderId > 0) && (OrderProductAdd > 0))
         {
             //SendOrderMail(OrderId);
@@ -1971,7 +2021,7 @@ public class moryatools : System.Web.Services.WebService
         Context.Response.End();
     }
 
-	
+
 
     private bool SendOrderMail(Int64 OrderId)
     {
@@ -1980,17 +2030,19 @@ public class moryatools : System.Web.Services.WebService
         bool send = false;
         MailMessage mail = new MailMessage();
         mail.To.Add("kshatriya.enterprises@gmail.com");
-        
+
         mail.CC.Add("Acnts.moryatools@gmail.com");
         mail.From = new MailAddress("demo@moryatools.com", "Morya Tools App");
         mail.Subject = "Customer Generate New Order - InvoiceNo - " + OrderId;
         mail.Body = OrderMailCreate(OrderId);
         mail.IsBodyHtml = true;
-        SmtpClient smtp = new SmtpClient();
-        smtp.Host = "103.250.184.62";
-        smtp.Port = 25;
-        smtp.UseDefaultCredentials = false;
-        smtp.Credentials = new System.Net.NetworkCredential("demo@moryatools.com", "vsys@2017");
+        SmtpClient smtp = new SmtpClient
+        {
+            Host = "103.250.184.62",
+            Port = 25,
+            UseDefaultCredentials = false,
+            Credentials = new System.Net.NetworkCredential("demo@moryatools.com", "vsys@2017")
+        };
         try
         {
             smtp.Send(mail);
@@ -2014,10 +2066,12 @@ public class moryatools : System.Web.Services.WebService
         SqlDataAdapter da;
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            //cmd.CommandText = "order_invoice";
-            cmd.CommandText = "Customer_order_invoice";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                //cmd.CommandText = "order_invoice";
+                CommandText = "Customer_order_invoice",
+                CommandType = CommandType.StoredProcedure
+            };
             cmd.Parameters.AddWithValue("@oid", OrderId);
             cmd.Connection = con;
             con.Open();
@@ -2094,8 +2148,10 @@ public class moryatools : System.Web.Services.WebService
         SqlDataAdapter da;
         try
         {
-            SqlCommand cmd = new SqlCommand("select quantites from product Where pid=" + ProductId);
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand("select quantites from product Where pid=" + ProductId)
+            {
+                Connection = con
+            };
             con.Open();
             da = new SqlDataAdapter(cmd);
             da.Fill(dtStock);
@@ -2141,14 +2197,18 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtOrder = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandText = "Order_SelectOrderHistroyUsingUserId";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                Connection = con,
+                CommandText = "Order_SelectOrderHistroyUsingUserId",
+                CommandType = CommandType.StoredProcedure
+            };
             cmd.Parameters.AddWithValue("@userid", UserId);
             cmd.Parameters.AddWithValue("@usertype", UserType);
-            SqlDataAdapter sda = new SqlDataAdapter();
-            sda.SelectCommand = cmd;
+            SqlDataAdapter sda = new SqlDataAdapter
+            {
+                SelectCommand = cmd
+            };
             sda.Fill(dtOrder);
             con.Close();
             if (dtOrder != null)
@@ -2193,13 +2253,17 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtOrderHistroy = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.Connection = con;
-            cmd.CommandText = "Order_SelectOrderDetailsUsingOrderId";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                Connection = con,
+                CommandText = "Order_SelectOrderDetailsUsingOrderId",
+                CommandType = CommandType.StoredProcedure
+            };
             cmd.Parameters.AddWithValue("@orderid", OrderId);
-            SqlDataAdapter sda = new SqlDataAdapter();
-            sda.SelectCommand = cmd;
+            SqlDataAdapter sda = new SqlDataAdapter
+            {
+                SelectCommand = cmd
+            };
             sda.Fill(dtOrderHistroy);
             con.Close();
             if (dtOrderHistroy != null)
@@ -2240,10 +2304,12 @@ public class moryatools : System.Web.Services.WebService
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "product_stockupdate";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "product_stockupdate",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             cmd.Parameters.AddWithValue("@productid", ProductId);
             cmd.Parameters.AddWithValue("@quantites", Quantites);
             con.Open();
@@ -2346,20 +2412,22 @@ public class moryatools : System.Web.Services.WebService
                 SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
                 try
                 {
-                    dealermaster objdealermaster = new dealermaster();
-                    objdealermaster.did = 0;
-                    objdealermaster.name = Name;
-                    objdealermaster.userloginmobileno = UserLoginMobileNo;
-                    objdealermaster.password = Password;
-                    objdealermaster.whatappno = WhatAppNo;
-                    objdealermaster.email = Email;
-                    objdealermaster.gstno = GstNo;
-                    objdealermaster.address1 = Address1;
-                    objdealermaster.address2 = Address2;
-                    objdealermaster.city = City;
-                    objdealermaster.state = State;
-                    objdealermaster.guid = Guid.NewGuid().ToString();
-                    objdealermaster.district = Convert.ToInt64(district);
+                    dealermaster objdealermaster = new dealermaster
+                    {
+                        did = 0,
+                        name = Name,
+                        userloginmobileno = UserLoginMobileNo,
+                        password = Password,
+                        whatappno = WhatAppNo,
+                        email = Email,
+                        gstno = GstNo,
+                        address1 = Address1,
+                        address2 = Address2,
+                        city = City,
+                        state = State,
+                        guid = Guid.NewGuid().ToString(),
+                        district = Convert.ToInt64(district)
+                    };
                     Int64 Result = (new Cls_dealermaster_b().Insert(objdealermaster));
                     if (Result > 0)
                     {
@@ -2408,33 +2476,35 @@ public class moryatools : System.Web.Services.WebService
     }
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public void DealerProfileUpdate(Int64 DealerId, string Name, string WhatAppNo, string Email, string GstNo, string Address1, string Address2, string City, string State, string image1, string image1_extension,string districtId)
+    public void DealerProfileUpdate(Int64 DealerId, string Name, string WhatAppNo, string Email, string GstNo, string Address1, string Address2, string City, string State, string image1, string image1_extension, string districtId)
     {
         string finalResult = string.Empty;
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            dealermaster objdealermaster = new dealermaster();
-            objdealermaster.did = DealerId;
-            objdealermaster.name = Name;
-            objdealermaster.whatappno = WhatAppNo;
-            objdealermaster.email = Email;
-            objdealermaster.gstno = GstNo;
-            objdealermaster.address1 = Address1;
-            objdealermaster.address2 = Address2;
-            objdealermaster.city = City;
-            objdealermaster.state = State;
-            objdealermaster.district = Convert.ToInt64(districtId);
+            dealermaster objdealermaster = new dealermaster
+            {
+                did = DealerId,
+                name = Name,
+                whatappno = WhatAppNo,
+                email = Email,
+                gstno = GstNo,
+                address1 = Address1,
+                address2 = Address2,
+                city = City,
+                state = State,
+                district = Convert.ToInt64(districtId)
+            };
 
             if (!string.IsNullOrEmpty(image1))
             {
                 objdealermaster.Img = DealerProfileImage(image1, image1_extension);
-                 
+
             }
             //else
             //{
             //    objdealermaster.Img = string.Empty;
-             
+
             //}
             //objdealermaster.userloginmobileno = UserLoginMobileNo;
             //objdealermaster.password = Password;
@@ -2473,10 +2543,12 @@ public class moryatools : System.Web.Services.WebService
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "updatelatlong";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "updatelatlong",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             cmd.Parameters.AddWithValue("@userid", UserId);
             cmd.Parameters.AddWithValue("@usertype", UserType);
             cmd.Parameters.AddWithValue("@lat", Latitude);
@@ -2520,9 +2592,11 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtCount = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Select_LiveDownloadCount";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "Select_LiveDownloadCount",
+                CommandType = CommandType.StoredProcedure
+            };
             SqlDataAdapter sda = new SqlDataAdapter();
             cmd.Connection = con;
             sda.SelectCommand = cmd;
@@ -2573,16 +2647,20 @@ public class moryatools : System.Web.Services.WebService
         SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "orderimagemaster_Insert";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = ConnectionString;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "orderimagemaster_Insert",
+                CommandType = CommandType.StoredProcedure,
+                Connection = ConnectionString
+            };
 
-            SqlParameter param = new SqlParameter();
-            param.ParameterName = "@orderimageid";
-            param.Value = 0;
-            param.SqlDbType = SqlDbType.BigInt;
-            param.Direction = ParameterDirection.InputOutput;
+            SqlParameter param = new SqlParameter
+            {
+                ParameterName = "@orderimageid",
+                Value = 0,
+                SqlDbType = SqlDbType.BigInt,
+                Direction = ParameterDirection.InputOutput
+            };
             cmd.Parameters.Add(param);
 
             cmd.Parameters.AddWithValue("@oid", OrderId);
@@ -2632,10 +2710,12 @@ public class moryatools : System.Web.Services.WebService
     {
         string finalResult = string.Empty;
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-        SqlCommand cmd = new SqlCommand();
-        cmd.CommandText = "Select top 2 'http://moryaapp.moryatools.com/uploads/orderimage/'+adminimage from orderimagemaster where adminimage is not null and oid=" + OrderId + " order by createddatetime desc ";
-        cmd.CommandType = CommandType.Text;
-        cmd.Connection = con;
+        SqlCommand cmd = new SqlCommand
+        {
+            CommandText = "Select top 2 'http://moryaapp.moryatools.com/uploads/orderimage/'+adminimage from orderimagemaster where adminimage is not null and oid=" + OrderId + " order by createddatetime desc ",
+            CommandType = CommandType.Text,
+            Connection = con
+        };
         con.Open();
         DataTable dtOrderTrackImage = new DataTable();
         SqlDataAdapter sda = new SqlDataAdapter();
@@ -2699,16 +2779,20 @@ public class moryatools : System.Web.Services.WebService
         SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "productfeedback_Insert";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = ConnectionString;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "productfeedback_Insert",
+                CommandType = CommandType.StoredProcedure,
+                Connection = ConnectionString
+            };
 
-            SqlParameter param = new SqlParameter();
-            param.ParameterName = "@productfeedid";
-            param.Value = 0;
-            param.SqlDbType = SqlDbType.BigInt;
-            param.Direction = ParameterDirection.InputOutput;
+            SqlParameter param = new SqlParameter
+            {
+                ParameterName = "@productfeedid",
+                Value = 0,
+                SqlDbType = SqlDbType.BigInt,
+                Direction = ParameterDirection.InputOutput
+            };
             cmd.Parameters.Add(param);
 
             cmd.Parameters.AddWithValue("@uid", UserId);
@@ -2920,7 +3004,7 @@ public class moryatools : System.Web.Services.WebService
                 table.AddCell(dtProducts.Rows[i]["gst"].ToString());
                 table.AddCell(dtProducts.Rows[i]["dealerprice"].ToString());
             }
-            catch (Exception )
+            catch (Exception)
             {
             }
         }
@@ -2969,7 +3053,7 @@ public class moryatools : System.Web.Services.WebService
         try
         {
             DataTable dtCategory = (new Cls_dealermaster_b().SelectAllDetails_usingID(ID));
-              
+
             if (dtCategory != null)
             {
                 if (dtCategory.Rows.Count > 0)
@@ -3085,7 +3169,7 @@ public class moryatools : System.Web.Services.WebService
         return JSONString.ToString();
     }
 
-   
+
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
     public void dealer_SelectAllAdminPaging(int start, int end)
@@ -3096,10 +3180,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtDealer = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "dealer_SelectAllAdminPaging";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "dealer_SelectAllAdminPaging",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dtDealer);
@@ -3140,60 +3226,62 @@ public class moryatools : System.Web.Services.WebService
     }
 
 
-        [WebMethod]
-        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public void Admin_Login(string Username, string password)
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void Admin_Login(string Username, string password)
+    {
+        string finalResult = string.Empty;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
         {
-            string finalResult = string.Empty;
-            SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-            try
+            DataTable dtUser = new DataTable();
+            con.Open();
+            SqlCommand cmd = new SqlCommand
             {
-                DataTable dtUser = new DataTable();
-                con.Open();
-                SqlCommand cmd = new SqlCommand();
-                cmd.CommandText = "Admin_Login";
-                cmd.Parameters.AddWithValue("@UserName", Username);
-                cmd.Parameters.AddWithValue("@Password", password);                 
+                CommandText = "Admin_Login"
+            };
+            cmd.Parameters.AddWithValue("@UserName", Username);
+            cmd.Parameters.AddWithValue("@Password", password);
 
-                cmd.CommandType = CommandType.StoredProcedure;
-                SqlDataAdapter sda = new SqlDataAdapter();
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sda = new SqlDataAdapter();
 
-                cmd.Connection = con;
-                sda.SelectCommand = cmd;
-                sda.Fill(dtUser);
-                con.Close();
-                if (dtUser != null)
+            cmd.Connection = con;
+            sda.SelectCommand = cmd;
+            sda.Fill(dtUser);
+            con.Close();
+            if (dtUser != null)
+            {
+                if (dtUser.Rows.Count > 0)
                 {
-                    if (dtUser.Rows.Count > 0)
-                    {                       
-                            string output = DataTableToJSONWithJavaScriptSerializer(dtUser);
-                            finalResult = "{\"success\" : 1, \"message\" : \"Login Successfully\", \"data\" :" + output + "}";
-                    }
-                    else
-                    {
-                        finalResult = "{\"success\" : 0, \"message\" : \"Incorrect User Name & Password\", \"data\" : \"\"}";
-                    }
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtUser);
+                    finalResult = "{\"success\" : 1, \"message\" : \"Login Successfully\", \"data\" :" + output + "}";
                 }
                 else
                 {
                     finalResult = "{\"success\" : 0, \"message\" : \"Incorrect User Name & Password\", \"data\" : \"\"}";
                 }
             }
-            catch (Exception ex)
+            else
             {
-                finalResult = "{\"success\" : 0, \"message\" : \"" + ex.Message + "\", \"data\" : \"\"}";
+                finalResult = "{\"success\" : 0, \"message\" : \"Incorrect User Name & Password\", \"data\" : \"\"}";
             }
-            finally
-            {
-                con.Close();
-            }
-
-            Context.Response.Clear();
-            Context.Response.ContentType = "application/json";
-            Context.Response.Flush();
-            Context.Response.Write(finalResult);
-            Context.Response.End();
         }
+        catch (Exception ex)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"" + ex.Message + "\", \"data\" : \"\"}";
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
 
 
     [WebMethod]
@@ -3206,14 +3294,16 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtDealer = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "dealer_SelectAllAdminActivePaging";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "dealer_SelectAllAdminActivePaging",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dtDealer);
-           // int newEnd = start + end;
+            // int newEnd = start + end;
 
             if (dtDealer != null)
             {
@@ -3260,10 +3350,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtDealer = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "dealer_SelectAllAdminNotActivePaging";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "dealer_SelectAllAdminNotActivePaging",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dtDealer);
@@ -3273,9 +3365,9 @@ public class moryatools : System.Web.Services.WebService
             {
                 if (dtDealer.Rows.Count > 0)
                 {
-                   
-                    string output = DataTableToJSONWithJavaScriptSerializer(dtDealer); 
-                   // string output = dealer_DataTableToJSONWithJavaScriptSerializer(dtDealer, start, newEnd);
+
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtDealer);
+                    // string output = dealer_DataTableToJSONWithJavaScriptSerializer(dtDealer, start, newEnd);
                     finalResult = "{\"success\" : 1, \"message\" : \" Product Data\", \"data\" :" + output + "}";
 
                 }
@@ -3314,10 +3406,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtDealer = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "dealer_SelectAllWebsiteUserPaging";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "dealer_SelectAllWebsiteUserPaging",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dtDealer);
@@ -3365,10 +3459,12 @@ public class moryatools : System.Web.Services.WebService
         SqlDataAdapter da;
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Select did,name,deviceid,userloginmobileno from dealermaster Where isdeleted=0";
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = ConnectionString;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "Select did,name,deviceid,userloginmobileno from dealermaster Where isdeleted=0",
+                CommandType = CommandType.Text,
+                Connection = ConnectionString
+            };
             ConnectionString.Open();
             da = new SqlDataAdapter(cmd);
             da.Fill(ds);
@@ -3401,7 +3497,7 @@ public class moryatools : System.Web.Services.WebService
                         sResponseFromServer = string.Empty;
 
 
-                         
+
 
                         var applicationID = "AIzaSyBHxPITxegYgcgMmhdJ0ceRJCqz8wxJyUM";
                         var senderId = "315798993928";
@@ -3494,11 +3590,13 @@ public class moryatools : System.Web.Services.WebService
         try
         {
             Int64 Result = 0;
-            offers objoffers = new offers();
-            objoffers.title = Title;
-            objoffers.descp = Description;
-            objoffers.validfrom = fromDate;
-            objoffers.validto = Todate;
+            offers objoffers = new offers
+            {
+                title = Title,
+                descp = Description,
+                validfrom = fromDate,
+                validto = Todate
+            };
             if (!string.IsNullOrEmpty(Image1))
             {
                 objoffers.imagename = InsertOfferImage(Image1, Image1Extension);
@@ -3575,11 +3673,13 @@ public class moryatools : System.Web.Services.WebService
         try
         {
             Int64 Result = 0;
-            newsupdate objnewsupdate = new newsupdate();
-            objnewsupdate.title = Title;
-            objnewsupdate.shortdescp = ShortDescription;
-            objnewsupdate.longdescp = longDescription;
-            objnewsupdate.newsdate = date;
+            newsupdate objnewsupdate = new newsupdate
+            {
+                title = Title,
+                shortdescp = ShortDescription,
+                longdescp = longDescription,
+                newsdate = date
+            };
             if (!string.IsNullOrEmpty(Image1))
             {
                 objnewsupdate.imagename = InsertNewProductImage(Image1, Image1Extension);
@@ -3707,10 +3807,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtDealer = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "WebSiteUser_SelectAll";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "WebSiteUser_SelectAll",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dtDealer);
@@ -3761,10 +3863,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtDealer = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "WebSiteUser_SelectAllNotActive";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "WebSiteUser_SelectAllNotActive",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dtDealer);
@@ -3815,10 +3919,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtDealer = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "WebSiteUser_SelectAllActive";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "WebSiteUser_SelectAllActive",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dtDealer);
@@ -3867,10 +3973,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable ds = new DataTable();
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "pageaccess_SelectAll";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "pageaccess_SelectAll",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             //cmd.Parameters.AddWithValue("@feedbackid", feedbackid);
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -3915,10 +4023,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataSet ds = new DataSet();
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Order_SelectAll";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "Order_SelectAll",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             //cmd.Parameters.AddWithValue("@feedbackid", feedbackid);
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -3963,10 +4073,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataSet ds = new DataSet();
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Order_SelectAll";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "Order_SelectAll",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             //cmd.Parameters.AddWithValue("@feedbackid", feedbackid);
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -4011,10 +4123,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataSet ds = new DataSet();
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Order_SelectAll";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "Order_SelectAll",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             //cmd.Parameters.AddWithValue("@feedbackid", feedbackid);
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -4060,10 +4174,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataSet ds = new DataSet();
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "showMobileorder_invoice";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "showMobileorder_invoice",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             cmd.Parameters.AddWithValue("@oid", OrderID);
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -4113,10 +4229,12 @@ public class moryatools : System.Web.Services.WebService
         try
         {
             Int64 Result = 0;
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "dealermaster_IsActive";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "dealermaster_IsActive",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             cmd.Parameters.AddWithValue("@uid", UserID);
             cmd.Parameters.AddWithValue("@isactive", IsActive);
             con.Open();
@@ -4163,10 +4281,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataSet ds = new DataSet();
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "WebsiteUser_SelectById";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "WebsiteUser_SelectById",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             cmd.Parameters.AddWithValue("@UserID", UserID);
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -4215,10 +4335,12 @@ public class moryatools : System.Web.Services.WebService
             Int64 Result = 0;
             string userType = "user";
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandType = CommandType.Text;
-            cmd.Connection = con;
-            cmd.CommandText = "Update adminlogin SET UserName='" + LoginID + "',name='" + Username + "',Password='" + Password + "', usertype='" + userType + "',email='" + Email + "',phone='" + Phone + "' Where AdminId=" + UserID;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandType = CommandType.Text,
+                Connection = con,
+                CommandText = "Update adminlogin SET UserName='" + LoginID + "',name='" + Username + "',Password='" + Password + "', usertype='" + userType + "',email='" + Email + "',phone='" + Phone + "' Where AdminId=" + UserID
+            };
             con.Open();
             Result = cmd.ExecuteNonQuery();
             con.Close();
@@ -4271,10 +4393,12 @@ public class moryatools : System.Web.Services.WebService
     private void DeletePageAuthority(Int64 AdminId)
     {
         SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-        SqlCommand cmd = new SqlCommand();
-        cmd.CommandText = "Delete FROM pageauthority Where adminid=" + AdminId;
-        cmd.CommandType = CommandType.Text;
-        cmd.Connection = ConnectionString;
+        SqlCommand cmd = new SqlCommand
+        {
+            CommandText = "Delete FROM pageauthority Where adminid=" + AdminId,
+            CommandType = CommandType.Text,
+            Connection = ConnectionString
+        };
         try
         {
             ConnectionString.Open();
@@ -4292,10 +4416,12 @@ public class moryatools : System.Web.Services.WebService
     private void InsertPageAuthority(Int64 AdminId, Int64 PageId)
     {
         SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-        SqlCommand cmd = new SqlCommand();
-        cmd.CommandText = "pageauthority_Insert";
-        cmd.CommandType = CommandType.StoredProcedure;
-        cmd.Connection = ConnectionString;
+        SqlCommand cmd = new SqlCommand
+        {
+            CommandText = "pageauthority_Insert",
+            CommandType = CommandType.StoredProcedure,
+            Connection = ConnectionString
+        };
         cmd.Parameters.AddWithValue("@adminid", AdminId);
         cmd.Parameters.AddWithValue("@pageid", PageId);
         try
@@ -4345,11 +4471,13 @@ public class moryatools : System.Web.Services.WebService
         try
         {
             Int64 Result = 0;
-            newsupdate objnewsupdate = new newsupdate();
-            objnewsupdate.title = Title;
-            objnewsupdate.shortdescp = ShortDescription;
-            objnewsupdate.longdescp = longDescription;
-            objnewsupdate.newsdate = DateTime.Now.ToString();
+            newsupdate objnewsupdate = new newsupdate
+            {
+                title = Title,
+                shortdescp = ShortDescription,
+                longdescp = longDescription,
+                newsdate = DateTime.Now.ToString()
+            };
 
             if (!string.IsNullOrEmpty(Image1))
             {
@@ -4482,10 +4610,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable ds = new DataTable();
             SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Order_CountList";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "Order_CountList",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             //cmd.Parameters.AddWithValue("@feedbackid", feedbackid);
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
@@ -4524,7 +4654,7 @@ public class moryatools : System.Web.Services.WebService
     #endregion
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public void  MYSSKfollowupUPSelectall()
+    public void MYSSKfollowupUPSelectall()
     {
         string finalResult = string.Empty;
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
@@ -4532,14 +4662,16 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtDealer = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "[MySSKTblFollowupSelectAll]";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "[MySSKTblFollowupSelectAll]",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dtDealer);
-          
+
 
             if (dtDealer != null)
             {
@@ -4588,10 +4720,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtDealer = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "[EZACUSFolloupSelectAll]";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "[EZACUSFolloupSelectAll]",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dtDealer);
@@ -4643,10 +4777,12 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtDealer = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "[MoryaFolloupSelectAll]";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = con;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "[MoryaFolloupSelectAll]",
+                CommandType = CommandType.StoredProcedure,
+                Connection = con
+            };
             con.Open();
             SqlDataAdapter da = new SqlDataAdapter(cmd);
             da.Fill(dtDealer);
@@ -4688,13 +4824,13 @@ public class moryatools : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public void WebsiteUser_Status(string Username,string password, Boolean IsActive)
+    public void WebsiteUser_Status(string Username, string password, Boolean IsActive)
     {
-        string finalResult = string.Empty;        
+        string finalResult = string.Empty;
         try
         {
             Cls_userregistration_b obj = new Cls_userregistration_b();
-           Int64  Result = obj.WebsiteUser_Status(Username, password, IsActive);
+            Int64 Result = obj.WebsiteUser_Status(Username, password, IsActive);
             if (Result > 0)
             {
 
@@ -4716,7 +4852,7 @@ public class moryatools : System.Web.Services.WebService
         }
         finally
         {
-             
+
         }
         Context.Response.Clear();
         Context.Response.ContentType = "application/json";
@@ -4735,14 +4871,16 @@ public class moryatools : System.Web.Services.WebService
         SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Update_MySSKTblFollowup";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = ConnectionString;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "Update_MySSKTblFollowup",
+                CommandType = CommandType.StoredProcedure,
+                Connection = ConnectionString
+            };
 
             cmd.Parameters.AddWithValue("@PKId", ID);
             cmd.Parameters.AddWithValue("@Remark", AdminID);
-            
+
 
             ConnectionString.Open();
             result = cmd.ExecuteNonQuery();
@@ -4781,10 +4919,12 @@ public class moryatools : System.Web.Services.WebService
         SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Update_MoryaTblFollowup";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = ConnectionString;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "Update_MoryaTblFollowup",
+                CommandType = CommandType.StoredProcedure,
+                Connection = ConnectionString
+            };
 
             cmd.Parameters.AddWithValue("@PKId", ID);
             cmd.Parameters.AddWithValue("@Remark", AdminID);
@@ -4825,20 +4965,22 @@ public class moryatools : System.Web.Services.WebService
         SqlConnection ConnectionString = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
         try
         {
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "Update_EZACUSTblFollowup";
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Connection = ConnectionString;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "Update_EZACUSTblFollowup",
+                CommandType = CommandType.StoredProcedure,
+                Connection = ConnectionString
+            };
 
             cmd.Parameters.AddWithValue("@PKId", ID);
             cmd.Parameters.AddWithValue("@Remark", AdminID);
 
-              cmd.Parameters.AddWithValue("@EnquiryFor", enquityFor);
-              cmd.Parameters.AddWithValue("@NextTimetoCall", nextTimetoCall);
-              cmd.Parameters.AddWithValue("@Lead", lead);
-              cmd.Parameters.AddWithValue("@Other", other);
-              
-            
+            cmd.Parameters.AddWithValue("@EnquiryFor", enquityFor);
+            cmd.Parameters.AddWithValue("@NextTimetoCall", nextTimetoCall);
+            cmd.Parameters.AddWithValue("@Lead", lead);
+            cmd.Parameters.AddWithValue("@Other", other);
+
+
             ConnectionString.Open();
             result = cmd.ExecuteNonQuery();
             if (result > 0)
@@ -4870,7 +5012,7 @@ public class moryatools : System.Web.Services.WebService
 
     [WebMethod]
     [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-    public void customerLedger(string userType, string userId,string fromDate,string toDate)
+    public void customerLedger(string userType, string userId, string fromDate, string toDate)
     {
         string finalResult = string.Empty;
         SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
@@ -4878,12 +5020,14 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtUser = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "WS_CustomerLedger";
-            cmd.Parameters.AddWithValue("@id", Convert.ToInt64(userId) );
-            cmd.Parameters.AddWithValue("@userType", userType );
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "WS_CustomerLedger"
+            };
+            cmd.Parameters.AddWithValue("@id", Convert.ToInt64(userId));
+            cmd.Parameters.AddWithValue("@userType", userType);
             cmd.Parameters.AddWithValue("@from", fromDate);
-            cmd.Parameters.AddWithValue("@to", toDate);         
+            cmd.Parameters.AddWithValue("@to", toDate);
 
             cmd.CommandType = CommandType.StoredProcedure;
             SqlDataAdapter sda = new SqlDataAdapter();
@@ -4895,14 +5039,14 @@ public class moryatools : System.Web.Services.WebService
             {
                 if (dtUser.Rows.Count > 0)
                 {
-                     
-                        string output = DataTableToJSONWithJavaScriptSerializer(dtUser);
-                        object Total = dtUser.Compute("Sum(totalamount)", string.Empty);
-                        object paid = dtUser.Compute("Sum(paidamount)", string.Empty);
-                        object remaining = dtUser.Compute("Sum(remaining)", string.Empty);
-                        string t = "Total :" + Total.ToString() + ",paid :" + paid + ",Remaiining :" + remaining;
-                        finalResult = "{\"success\" : 1, \"message\" : \"Data Found\", \"Total\" : \"" + Total.ToString() + "\", \"paid\" : \"" + paid.ToString() + "\", \"remaining\" : \"" + remaining.ToString() + "\", \"data\" :" + output + "}";
-                     
+
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtUser);
+                    object Total = dtUser.Compute("Sum(totalamount)", string.Empty);
+                    object paid = dtUser.Compute("Sum(paidamount)", string.Empty);
+                    object remaining = dtUser.Compute("Sum(remaining)", string.Empty);
+                    string t = "Total :" + Total.ToString() + ",paid :" + paid + ",Remaiining :" + remaining;
+                    finalResult = "{\"success\" : 1, \"message\" : \"Data Found\", \"Total\" : \"" + Total.ToString() + "\", \"paid\" : \"" + paid.ToString() + "\", \"remaining\" : \"" + remaining.ToString() + "\", \"data\" :" + output + "}";
+
                 }
                 else
                 {
@@ -4939,9 +5083,11 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtState = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "getState_byCountryId";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "getState_byCountryId",
+                CommandType = CommandType.StoredProcedure
+            };
             cmd.Parameters.AddWithValue("@countryid", Convert.ToInt64("1"));
             cmd.Connection = con;
             con.Open();
@@ -4993,9 +5139,11 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtState = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "getDistrict_byStateId";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "getDistrict_byStateId",
+                CommandType = CommandType.StoredProcedure
+            };
             cmd.Parameters.AddWithValue("@stateid", Convert.ToInt64(stateId));
             cmd.Connection = con;
             con.Open();
@@ -5084,8 +5232,10 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtUser = new DataTable();
             con.Open();
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "SalesmanLogin";
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "SalesmanLogin"
+            };
             cmd.Parameters.AddWithValue("@UserName", username);
             cmd.Parameters.AddWithValue("@password", password);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -5101,9 +5251,9 @@ public class moryatools : System.Web.Services.WebService
                     //bool Status = Convert.ToBoolean(dtUser.Rows[0]["isactive"]);
                     //if (Status)
                     //{
-                        //UpdateLatitudeLongitudeUsingUserId(Convert.ToInt64(dtUser.Rows[0]["uid"]), Convert.ToString(dtUser.Rows[0]["type"]), Latitude, Longitude);
-                        string output = DataTableToJSONWithJavaScriptSerializer(dtUser);
-                        finalResult = "{\"success\" : 1, \"message\" : \"Login Successfully\", \"data\" :" + output + "}";
+                    //UpdateLatitudeLongitudeUsingUserId(Convert.ToInt64(dtUser.Rows[0]["uid"]), Convert.ToString(dtUser.Rows[0]["type"]), Latitude, Longitude);
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtUser);
+                    finalResult = "{\"success\" : 1, \"message\" : \"Login Successfully\", \"data\" :" + output + "}";
                     //}
                     //else
                     //{
@@ -5146,9 +5296,11 @@ public class moryatools : System.Web.Services.WebService
         {
             DataTable dtSizes = new DataTable();
 
-            SqlCommand cmd = new SqlCommand();
-            cmd.CommandText = "getSizesByProductId";
-            cmd.CommandType = CommandType.StoredProcedure;
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "getSizesByProductId",
+                CommandType = CommandType.StoredProcedure
+            };
             cmd.Parameters.AddWithValue("@pid", Convert.ToInt64(productid));
             cmd.Connection = con;
             con.Open();
@@ -5189,6 +5341,232 @@ public class moryatools : System.Web.Services.WebService
         Context.Response.Write(finalResult);
         Context.Response.End();
     }
+
+
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void CityMaster_SelectAll()
+    {
+        string finalResult = string.Empty;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            DataTable dtCity = (new cls_CityMaster_b().SelectAll());
+            if (dtCity != null)
+            {
+                if (dtCity.Rows.Count > 0)
+                {
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtCity);
+                    finalResult = "{\"success\" : 1, \"message\" : \" City Data\", \"data\" :" + output + "}";
+
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"No Data Found\", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \"No Data Found\", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"No Data Found\", \"data\" : \"\"}";
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
+
+
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void EmployeeLogin(string mobile, string password)
+    {
+        string finalResult = string.Empty;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            DataTable dtUser = new DataTable();
+            con.Open();
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "employee_Login"
+            };
+            cmd.Parameters.AddWithValue("@mobileno", mobile);
+            cmd.Parameters.AddWithValue("@password", password);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sda = new SqlDataAdapter();
+            cmd.Connection = con;
+            sda.SelectCommand = cmd;
+            sda.Fill(dtUser);
+            con.Close();
+            if (dtUser != null)
+            {
+                if (dtUser.Rows.Count > 0)
+                {
+                    bool Status = Convert.ToBoolean(dtUser.Rows[0]["isactive"]);
+                    if (Status)
+                    {
+                        //UpdateLatitudeLongitudeUsingUserId(Convert.ToInt64(dtUser.Rows[0]["uid"]), Convert.ToString(dtUser.Rows[0]["type"]), Latitude, Longitude);
+                        string output = DataTableToJSONWithJavaScriptSerializer(dtUser);
+                        finalResult = "{\"success\" : 1, \"message\" : \"Login Successfully\", \"data\" :" + output + "}";
+                    }
+                    else
+                    {
+                        finalResult = "{\"success\" : 0, \"message\" : \"Your Account Under Admin Observation.Please wait for admin confirmation\", \"data\" : \"\"}";
+                    }
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"Incorrect User Name & Password\", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \"Incorrect User Name & Password\", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception ex)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"" + ex.Message + "\", \"data\" : \"\"}";
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void getDealersForCollection(Int64 empid)
+    {
+        string finalResult = string.Empty;
+        SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["cnstring"].ConnectionString);
+        try
+        {
+            DataTable dtDealers = new DataTable();
+            con.Open();
+            SqlCommand cmd = new SqlCommand
+            {
+                CommandText = "getdealersforcollection"
+            };
+            cmd.Parameters.AddWithValue("@empid", empid);
+            cmd.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter sda = new SqlDataAdapter();
+            cmd.Connection = con;
+            sda.SelectCommand = cmd;
+            sda.Fill(dtDealers);
+            con.Close();
+
+            if (dtDealers != null)
+            {
+                if (dtDealers.Rows.Count > 0)
+                {
+                    string output = DataTableToJSONWithJavaScriptSerializer(dtDealers);
+                    finalResult = "{\"success\" : 1, \"message\" : \" Dealer's Data\", \"data\" :" + output + "}";
+
+                }
+                else
+                {
+                    finalResult = "{\"success\" : 0, \"message\" : \"No Data Found\", \"data\" : \"\"}";
+                }
+            }
+            else
+            {
+                finalResult = "{\"success\" : 0, \"message\" : \"No Data Found\", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"No Data Found\", \"data\" : \"\"}";
+        }
+        finally
+        {
+            con.Close();
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
+
+    [WebMethod]
+    [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+    public void DealerPaymentToUser(Int64 userid, Int64 dealerid, decimal amount, string note, string paymenttype, string paymenttype1, string chequeno, string bankname)
+    {
+        string finalResult = string.Empty;
+        try
+        {
+            SqlCommand cmd = new SqlCommand();
+            cmd.CommandText = "dealerpaymentuser_Insert";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Connection = con;
+            
+            SqlParameter param = new SqlParameter();
+            param.ParameterName = "@id";
+            param.Value = 0;
+            param.SqlDbType = SqlDbType.Int;
+            param.Direction = ParameterDirection.InputOutput;
+            cmd.Parameters.Add(param);
+            cmd.Parameters.AddWithValue("@uid", userid);
+            cmd.Parameters.AddWithValue("@dealerid", dealerid);
+            cmd.Parameters.AddWithValue("@amount", amount);
+
+            cmd.Parameters.AddWithValue("@note", note);
+            cmd.Parameters.AddWithValue("@paymenttype", paymenttype);
+            cmd.Parameters.AddWithValue("@paymenttype1", paymenttype1);
+            cmd.Parameters.AddWithValue("@chequeno", chequeno);
+            cmd.Parameters.AddWithValue("@bankname", bankname);
+
+            
+
+            con.Open();
+            cmd.ExecuteNonQuery();
+            
+            Int64 Result = Convert.ToInt64(param.Value);
+            if (Result > 0)
+            {
+                finalResult = "{\"success\" : 1, \"message\" : \"Payment Done Successfully\", \"data\" : \"\"}";
+            }
+            else
+            {
+                finalResult = "{\"success\" : 1, \"message\" : \"Payment Failed\", \"data\" : \"\"}";
+            }
+        }
+        catch (Exception ex)
+        {
+            finalResult = "{\"success\" : 0, \"message\" : \"" + ex.Message + "\", \"data\" : \"\"}";
+        }
+
+        Context.Response.Clear();
+        Context.Response.ContentType = "application/json";
+        Context.Response.Flush();
+        Context.Response.Write(finalResult);
+        Context.Response.End();
+    }
+
 
 
 

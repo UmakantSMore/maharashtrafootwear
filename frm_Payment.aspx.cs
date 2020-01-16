@@ -47,58 +47,58 @@ public partial class frm_Payment : System.Web.UI.Page
     protected void Page_Load(object sender, EventArgs e)
     {
 
-        txtpaymentDate.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+        txtpaymentDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
 
         if (!Page.IsPostBack)
         {
             bindDelar();
-         //   bindBank();
+            //   bindBank();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
             hPageTitle.InnerText = "Payment";
             Page.Title = "Payment";
-          //  BindPaymentDetails(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["oid"].ToString(), true)));
+            //  BindPaymentDetails(Convert.ToInt64(ocommon.Decrypt(Request.QueryString["oid"].ToString(), true)));
         }
 
     }
-     
+
 
     protected void btnSave_Click(object sender, EventArgs e)
     {
-       
-            #region
-            try
+
+        #region
+        try
+        {
+            con.Open();
+            if (txtPaidamt.Text == string.Empty && ddlname.SelectedIndex == 0 && ddlPaymentType.SelectedIndex == 0)
             {
-                con.Open();
-                if (txtPaidamt.Text == string.Empty  && ddlname.SelectedIndex == 0 &&ddlPaymentType.SelectedIndex==0 )
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Please Enter all Fields')", true);
-                }
-                else
-                {
+                ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Please Enter all Fields')", true);
+            }
+            else
+            {
 
 
-                    SqlCommand cmd = new SqlCommand();
-                    cmd.CommandText = "PaymentTransaction_Insert";
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Connection = con;
+                SqlCommand cmd = new SqlCommand();
+                cmd.CommandText = "PaymentTransaction_Insert";
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Connection = con;
 
-                    SqlParameter param = new SqlParameter();
-                    param.ParameterName = "@Payid";
-                    param.Value = 0;
-                    param.SqlDbType = SqlDbType.BigInt;
-                    param.Direction = ParameterDirection.InputOutput;
-                    cmd.Parameters.Add(param);
-               
-                    cmd.Parameters.AddWithValue("@FK_uid", Convert.ToInt64(ddlname.SelectedValue.ToString()));
-                    
-                    cmd.Parameters.AddWithValue("@date1", DateTime.Parse(txtpaymentDate.Text));
-                    cmd.Parameters.AddWithValue("@Paidamt", Convert.ToDecimal(txtPaidamt.Text));
-                   
-                    cmd.Parameters.AddWithValue("@Note", txtComment.Text);
-                     
-                    cmd.Parameters.AddWithValue("@paymentType", Convert.ToString(ddlPaymentType.SelectedItem.ToString()));
-                    cmd.Parameters.AddWithValue("@chequeno", Convert.ToString(txtChequeNo.Text));
-                if(ddlPaymentType.SelectedItem.ToString()== "Cash")
+                SqlParameter param = new SqlParameter();
+                param.ParameterName = "@Payid";
+                param.Value = 0;
+                param.SqlDbType = SqlDbType.BigInt;
+                param.Direction = ParameterDirection.InputOutput;
+                cmd.Parameters.Add(param);
+
+                cmd.Parameters.AddWithValue("@FK_uid", Convert.ToInt64(ddlname.SelectedValue.ToString()));
+
+                cmd.Parameters.AddWithValue("@date1", DateTime.Parse(txtpaymentDate.Text));
+                cmd.Parameters.AddWithValue("@Paidamt", Convert.ToDecimal(txtPaidamt.Text));
+
+                cmd.Parameters.AddWithValue("@Note", txtComment.Text);
+
+                cmd.Parameters.AddWithValue("@paymentType", Convert.ToString(ddlPaymentType.SelectedItem.ToString()));
+                cmd.Parameters.AddWithValue("@chequeno", Convert.ToString(txtChequeNo.Text));
+                if (ddlPaymentType.SelectedItem.ToString() == "Cash")
                 {
                     cmd.Parameters.AddWithValue("@paymentType1", "");
                 }
@@ -107,52 +107,52 @@ public partial class frm_Payment : System.Web.UI.Page
                     cmd.Parameters.AddWithValue("@paymentType1", Convert.ToString(ddlPaymentType1.SelectedItem.ToString()));
                 }
                 //cmd.Parameters.AddWithValue("@paymentType1", Convert.ToString(ddlPaymentType1.SelectedItem.ToString()));
-                cmd.Parameters.AddWithValue("@bankName", Convert.ToString(txtbankName .Text));
-                 
+                cmd.Parameters.AddWithValue("@bankName", Convert.ToString(txtbankName.Text));
 
-                    int t = cmd.ExecuteNonQuery();
-                    Int64 result = Convert.ToInt64(param.Value);
-                    if (t > 0)
-                    {
-                        ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Record Saved Successfully')", true);
-                    }
-                    else
-                    {
-                        ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Record Not Saved')", true);
-                    }
+
+                int t = cmd.ExecuteNonQuery();
+                Int64 result = Convert.ToInt64(param.Value);
+                if (t > 0)
+                {
                     ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Record Saved Successfully')", true);
-                    clear();
                 }
-
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Record Not Saved')", true);
+                }
+                ScriptManager.RegisterClientScriptBlock(this, typeof(Page), "", "alert('Record Saved Successfully')", true);
+                clear();
             }
-            catch(Exception p)
+
+        }
+        catch (Exception p)
         {
         }
-            finally { con.Close(); }
-            #endregion
+        finally { con.Close(); }
+        #endregion
 
-         
+
     }
     public void clear()
     {
-        
+
         ddlname.SelectedIndex = 0;
-        
+
         txtpaymentDate.Text = string.Empty;
-        
+
         txtPaidamt.Text = string.Empty;
-        
+
         txtComment.Text = string.Empty;
 
 
 
     }
-     
+
     protected void btnCancel_Click(object sender, EventArgs e)
     {
         Response.Redirect("manageorders.aspx");
     }
-    
+
 
     protected void ddlPaymentType_SelectedIndexChanged(object sender, EventArgs e)
     {
@@ -164,7 +164,7 @@ public partial class frm_Payment : System.Web.UI.Page
         }
         else if (ddlPaymentType.SelectedItem.ToString() == "Bank".ToString())
         {
-            ddlPaymentType1.Visible = true  ;
+            ddlPaymentType1.Visible = true;
             txtChequeNo.Visible = false;
             txtbankName.Visible = false;
 

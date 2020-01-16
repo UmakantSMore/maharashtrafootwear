@@ -31,7 +31,7 @@ public partial class manageCustomerOrder : System.Web.UI.Page
                 
                 spnMessage.Visible = true;
                 spnMessage.Style.Add("color", "green");
-                spnMessage.InnerText = "Order Updated Successfully";
+                spnMessage.InnerText = "Order Updated Successfully!!!";
 
             }
             else if (Request.QueryString["mode"] == "i")
@@ -39,7 +39,7 @@ public partial class manageCustomerOrder : System.Web.UI.Page
                 
                 spnMessage.Visible = true;
                 spnMessage.Style.Add("color", "green");
-                spnMessage.InnerText = "Order Inserted Successfully";
+                spnMessage.InnerText = "Order Inserted Successfully!!!";
             }
         }
     }

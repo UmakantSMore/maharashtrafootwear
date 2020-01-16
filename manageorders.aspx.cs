@@ -42,7 +42,7 @@ public partial class manageorders : System.Web.UI.Page
         {
             spnMessage.Visible = true;
             spnMessage.Style.Add("color", "green");
-            spnMessage.InnerText = "Payment add Successfully";
+            spnMessage.InnerText = "Payment add Successfully!!!";
         }
     }
 
@@ -56,7 +56,7 @@ public partial class manageorders : System.Web.UI.Page
             SqlCommand cmd = new SqlCommand();
             cmd.CommandText = "Order_SelectAll";
             cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.Add("@paymentStatus", id);
+            cmd.Parameters.AddWithValue("@paymentStatus", id);
             cmd.Connection = con;
             con.Open();
             da = new SqlDataAdapter(cmd);

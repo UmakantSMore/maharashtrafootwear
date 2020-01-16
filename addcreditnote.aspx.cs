@@ -30,8 +30,11 @@ public partial class addcreditnote : System.Web.UI.Page
             Bind();
             HtmlGenericControl hPageTitle = (HtmlGenericControl)this.Page.Master.FindControl("hPageTitle");
             hPageTitle.InnerText = "Credit Note";
-            txt_Date.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
-            txtinvoicedate.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
+            //txt_Date.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
+            //txtinvoicedate.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Now);
+            //txtinvoicedate.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}", DateTime.Today);
+
+            txt_Date.Text = String.Format(new System.Globalization.CultureInfo("en-US"), "{0:d/M/yyyy}",DateTime.Today);
 
 
 
@@ -279,7 +282,7 @@ public partial class addcreditnote : System.Web.UI.Page
                 {
                     
 
-                    txt_Date.Text = dsOrder.Tables[0].Rows[0]["orderdate"].ToString();
+                    txtinvoicedate.Text = dsOrder.Tables[0].Rows[0]["orderdate"].ToString();
                     txt_Subtotal.Text = dsOrder.Tables[0].Rows[0]["subamount"].ToString();
                     txtTotalGstAmt.Text = dsOrder.Tables[0].Rows[0]["totalGSTAmount"].ToString();
                     txttradDis.Text = dsOrder.Tables[0].Rows[0]["per_tradeDisandScheme"].ToString();

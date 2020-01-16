@@ -63,7 +63,7 @@
                                                             <asp:Label ID="Label1" runat="server" CssClass="Container" Text='<%# Eval("orderno") %>' />
                                                         </td>
                                                         <td style="text-align: center">
-                                                            <asp:Label ID="Label2" runat="server" CssClass="Container" Text='<%# Eval("dealerName") %>' />
+                                                            <asp:Label ID="Label2" runat="server" CssClass="Container" Text='<%# Eval("vendorname") %>' />
                                                         </td>
                                                         <td style="text-align: center">
                                                             <asp:Label ID="Label3" runat="server" CssClass="Container" Text='<%# Eval("grandTotal") %>' />
@@ -125,7 +125,7 @@
                                                             <asp:Label ID="Label1" runat="server" CssClass="Container" Text='<%# Eval("orderno") %>' />
                                                         </td>
                                                         <td style="text-align: center">
-                                                            <asp:Label ID="Label2" runat="server" CssClass="Container" Text='<%# Eval("dealerName") %>' />
+                                                            <asp:Label ID="Label2" runat="server" CssClass="Container" Text='<%# Eval("vendorname") %>' />
                                                         </td>
                                                         <td style="text-align: center">
                                                             <asp:Label ID="Label3" runat="server" CssClass="Container" Text='<%# Eval("grandTotal") %>' />
@@ -188,7 +188,7 @@
                                                             <asp:Label ID="Label1" runat="server" CssClass="Container" Text='<%# Eval("orderno") %>' />
                                                         </td>
                                                         <td style="text-align: center">
-                                                            <asp:Label ID="Label2" runat="server" CssClass="Container" Text='<%# Eval("dealerName") %>' />
+                                                            <asp:Label ID="Label2" runat="server" CssClass="Container" Text='<%# Eval("vendorname") %>' />
                                                         </td>
                                                         <td style="text-align: center">
                                                             <asp:Label ID="Label3" runat="server" CssClass="Container" Text='<%# Eval("grandTotal") %>' />

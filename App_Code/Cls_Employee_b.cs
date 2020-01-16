@@ -118,7 +118,8 @@ public class employeeMaster
     private Int64 _id;
     private String _employeeName;   
     private String _Address1; 
-    private String _MobileNo1;   
+    private String _MobileNo1;
+        private string _password;
     private String _img;
     private String _email;
     private String _landline;    
@@ -149,8 +150,14 @@ public class employeeMaster
     {
         get { return _MobileNo1; }
         set { _MobileNo1 = value; }
-    }   
-    public String img
+    }
+
+        public String Password
+        {
+            get { return _password; }
+            set { _password = value; }
+        }
+        public String img
     {
         get { return _img; }
         set { _img = value; }

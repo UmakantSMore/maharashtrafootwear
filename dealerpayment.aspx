@@ -1,6 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="manageEmployee.aspx.cs" Inherits="manageEmployee" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/morya.master" AutoEventWireup="true" CodeFile="dealerpayment.aspx.cs" Inherits="dealerpayment" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+    <!-- DataTables -->
+  <link rel="stylesheet" href="Template/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
  <asp:UpdatePanel ID="UpdatePanel1" runat="server">
@@ -18,20 +20,17 @@
                         <!-- /.box-header -->
                         <div class="box-body">
                            
-                            <div class="pull-right" >
+                            <%--<div class="pull-right" >
                 <asp:Button ID="Button1" runat="server" Text="Add New Employee" CssClass="btn btn-danger" OnClick="btnAddNew_Click" />
 
 
-                    </div>
+                    </div>--%>
          <table id="tblBank" class="display table table-hover table-striped table-bordered">
                     <thead>
                         <tr class="tableheader">
                             <th style="text-align: center">Employee Name</th>
-                             <th style="text-align: center">Image</th>
-                            <th style="text-align: center">Address</th>
-                            <th style="text-align: center">Mobile No</th>
-                            <th style="text-align: center">Password</th>
-                            <th style="text-align: center">E-mail</th>                      
+                             
+                            <th style="text-align: center">Amount</th>                      
                            <th style="text-align: center">Action</th>
 
                           
@@ -43,31 +42,23 @@
                             <ItemTemplate>
                                 <tr>
                                     <td style="text-align: center">
-                                        <asp:Label ID="lblAgentId" runat="server" Visible="false" Text='<%# Eval("id") %>'></asp:Label>
+                                        <asp:Label ID="lblAgentId" runat="server" Visible="false" Text='<%# Eval("uid") %>'></asp:Label>
                                         <%--<asp:Label ID="lblBankCount" runat="server" Visible="false" Text='<%# Eval("bankcount") %>'></asp:Label>--%>
                                         <asp:Label ID="lblName" runat="server" Text='<%# Eval("employeeName") %>'></asp:Label>
                                     </td>
-                                    <td style="text-align: center">
-                                        <asp:Image ID="imgProfile" Width="75px" Height="50px" runat="server"></asp:Image>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <asp:Label ID="lblAddress" runat="server" Text='<%# Eval("Address1") %>'></asp:Label>
-                                    </td>
 
                                     <td style="text-align: center">
-                                        <asp:Label ID="lblMobileno" runat="server" Text='<%# Eval("MobileNo1") %>'></asp:Label>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <asp:Label ID="lblpassword" runat="server" Text='<%# Eval("emppassword") %>'></asp:Label>
-                                    </td>
-                                    <td style="text-align: center">
-                                        <asp:Label ID="lblemail" runat="server" Text='<%# Eval("email") %>'></asp:Label>
+                                        <asp:Label ID="lblamount" runat="server" Text='<%# Eval("amount") %>'></asp:Label>
                                     </td>
                                     
                                     
                                     <td style="text-align: center">
-                                        <asp:HyperLink ID="hlEdit" runat="server" Style="text-decoration: underline" CssClass="btn btn-sm btn-success" Text="Edit"></asp:HyperLink>&nbsp;
-                                        &nbsp;<asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('Do you want to delete this bank?');" OnClick="lnkDelete_Click"></asp:LinkButton>
+
+                                        <asp:LinkButton ID="lnkAccept" runat="server" Text="ACCEPT" CssClass="btn btn-sm btn-success" OnClick="lnkAccept_Click"></asp:LinkButton>
+                                        
+                                        <%--<asp:HyperLink ID="hlEdit" runat="server" Style="text-decoration: underline" CssClass="btn btn-sm btn-success" Text="Edit"></asp:HyperLink>&nbsp;
+                                        &nbsp;<asp:LinkButton ID="lnkDelete" runat="server" Text="Delete" CssClass="btn btn-sm btn-danger" OnClientClick="return confirm('Do you want to delete this bank?');" OnClick="lnkDelete_Click"></asp:LinkButton>--%>
+                                    
                                     </td>
                                 </tr>
                             </ItemTemplate>
@@ -124,3 +115,4 @@
 
    
 </asp:Content>
+

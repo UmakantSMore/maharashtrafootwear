@@ -13,7 +13,7 @@ public class Cls_agentmaster_b
 	{
 		//
 		// TODO: Add constructor logic here
-		//
+//
 	}
     #region Public Methods
 

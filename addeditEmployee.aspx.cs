@@ -45,6 +45,7 @@ public partial class addeditEmployee : System.Web.UI.Page
         txtAddress1.Text = string.Empty;
          
         txtMobileNo1.Text = string.Empty;
+        txtpassword.Text = string.Empty;
        
         txtLandline.Text = string.Empty;
         txtEmail.Text = string.Empty;
@@ -63,7 +64,7 @@ public partial class addeditEmployee : System.Web.UI.Page
             txtAddress1.Text = objVendorMaster.Address1;
            
             txtMobileNo1.Text = objVendorMaster.MobileNo1;
-          
+            txtpassword.Text = objVendorMaster.Password;
             txtLandline.Text = objVendorMaster.landline;
             txtEmail.Text = objVendorMaster.email;
 
@@ -96,6 +97,7 @@ public partial class addeditEmployee : System.Web.UI.Page
         objemployeeMaster.employeeName = txtEmployeeName.Text.Trim();
         objemployeeMaster.Address1 = txtAddress1.Text.Trim();
         objemployeeMaster.MobileNo1 = txtMobileNo1.Text.Trim();
+        objemployeeMaster.Password = txtpassword.Text.Trim();
         objemployeeMaster.landline = txtLandline.Text.Trim();
         objemployeeMaster.email = txtEmail.Text.Trim();
         if (ViewState["fileName"] != null)

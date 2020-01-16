@@ -258,7 +258,7 @@ namespace DatabaseLayer
                                     objproduct.LandingPrice = Convert.ToDecimal(ds.Tables[0].Rows[0]["LandingPrice"]);
                                     objproduct.isHotproduct = string.IsNullOrEmpty(ds.Tables[0].Rows[0]["isHotproduct"].ToString()) ? false : Convert.ToBoolean(ds.Tables[0].Rows[0]["isHotproduct"]);
 
-                                    objproduct.fk_colorId = Convert.ToInt64(ds.Tables[0].Rows[0]["fk_colorId"]);
+                                    objproduct.fk_colorId = Convert.ToString(ds.Tables[0].Rows[0]["fk_colorId"]);
                                     objproduct.fk_sizeId = Convert.ToInt64(ds.Tables[0].Rows[0]["fk_sizeId"]);
                                     objproduct.packing = Convert.ToInt32(ds.Tables[0].Rows[0]["packing"]);
                                     objproduct.brandid= Convert.ToInt64(ds.Tables[0].Rows[0]["brandid"]);

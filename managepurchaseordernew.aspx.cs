@@ -51,7 +51,8 @@ public partial class managepurchaseordernew : System.Web.UI.Page
         SqlDataAdapter da;
         try
         {
-            clsPurchaseOrderHeader_b obj = new clsPurchaseOrderHeader_b();
+            //clsPurchaseOrderHeader_b obj = new clsPurchaseOrderHeader_b();
+            Cls_porders_b obj = new Cls_porders_b();
             ds = obj.SelectAll();
             //SqlCommand cmd = new SqlCommand();
             //cmd.CommandText = "Customer_Order_SelectAll";

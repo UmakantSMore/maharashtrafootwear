@@ -46,6 +46,17 @@
 
                                 </div>
                             </div>
+
+
+                            <div class="form-group row">
+                                <div class="col-xs-6">
+                                    <label for="exampleInputEmail1">Password<span style="color: red">*</span></label>
+                                    <asp:TextBox ID="txtpassword" CssClass="form-control" runat="server"></asp:TextBox>
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" Display="Dynamic" ControlToValidate="txtpassword" CssClass="error" ErrorMessage="Required Field" ValidationGroup="c1"></asp:RequiredFieldValidator>
+
+                                </div>
+                            </div>
+
                             <div class="form-group row">
                                 <div class="col-xs-6">
                                     <label for="exampleInputEmail1">Landline</label>

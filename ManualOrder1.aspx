@@ -205,9 +205,9 @@
                                                 <th>Brand</th>
                                                 <th>Size</th>
                                                 <th>Color</th>
-                                                <th>Cart</th>
-                                                <th>Pack</th>
-                                                <th>Quanity</th>
+                                                <th style="width:20px">Quantity</th>
+                                                <th style="display:none">Pack</th>
+                                                <th style="display:none">Quantity</th>
                                                 <th>Mrp</th>
                                                 <th>Unit Rate</th>
                                                 <th>SubTotal</th>
@@ -233,7 +233,7 @@
                                                         </td>
                                                         <td class="center">
                                                             <asp:Label ID="rep_txtproductName" runat="server" Text='<%# Eval("productName") %>'></asp:Label>
-                                                            <asp:Label ID="rep_txtproductid" runat="server" Text='<%# Eval("pid") %>'></asp:Label>
+                                                            <asp:Label ID="rep_txtproductid" Visible="false" runat="server" Text='<%# Eval("pid") %>'></asp:Label>
 
 
                                                             <%--<asp:TextBox ID="rep_txtproductName" ReadOnly="true" Width="100" runat="server" Text=' <%#Eval("productName")%>'></asp:TextBox>--%>
@@ -246,25 +246,25 @@
                                                         </td>
                                                         <td class="center">
 
-                                                            <asp:Label ID="rep_txtSize" runat="server" Text='<%# Eval("sizeid") %>'></asp:Label>
+                                                            <asp:Label ID="rep_txtSize" runat="server" Text='<%# Eval("sizename") %>'></asp:Label>
                                                             <%--<asp:TextBox ID="rep_txtSize" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("sizeid")%>'></asp:TextBox>--%>
                                                         </td>
                                                         <td class="center">
-                                                            <asp:Label ID="rep_txtColor" runat="server" Text='<%# Eval("colorid") %>'></asp:Label>
+                                                            <asp:Label ID="rep_txtColor" runat="server" Text='<%# Eval("colorname") %>'></asp:Label>
 
                                                             <%--<asp:TextBox ID="rep_txtColor" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("colorid")%>'></asp:TextBox>--%>
                                                         </td>
                                                         <td class="center">
 
 
-                                                            <asp:TextBox ID="rep_txtCart" Width="50" AutoPostBack="true" OnTextChanged="rep_txtCart_TextChanged" runat="server" Text=' <%#Eval("cart")%>'></asp:TextBox>
+                                                            <asp:TextBox ID="rep_txtCart" AutoPostBack="true" OnTextChanged="rep_txtCart_TextChanged" runat="server" Text=' <%#Eval("cart")%>'></asp:TextBox>
                                                         </td>
-                                                        <td class="center">
+                                                        <td class="center" style="display:none">
                                                             <asp:Label ID="rep_txtpacking" runat="server" Text='<%# Eval("pack") %>'></asp:Label>
 
                                                             <%--<asp:TextBox ID="rep_txtpacking" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("pack")%>'></asp:TextBox>--%>
                                                         </td>
-                                                        <td class="center">
+                                                        <td class="center" style="display:none">
                                                             <asp:Label ID="rep_txtqty" runat="server" Text='<%# Eval("qty") %>'></asp:Label>
 
                                                             <%--<asp:TextBox ID="rep_txtqty" ReadOnly="true" Width="50" runat="server" Text=' <%#Eval("qty")%>'></asp:TextBox>--%>
@@ -341,7 +341,7 @@
                                             <tr>
                                                 <th><asp:Button ID="btnAdd" runat="server" Text="Add" CssClass="btn btn-info" ValidationGroup="bb" BackColor="#3c8dbc" ForeColor="White" OnClick="btnAdd_Click" TabIndex="11" /></th>
                                                 <th>
-                                                    <asp:ListBox ID="ddlProduct" runat="server" class="form-control select2" Width="150" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged" TabIndex="8"></asp:ListBox>
+                                                    <asp:ListBox ID="ddlProduct" runat="server" class="form-control select2" Width="130" AutoPostBack="True" OnSelectedIndexChanged="ddlProduct_SelectedIndexChanged" TabIndex="8"></asp:ListBox>
                                                     <asp:HiddenField ID="ddlProductid" runat="server" />
                                                     <asp:RequiredFieldValidator ID="RequiredFieldValidator5" ControlToValidate="ddlProduct" ValidationGroup="bb" runat="server" ErrorMessage="*" Font-Bold="True" Font-Size="Medium"></asp:RequiredFieldValidator>
 
@@ -351,11 +351,18 @@
 
                                                 </th>
                                                 <th>
-                                                    <asp:Label ID="txtSize" runat="server" Enabled="false" placeholder="Size" Text=""></asp:Label></th>
+
+                                                    <asp:ListBox ID="txtSize" runat="server" class="form-control select2" TabIndex="8"></asp:ListBox>
+                                                    <asp:HiddenField ID="hfsizeid" runat="server" />
+                                                    <%--<asp:Label ID="txtSize" runat="server" Enabled="false" placeholder="Size" Text=""></asp:Label></th>--%>
                                                 <th>
-                                                    <asp:Label ID="txtColor"  runat="server" Enabled="false" placeholder="Color" Text=""></asp:Label></th>
+                                                    <asp:ListBox ID="txtColor" runat="server" class="form-control select2" TabIndex="9"></asp:ListBox>
+                                                    <asp:HiddenField ID="hfcolorid" runat="server" />
+                                                    
+
+                                                    <%--<asp:Label ID="txtColor"  runat="server" Enabled="false" placeholder="Color" Text=""></asp:Label></th>--%>
                                                 <th>
-                                                    <asp:TextBox ID="txtCart" Width="70"  runat="server" placeholder="Cart" AutoPostBack="true"  OnTextChanged="txtCart_TextChanged" Text="0" TabIndex="9"></asp:TextBox></td>
+                                                    <asp:TextBox ID="txtCart" width="50" runat="server" placeholder="Quantity" AutoPostBack="true"  OnTextChanged="txtCart_TextChanged" Text="0" TabIndex="10"></asp:TextBox></td>
                                             <asp:RegularExpressionValidator
                                                 ID="RegularExpressionValidator6"
                                                 runat="server"
@@ -363,9 +370,9 @@
                                                 ControlToValidate="txtCart"
                                                 ValidationExpression="^\d+"
                                                 ErrorMessage="Enter only Digit in Cart" Font-Bold="True" Font-Size="Medium"></asp:RegularExpressionValidator></th>
-                                                <th>
+                                                <th style="display:none">
                                                     <asp:Label ID="txtPack" runat="server" Enabled="false" placeholder="Pack" Text="0"></asp:Label></th>
-                                                <th>
+                                                <th style="display:none">
                                                     <asp:Label ID="txtQty"  runat="server" Enabled="false" placeholder="Qty" Text="0"></asp:Label></th>
                                                 <th>
                                                     <asp:Label ID="txtMrp"  runat="server" Enabled="false" placeholder="MRP" Text="0"></asp:Label></th>
@@ -374,7 +381,7 @@
                                                 <th>
                                                     <asp:Label ID="txtSubTotal" Enabled="false" runat="server" placeholder="SubTotal" Text="0"></asp:Label></th>
                                                 <th>
-                                                    <asp:TextBox ID="txtDiscount" Width="70" Enabled="true" runat="server" AutoPostBack="true" OnTextChanged="txtCart_TextChanged" placeholder="Dis(%)" Text="0" TabIndex="10"></asp:TextBox></th>
+                                                    <asp:TextBox ID="txtDiscount" Width="50" Enabled="true" runat="server" AutoPostBack="true" OnTextChanged="txtCart_TextChanged" placeholder="Dis(%)" Text="0" TabIndex="10"></asp:TextBox></th>
                                                 <th>
                                                     <asp:Label  ID="txtScheme"    Enabled="false" runat="server" placeholder="Scheme" Text="0"></asp:Label></th>
                                                 <th>
@@ -594,6 +601,26 @@
             }).on('change.select2', function () {
                 //alert("Selected value is: "+$("#<%=ddlname.ClientID%>").select2("val"));
                     $('[id*=hfddlnameid]').val($(this).val());
+                });
+
+
+            
+            $("#<%=txtSize.ClientID%>").select2({
+
+                allowClear: true
+
+            }).on('change.select2', function () {
+                //alert("Selected value is: "+$("#<%=ddlProduct.ClientID%>").select2("val"));
+                    $('[id*=hfsizeid]').val($(this).val());
+                });
+            
+            $("#<%=txtColor.ClientID%>").select2({
+
+                allowClear: true
+
+            }).on('change.select2', function () {
+                //alert("Selected value is: "+$("#<%=ddlProduct.ClientID%>").select2("val"));
+                    $('[id*=hfcolorid]').val($(this).val());
                 });
         }
 

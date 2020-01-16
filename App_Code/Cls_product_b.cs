@@ -300,7 +300,7 @@ namespace BusinessLayer
 
         private Boolean _isHotproduct;
 
-        private Int64 _fk_colorId;
+        private string _fk_colorId;
         private Int64 _fk_sizeId;
         private Int32 _packing;
         private Int64 _brandid;
@@ -488,7 +488,7 @@ namespace BusinessLayer
             set { _isHotproduct = value; }
         }
 
-        public Int64 fk_colorId
+        public string fk_colorId
         {
             get { return _fk_colorId; }
             set { _fk_colorId = value; }
